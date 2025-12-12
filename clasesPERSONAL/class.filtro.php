@@ -21,51 +21,7 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 		$this->mysqli = $this->db();
     }
 	
-	public function datos_bancarios_xml($idRelacion){
-    $conn = $this->db();
 
-    $sql = "SELECT db.idRelacion
-            FROM 04personal p
-            LEFT JOIN 01DATOSBANCARIOS db
-                ON p.idPersonal = db.idRelacion
-            WHERE p.idPersonal = ?
-            LIMIT 1";
-
-    $stmt = mysqli_prepare($conn, $sql);
-    if (!$stmt) { return null; }
-
-    mysqli_stmt_bind_param($stmt, "i", $idRelacion);
-    mysqli_stmt_execute($stmt);
-
-    $res = mysqli_stmt_get_result($stmt);
-    if (!$res) { return null; }
-
-    $row = mysqli_fetch_assoc($res);
-    return $row['idRelacion'] ?? null;
-}
-
-public function datos_bancarios_todo($idRelacion){
-    $conn = $this->db();
-
-    $sql = "SELECT *
-            FROM 01DATOSBANCARIOS
-            WHERE idRelacion = ?
-              AND checkbox = 'si'
-            ORDER BY id DESC
-            LIMIT 1";
-
-    $stmt = mysqli_prepare($conn, $sql);
-    if (!$stmt) { return null; }
-
-    mysqli_stmt_bind_param($stmt, "i", $idRelacion);
-    mysqli_stmt_execute($stmt);
-
-    $res = mysqli_stmt_get_result($stmt);
-    if (!$res) { return null; }
-
-    $row = mysqli_fetch_assoc($res);
-    return $row ?: null;
-}
 	
 	public function countAll($sql){
 		$query=$this->mysqli->query($sql);
@@ -79,9 +35,9 @@ public function datos_bancarios_todo($idRelacion){
 		
 		$sWhere=" ";
 
-                $tables1 = '04altaeventos';
+           $tables1 = '04altaeventos';
                 $tables = '04personal';
-				$tables2 = '01DATOSBANCARIOS';
+                $tables2 = '01DATOSBANCARIOS';
                 $baseConditions = " ( (NOMBRE_PERSONAL is not null or NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
                 $sWhere2="";$sWhere3="";
 
@@ -166,21 +122,26 @@ $sWhere2.="  $tables.hDatosPERSONAL LIKE '%".$search['hDatosPERSONAL']."%' OR ";
 IF($sWhere2!=""){
                                 $sWhere22 = substr($sWhere2,0,-3);
                         $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
+                        .' LEFT JOIN 01DATOSBANCARIOS ON 04personal.idPersonal = 01DATOSBANCARIOS.idRelacion AND 01DATOSBANCARIOS.checkbox = "si"'
                         .' where '.$baseConditions.' and ('.$sWhere22.') ';
                 }ELSE{
-                $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion where '
+                $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
+                        .' LEFT JOIN 01DATOSBANCARIOS ON 04personal.idPersonal = 01DATOSBANCARIOS.idRelacion AND 01DATOSBANCARIOS.checkbox = "si"'
+                        .' where '
                         .$baseConditions;
-		}
+                }
 
 
-			
-			
-	
-		
 
-		
-		$sWhere3.="  order by $tables.id asc ";
-		$sql="SELECT $campos, 04altaeventos.id as id FROM $sWhere $sWhere3 LIMIT $offset,$per_page";
+
+
+
+
+
+
+
+                $sWhere3.="  order by $tables.id asc ";
+                $sql="SELECT $campos, 04altaeventos.id as id, 04personal.idPersonal as personalId, 01DATOSBANCARIOS.idRelacion as datosBancariosRelacion FROM $sWhere $sWhere3 LIMIT $offset,$per_page";
 		
 		$query=$this->mysqli->query($sql);
 		$sql1="SELECT $campos FROM $sWhere $sWhere3 ";

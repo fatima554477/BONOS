@@ -44,6 +44,7 @@ var OBSERVACIONES_PERSONAL=$("#OBSERVACIONES_PERSONAL_1").val();
 var PERSONAL_FECHA_ULTIMA_CARGA=$("#PERSONAL_FECHA_ULTIMA_CARGA_1").val();
 var hDatosPERSONAL=$("#hDatosPERSONAL_1").val();
 
+
 /*termina copiar y pegar*/
 			
 			var per_page=$("#per_page").val();
