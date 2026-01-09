@@ -37,7 +37,7 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 
            $tables1 = '04altaeventos';
                 $tables = '04personal';
-                $tables2 = '01DATOSBANCARIOS';
+               $tables2 = '01DATOSBANCARIOS';
                 $baseConditions = " ( (NOMBRE_PERSONAL is not null or NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
                 $sWhere2="";$sWhere3="";
 
@@ -121,15 +121,18 @@ $sWhere2.="  $tables.hDatosPERSONAL LIKE '%".$search['hDatosPERSONAL']."%' OR ";
 
 IF($sWhere2!=""){
                                 $sWhere22 = substr($sWhere2,0,-3);
-                        $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
-                        .' LEFT JOIN 01DATOSBANCARIOS ON 04personal.idPersonal = 01DATOSBANCARIOS.idRelacion AND 01DATOSBANCARIOS.checkbox = "si"'
+                                  $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
+                        .' LEFT JOIN 01informacionpersonal ON 04personal.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
+                        .' LEFT JOIN 01DATOSBANCARIOS ON 01informacionpersonal.idRelacion = 01DATOSBANCARIOS.idRelacion AND 01DATOSBANCARIOS.checkbox = "si"'
                         .' where '.$baseConditions.' and ('.$sWhere22.') ';
                 }ELSE{
                 $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
-                        .' LEFT JOIN 01DATOSBANCARIOS ON 04personal.idPersonal = 01DATOSBANCARIOS.idRelacion AND 01DATOSBANCARIOS.checkbox = "si"'
+                        .' LEFT JOIN 01informacionpersonal ON 04personal.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
+                        .' LEFT JOIN 01DATOSBANCARIOS ON 01informacionpersonal.idRelacion = 01DATOSBANCARIOS.idRelacion AND 01DATOSBANCARIOS.checkbox = "si"'
                         .' where '
                         .$baseConditions;
                 }
+
 
 
 
