@@ -22,10 +22,10 @@ if($action == "ajax"){
 	$database=new orders();	
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
-
-	$DEPARTAMENTO = !EMPTY($_POST["DEPARTAMENTO2"])?$_POST["DEPARTAMENTO2"]:"DEFAULT";	
-	$nombreTabla = "SELECT * FROM `08altaeventosfiltroDes`, 08altaeventosfiltroPLA WHERE 08altaeventosfiltroDes.id = 08altaeventosfiltroPLA.idRelacion";
-	$altaeventos = "altaeventos";
+        $DEPARTAMENTO = !EMPTY($_POST["DEPARTAMENTO2"])?$_POST["DEPARTAMENTO2"]:"DEFAULT";
+        $tables = "04personal";
+        $nombreTabla = "SELECT * FROM `08altaeventosfiltroDes`, 08altaeventosfiltroPLA WHERE 08altaeventosfiltroDes.id = 08altaeventosfiltroPLA.idRelacion";
+        $altaeventos = "altaeventos";
 
 
 	
