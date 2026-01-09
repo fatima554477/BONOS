@@ -21,7 +21,7 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 		$this->mysqli = $this->db();
     }
 	
-
+	
 	
 	public function countAll($sql){
 		$query=$this->mysqli->query($sql);
@@ -35,9 +35,8 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 		
 		$sWhere=" ";
 
-           $tables1 = '04altaeventos';
+                $tables1 = '04altaeventos';
                 $tables = '04personal';
-               $tables2 = '01DATOSBANCARIOS';
                 $baseConditions = " ( (NOMBRE_PERSONAL is not null or NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
                 $sWhere2="";$sWhere3="";
 
@@ -97,54 +96,24 @@ if($search['PERSONAL_FECHA_ULTIMA_CARGA']!=""){
 $sWhere2.="  $tables.PERSONAL_FECHA_ULTIMA_CARGA LIKE '%".$search['PERSONAL_FECHA_ULTIMA_CARGA']."%' OR ";}
 if($search['hDatosPERSONAL']!=""){
 $sWhere2.="  $tables.hDatosPERSONAL LIKE '%".$search['hDatosPERSONAL']."%' OR ";}
-
-
-		/////////////////////////////nuevo//////////////////////////INSTITUCION_FINANCIERA_1
-		if($search['TIPO_DE_MONEDA_1']!=""){
-			$sWhere2.="  $tables2.TIPO_DE_MONEDA_1 LIKE '%".$search['TIPO_DE_MONEDA_1']."%' and ";}
-		if($search['INSTITUCION_FINANCIERA_1']!=""){
-			$sWhere2.="  $tables2.INSTITUCION_FINANCIERA_1 LIKE '%".$search['INSTITUCION_FINANCIERA_1']."%' and ";}
-		if($search['NUMERO_DE_CUENTA_DB_1']!=""){
-			$sWhere2.="  $tables2.NUMERO_DE_CUENTA_DB_1 LIKE '%".$search['NUMERO_DE_CUENTA_DB_1']."%' and ";}
-		if($search['NUMERO_CLABE_1']!=""){
-			$sWhere2.="  $tables2.NUMERO_CLABE_1 LIKE '%".$search['NUMERO_CLABE_1']."%' and ";}
-		if($search['NUMERO_IBAN_1']!=""){
-			$sWhere2.="  $tables2.NUMERO_IBAN_1 LIKE '%".$search['NUMERO_IBAN_1']."%' and ";}
-		if($search['NUMERO_CUENTA_SWIFT_1']!=""){
-			$sWhere2.="  $tables2.NUMERO_CUENTA_SWIFT_1 LIKE '%".$search['NUMERO_CUENTA_SWIFT_1']."%' and ";}
-		if($search['FOTO_ESTADO_PROVEE']!=""){
-			$sWhere2.="  $tables2.FOTO_ESTADO_PROVEE LIKE '%".$search['FOTO_ESTADO_PROVEE']."%' and ";}
-		if($search['ULTIMA_CARGA_DATOBANCA']!=""){
-			$sWhere2.="  $tables2.ULTIMA_CARGA_DATOBANCA LIKE '%".$search['ULTIMA_CARGA_DATOBANCA']."%' and ";}
-
-
-
 IF($sWhere2!=""){
                                 $sWhere22 = substr($sWhere2,0,-3);
-                                  $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
-                        .' LEFT JOIN 01informacionpersonal ON 04personal.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
-                        .' LEFT JOIN 01DATOSBANCARIOS ON 01informacionpersonal.idRelacion = 01DATOSBANCARIOS.idRelacion AND 01DATOSBANCARIOS.checkbox = "si"'
+                        $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
                         .' where '.$baseConditions.' and ('.$sWhere22.') ';
                 }ELSE{
-                $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
-                        .' LEFT JOIN 01informacionpersonal ON 04personal.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
-                        .' LEFT JOIN 01DATOSBANCARIOS ON 01informacionpersonal.idRelacion = 01DATOSBANCARIOS.idRelacion AND 01DATOSBANCARIOS.checkbox = "si"'
-                        .' where '
+                $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion where '
                         .$baseConditions;
-                }
+		}
 
 
+			
+			
+	
+		
 
-
-
-
-
-
-
-
-
-                $sWhere3.="  order by $tables.id asc ";
-                $sql="SELECT $campos, 04altaeventos.id as id, 04personal.idPersonal as personalId, 01DATOSBANCARIOS.idRelacion as datosBancariosRelacion FROM $sWhere $sWhere3 LIMIT $offset,$per_page";
+		
+		$sWhere3.="  order by $tables.id asc ";
+		$sql="SELECT $campos, 04altaeventos.id as id FROM $sWhere $sWhere3 LIMIT $offset,$per_page";
 		
 		$query=$this->mysqli->query($sql);
 		$sql1="SELECT $campos FROM $sWhere $sWhere3 ";
