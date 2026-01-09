@@ -237,11 +237,12 @@ if($database->plantilla_filtro($nombreTabla,"PERSONAL_FECHA_ULTIMA_CARGA",$altae
 <?php } ?>
 
 <?php 
-if($database->plantilla_filtro($nombreTabla,"TIPO_DE_MONEDA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">TIPO DE MONEDA</th>␊
+if($database->plantilla_filtro($nombreTabla,"TIPO_DE_MONEDA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">TIPO DE MONEDA</th>
 <?php } ?>
 
 <?php
 if($database->plantilla_filtro($nombreTabla,"INSTITUCION_FINANCIERA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">INSTITUCION FINANCIERA</th>
+<?php } ?>
 <?php 
 if($database->plantilla_filtro($nombreTabla,"NUMERO_DE_CUENTA_DB_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NÚMERO DE CUENTA</th>
 <?php } ?>
@@ -362,7 +363,9 @@ echo $ULTIMO_DIA; ?>"></td>
 <?php  
 if($database->plantilla_filtro($nombreTabla,"OBSERVACIONES_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="OBSERVACIONES_PERSONAL_1" value="<?php 
 echo $OBSERVACIONES_PERSONAL; ?>"></td>
-<?php } ?><?php  
+<?php } ?>
+
+<?php  
 if($database->plantilla_filtro($nombreTabla,"PERSONAL_FECHA_ULTIMA_CARGA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="date" class="form-control" id="PERSONAL_FECHA_ULTIMA_CARGA_1" value="<?php 
 echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 <?php } ?>
@@ -546,7 +549,6 @@ if(in_array($archivoBanco, ['', '1', '2', 1, 2], true)){
 			?>
         </div>
 <?php
-}
 }
 }
 ?>
