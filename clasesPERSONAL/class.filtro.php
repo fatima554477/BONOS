@@ -74,6 +74,21 @@ $sWhere2.="  $tables.WHAT_PERSONAL LIKE '%".$search['WHAT_PERSONAL']."%' OR ";}
 if($search['EMAIL_PERSONAL2']!=""){
 $sWhere2.="  $tables.EMAIL_PERSONAL2 LIKE '%".$search['EMAIL_PERSONAL2']."%' OR ";}
 
+if($search['TIPO_DE_MONEDA_1']!=""){
+$sWhere2.="  01DATOSBANCARIOS.TIPO_DE_MONEDA_1 LIKE '%".$search['TIPO_DE_MONEDA_1']."%' OR ";}
+
+if($search['INSTITUCION_FINANCIERA_1']!=""){
+$sWhere2.="  01DATOSBANCARIOS.INSTITUCION_FINANCIERA_1 LIKE '%".$search['INSTITUCION_FINANCIERA_1']."%' OR ";}
+
+if($search['NUMERO_DE_CUENTA_DB_1']!=""){
+$sWhere2.="  01DATOSBANCARIOS.NUMERO_DE_CUENTA_DB_1 LIKE '%".$search['NUMERO_DE_CUENTA_DB_1']."%' OR ";}
+
+if($search['NUMERO_CLABE_1']!=""){
+$sWhere2.="  01DATOSBANCARIOS.NUMERO_CLABE_1 LIKE '%".$search['NUMERO_CLABE_1']."%' OR ";}
+
+if($search['FOTO_ESTADO_PROVEE']!=""){
+$sWhere2.="  01DATOSBANCARIOS.FOTO_ESTADO_PROVEE LIKE '%".$search['FOTO_ESTADO_PROVEE']."%' OR ";}
+
 if($search['FECHA_INICIO']!=""){
 $sWhere2.="  $tables.FECHA_INICIO LIKE '%".$search['FECHA_INICIO']."%' OR ";}
 if($search['FECHA_FINAL']!=""){
@@ -99,9 +114,13 @@ $sWhere2.="  $tables.hDatosPERSONAL LIKE '%".$search['hDatosPERSONAL']."%' OR ";
 IF($sWhere2!=""){
                                 $sWhere22 = substr($sWhere2,0,-3);
                         $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
+                        .' left join 01informacionpersonal ON 04personal.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
+                        .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion'
                         .' where '.$baseConditions.' and ('.$sWhere22.') ';
                 }ELSE{
-                $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion where '
+                $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
+                        .' left join 01informacionpersonal ON 04personal.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
+                        .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion where '
                         .$baseConditions;
 		}
 

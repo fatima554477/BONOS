@@ -58,9 +58,10 @@ $P_INSTITUCION_FINANCIERA_1 = isset($_POST["P_INSTITUCION_FINANCIERA_1"])?trim($
 $P_INSTITUCION_FINANCIERA_1 = isset($_POST["P_INSTITUCION_FINANCIERA_1"])?trim($_POST["P_INSTITUCION_FINANCIERA_1"]):"";  
 $P_NUMERO_DE_CUENTA_DB_1 = isset($_POST["P_NUMERO_DE_CUENTA_DB_1"])?trim($_POST["P_NUMERO_DE_CUENTA_DB_1"]):"";  
 $P_NUMERO_CLABE_1 = isset($_POST["P_NUMERO_CLABE_1"])?trim($_POST["P_NUMERO_CLABE_1"]):"";  
+$P_NUMERO_IBAN_1 = isset($_POST["P_NUMERO_IBAN_1"])?trim($_POST["P_NUMERO_IBAN_1"]):"";  
 $P_NUMERO_CUENTA_SWIFT_1 = isset($_POST["P_NUMERO_CUENTA_SWIFT_1"])?trim($_POST["P_NUMERO_CUENTA_SWIFT_1"]):"";  
 $FOTO_ESTADO_PROVEE = isset($_POST["FOTO_ESTADO_PROVEE"])?trim($_POST["FOTO_ESTADO_PROVEE"]):"";  
-$ULTIMA_CARGA_DATOBANCA = isset($_POST["ULTIMA_CARGA_DATOBANCA"])?trim($_POST["ULTIMA_CARGA_DATOBANCA"]):"";  
+$ULTIMA_CARGA_DATOBANCA = isset($_POST["ULTIMA_CARGA_DATOBANCA"])?trim($_POST["ULTIMA_CARGA_DATOBANCA"]):"";
 
 $per_page=intval($_POST["per_page"]);
 	$campos="*";
@@ -193,10 +194,25 @@ if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DE
 <?php } ?>
 
 
-<?php 
+
+<?php
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE DEL PERSONAL</th>
 <?php } ?>
-
+<?php 
+if($database->plantilla_filtro($nombreTabla,"P_TIPO_DE_MONEDA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">TIPO DE MONEDA</th>
+<?php } ?>
+<?php 
+if($database->plantilla_filtro($nombreTabla,"P_INSTITUCION_FINANCIERA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">INSTITUCIÓN FINANCIERA</th>
+<?php } ?>
+<?php 
+if($database->plantilla_filtro($nombreTabla,"P_NUMERO_DE_CUENTA_DB_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NÚMERO DE CUENTA</th>
+<?php } ?>
+<?php 
+if($database->plantilla_filtro($nombreTabla,"P_NUMERO_CLABE_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NÚMERO DE CUENTA CLABE</th>
+<?php } ?>
+<?php 
+if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FOTO ESTADO DE CUENTA</th>
+<?php } ?>
 <?php 
 if($database->plantilla_filtro($nombreTabla,"PUESTO_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">PUESTO</th>
 <?php } ?>
@@ -285,6 +301,26 @@ echo $CIUDAD_DEL_EVENTO; ?>"></td>
 <?php  
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="NOMBRE_PERSONAL_1" value="<?php 
 echo $NOMBRE_PERSONAL; ?>"></td>
+<?php } ?>
+<?php  
+if($database->plantilla_filtro($nombreTabla,"P_TIPO_DE_MONEDA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="P_TIPO_DE_MONEDA_1" value="<?php 
+echo $P_TIPO_DE_MONEDA_1; ?>"></td>
+<?php } ?>
+<?php  
+if($database->plantilla_filtro($nombreTabla,"P_INSTITUCION_FINANCIERA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="P_INSTITUCION_FINANCIERA_1" value="<?php 
+echo $P_INSTITUCION_FINANCIERA_1; ?>"></td>
+<?php } ?>
+<?php  
+if($database->plantilla_filtro($nombreTabla,"P_NUMERO_DE_CUENTA_DB_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="P_NUMERO_DE_CUENTA_DB_1" value="<?php 
+echo $P_NUMERO_DE_CUENTA_DB_1; ?>"></td>
+<?php } ?>
+<?php  
+if($database->plantilla_filtro($nombreTabla,"P_NUMERO_CLABE_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="P_NUMERO_CLABE_1" value="<?php 
+echo $P_NUMERO_CLABE_1; ?>"></td>
+<?php } ?>
+<?php  
+if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="FOTO_ESTADO_PROVEE" value="<?php 
+echo $FOTO_ESTADO_PROVEE; ?>"></td>
 <?php } ?>
 
 <?php  
@@ -406,6 +442,16 @@ echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 <?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"> <?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1'); ?></td>
+<?php } ?>
+<?php  if($database->plantilla_filtro($nombreTabla,"P_TIPO_DE_MONEDA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['P_TIPO_DE_MONEDA_1']; ?></td>
+<?php } ?>
+<?php  if($database->plantilla_filtro($nombreTabla,"P_INSTITUCION_FINANCIERA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['P_INSTITUCION_FINANCIERA_1']; ?></td>
+<?php } ?>
+<?php  if($database->plantilla_filtro($nombreTabla,"P_NUMERO_DE_CUENTA_DB_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['P_NUMERO_DE_CUENTA_DB_1']; ?></td>
+<?php } ?>
+<?php  if($database->plantilla_filtro($nombreTabla,"P_NUMERO_CLABE_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['P_NUMERO_CLABE_1']; ?></td>
+<?php } ?>
+<?php  if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php if($row['FOTO_ESTADO_PROVEE']!=''){ ?><a target="_blank" href="includes/archivos/<?php echo $row['FOTO_ESTADO_PROVEE']; ?>">Ver</a><?php } ?></td>
 <?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"PUESTO_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"> <?php echo $database->un_solo_colaborador($row["NOMBRE_PERSONAL"],'01empresa','PUESTO'); ?></td>
