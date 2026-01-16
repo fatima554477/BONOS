@@ -59,6 +59,31 @@ $sWhere2.="  $tables1.CIUDAD_DEL_EVENTO LIKE  '%".$search['CIUDAD_DEL_EVENTO']."
 
 if($search['NOMBRE_PERSONAL2']!=""){
 $sWhere2.="  $tables.NOMBRE_PERSONAL2 LIKE '%".$search['NOMBRE_PERSONAL2']."%' OR ";}
+
+if($search['PUESTO_PERSONAL2']!=""){
+$sWhere2.="  $tables.PUESTO_PERSONAL2 LIKE '%".$search['PUESTO_PERSONAL2']."%' OR ";}
+
+if($search['WHAT_PERSONAL']!=""){
+$sWhere2.="  $tables.WHAT_PERSONAL LIKE '%".$search['WHAT_PERSONAL']."%' OR ";}
+
+if($search['EMAIL_PERSONAL2']!=""){
+$sWhere2.="  $tables.EMAIL_PERSONAL2 LIKE '%".$search['EMAIL_PERSONAL2']."%' OR ";}
+
+if($search['TIPO_DE_MONEDA_1']!=""){
+$sWhere2.="  01DATOSBANCARIOS.TIPO_DE_MONEDA_1 LIKE '%".$search['TIPO_DE_MONEDA_1']."%' OR ";}
+
+if($search['INSTITUCION_FINANCIERA_1']!=""){
+$sWhere2.="  01DATOSBANCARIOS.INSTITUCION_FINANCIERA_1 LIKE '%".$search['INSTITUCION_FINANCIERA_1']."%' OR ";}
+
+if($search['NUMERO_DE_CUENTA_DB_1']!=""){
+$sWhere2.="  01DATOSBANCARIOS.NUMERO_DE_CUENTA_DB_1 LIKE '%".$search['NUMERO_DE_CUENTA_DB_1']."%' OR ";}
+
+if($search['NUMERO_CLABE_1']!=""){
+$sWhere2.="  01DATOSBANCARIOS.NUMERO_CLABE_1 LIKE '%".$search['NUMERO_CLABE_1']."%' OR ";}
+
+if($search['FOTO_ESTADO_PROVEE']!=""){
+$sWhere2.="  01DATOSBANCARIOS.FOTO_ESTADO_PROVEE LIKE '%".$search['FOTO_ESTADO_PROVEE']."%' OR ";}
+
 if($search['FECHA_INICIO1']!=""){
 $sWhere2.="  $tables.FECHA_INICIO1 LIKE '%".$search['FECHA_INICIO1']."%' OR ";}
 if($search['FECHA_FINAL1']!=""){
@@ -82,11 +107,16 @@ $sWhere2.="  $tables.PERSONAL2_FECHA_ULTIMA_CARGA LIKE '%".$search['PERSONAL2_FE
 if($search['hDatosPERSONAL2']!=""){
 $sWhere2.="  $tables.hDatosPERSONAL2 LIKE '%".$search['hDatosPERSONAL2']."%' OR ";}
 IF($sWhere2!=""){
-				$sWhere22 = substr($sWhere2,0,-3);
-			$sWhere3  = ' 04altaeventos left join 04personal2 ON 04altaeventos.id = 04personal2.idRelacion  
-			where (  (NOMBRE_PERSONAL2 is not null or NOMBRE_PERSONAL2 <> "" ) and '.$sWhere22.' ) ';
-		}ELSE{
-		$sWhere3  = ' 04altaeventos left join 04personal2 ON 04altaeventos.id = 04personal2.idRelacion where ( NOMBRE_PERSONAL2 is not null or NOMBRE_PERSONAL2 <> "" ) ';	
+                                $sWhere22 = substr($sWhere2,0,-3);
+                        $sWhere3  = ' 04altaeventos left join 04personal2 ON 04altaeventos.id = 04personal2.idRelacion'
+                        .' left join 01informacionpersonal ON 04personal2.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
+                        .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion'
+                        .' where '.$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\' and ('.$sWhere22.') ';
+                }ELSE{
+                $sWhere3  = ' 04altaeventos left join 04personal2 ON 04altaeventos.id = 04personal2.idRelacion'
+                        .' left join 01informacionpersonal ON 04personal2.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
+                        .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion where '
+                        .$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\'';
 		}
 		
 
