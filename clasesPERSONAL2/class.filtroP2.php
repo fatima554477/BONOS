@@ -31,10 +31,11 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 		$offset=$search['offset'];
 		$per_page=$search['per_page'];
 		
-		$sWhere=" ";
+	$sWhere=" ";
 
-		$tables1 = '04altaeventos';
-		$tables = '04personal2'; 		
+  	$tables1 = '04altaeventos';
+		$tables = '04personal2';
+		$baseConditions = " ( (NOMBRE_PERSONAL is not null or NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
 $sWhere2="";$sWhere3="";
 		
 if($search['NUMERO_EVENTO']!=""){
@@ -54,17 +55,11 @@ $sWhere2.="  $tables1.CIUDAD_DEL_EVENTO LIKE  '%".$search['CIUDAD_DEL_EVENTO']."
 		
 
 
-
-
-
-if($search['NOMBRE_PERSONAL2']!=""){
-$sWhere2.="  $tables.NOMBRE_PERSONAL2 LIKE '%".$search['NOMBRE_PERSONAL2']."%' OR ";}
-
 if($search['PUESTO_PERSONAL2']!=""){
 $sWhere2.="  $tables.PUESTO_PERSONAL2 LIKE '%".$search['PUESTO_PERSONAL2']."%' OR ";}
 
-if($search['WHAT_PERSONAL']!=""){
-$sWhere2.="  $tables.WHAT_PERSONAL LIKE '%".$search['WHAT_PERSONAL']."%' OR ";}
+if($search['WHAT_PERSONAL2']!=""){
+$sWhere2.="  $tables.WHAT_PERSONAL2 LIKE '%".$search['WHAT_PERSONAL2']."%' OR ";}
 
 if($search['EMAIL_PERSONAL2']!=""){
 $sWhere2.="  $tables.EMAIL_PERSONAL2 LIKE '%".$search['EMAIL_PERSONAL2']."%' OR ";}
@@ -84,6 +79,9 @@ $sWhere2.="  01DATOSBANCARIOS.NUMERO_CLABE_1 LIKE '%".$search['NUMERO_CLABE_1'].
 if($search['FOTO_ESTADO_PROVEE']!=""){
 $sWhere2.="  01DATOSBANCARIOS.FOTO_ESTADO_PROVEE LIKE '%".$search['FOTO_ESTADO_PROVEE']."%' OR ";}
 
+
+if($search['NOMBRE_PERSONAL2']!=""){
+$sWhere2.="  $tables.NOMBRE_PERSONAL2 LIKE '%".$search['NOMBRE_PERSONAL2']."%' OR ";}
 if($search['FECHA_INICIO1']!=""){
 $sWhere2.="  $tables.FECHA_INICIO1 LIKE '%".$search['FECHA_INICIO1']."%' OR ";}
 if($search['FECHA_FINAL1']!=""){
