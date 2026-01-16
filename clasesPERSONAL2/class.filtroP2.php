@@ -33,10 +33,11 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 		
 	$sWhere=" ";
 
-  	$tables1 = '04altaeventos';
+$tables1 = '04altaeventos';
 		$tables = '04personal2';
-		$baseConditions = " ( (NOMBRE_PERSONAL is not null or NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
+		$baseConditions = " ( ($tables.NOMBRE_PERSONAL2 is not null or $tables.NOMBRE_PERSONAL2 <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
 $sWhere2="";$sWhere3="";
+
 		
 if($search['NUMERO_EVENTO']!=""){
 $sWhere2.="  $tables1.NUMERO_EVENTO LIKE   '%".$search['NUMERO_EVENTO']."%' OR ";}
@@ -107,15 +108,18 @@ $sWhere2.="  $tables.hDatosPERSONAL2 LIKE '%".$search['hDatosPERSONAL2']."%' OR 
 IF($sWhere2!=""){
                                 $sWhere22 = substr($sWhere2,0,-3);
                         $sWhere3  = ' 04altaeventos left join 04personal2 ON 04altaeventos.id = 04personal2.idRelacion'
-                        .' left join 01informacionpersonal ON 04personal2.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
+                        .' left join 01informacionpersonal ON 04personal2.NOMBRE_PERSONAL2 = 01informacionpersonal.idRelacion'
                         .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion'
                         .' where '.$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\' and ('.$sWhere22.') ';
                 }ELSE{
                 $sWhere3  = ' 04altaeventos left join 04personal2 ON 04altaeventos.id = 04personal2.idRelacion'
-                        .' left join 01informacionpersonal ON 04personal2.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
+                        .' left join 01informacionpersonal ON 04personal2.NOMBRE_PERSONAL2 = 01informacionpersonal.idRelacion'
                         .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion where '
                         .$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\'';
 		}
+
+		
+
 		
 
 		

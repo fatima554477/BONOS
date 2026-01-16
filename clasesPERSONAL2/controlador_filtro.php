@@ -278,7 +278,7 @@ echo $PUESTO_PERSONAL2; ?>"></td>
 
 <?php  
 if($database->plantilla_filtro($nombreTabla,"WHAT_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="WHAT_PERSONAL2_1" value="<?php 
-echo $WHAT_PERSONAL; ?>"></td>
+echo $WHAT_PERSONAL2; ?>"></td>
 <?php } ?>
 
 <?php  
@@ -394,7 +394,17 @@ echo $PERSONAL2_FECHA_ULTIMA_CARGA; ?>"></td>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NOMBRE_EVENTO'];?></td>
 <?php } ?>
-<?php  if($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['FECHA_INICIO_EVENTO'])); ?></td>
+<?php  
+if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si") { 
+    $fecha = trim($row['FECHA_INICIO_EVENTO']);
+?>
+<td style="text-align:center">
+    <?php 
+    echo ($fecha !== '' && $fecha !== '0000-00-00')
+        ? date('d/m/Y', strtotime($fecha))
+        : '';
+    ?>
+</td>
 <?php } ?>
 <?php  if($database->plantilla_filtro($nombreTabla,"PAIS_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['PAIS_DEL_EVENTO'];?></td>
 <?php } ?>
@@ -404,7 +414,7 @@ echo $PERSONAL2_FECHA_ULTIMA_CARGA; ?>"></td>
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"> <?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL2"],'01informacionpersonal','NOMBRE_1','NOMBRE_2','APELLIDO_PATERNO','APELLIDO_MATERNO'); ?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><a href="colaboradores.php?id=<?php echo $row["NOMBRE_PERSONAL2"]; ?>"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL2"],'01informacionpersonal','NOMBRE_1'); ?></a></td>
 <?php } ?>
 <?php  if($database->plantilla_filtro($nombreTabla,"PUESTO_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"> <?php echo $database->un_solo_colaborador($row["NOMBRE_PERSONAL2"],'01empresa','PUESTO'); ?></td>
 <?php } ?>
@@ -418,9 +428,10 @@ echo $PERSONAL2_FECHA_ULTIMA_CARGA; ?>"></td>
 <?php 
 $urlFOTO_ESTADO_PROVEE = "";
 if (!empty($row["FOTO_ESTADO_PROVEE"])) {
-	$urlFOTO_ESTADO_PROVEE = "<a target='_blank' href='includes/archivos/".$row["FOTO_ESTADO_PROVEE"]."'>Visualizar!</a>";
+	$urlFOTO_ESTADO_PROVEE = $database->descargararchivo($row["FOTO_ESTADO_PROVEE"]);
 }
 ?>
+
 
 <?php  if($database->plantilla_filtro($nombreTabla,"TIPO_DE_MONEDA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TIPO_DE_MONEDA_1'];?></td>
 <?php } ?>
@@ -436,10 +447,31 @@ if (!empty($row["FOTO_ESTADO_PROVEE"])) {
 
 <?php  if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $urlFOTO_ESTADO_PROVEE; ?></td>
 <?php } ?>
-<?php  if($database->plantilla_filtro($nombreTabla,"FECHA_INICIO1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['FECHA_INICIO1'])); ?></td> 
+
+<?php  
+if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO1",$altaeventos,$DEPARTAMENTO)=="si") { 
+    $fecha1 = trim($row['FECHA_INICIO1']);
+?>
+<td style="text-align:center">
+    <?php 
+    echo ($fecha1 !== '' && $fecha1 !== '0000-00-00')
+        ? date('d/m/Y', strtotime($fecha1))
+        : '';
+    ?>
+</td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"FECHA_FINAL1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['FECHA_FINAL1'])); ?></td>
+<?php  
+if ($database->plantilla_filtro($nombreTabla,"FECHA_FINAL1",$altaeventos,$DEPARTAMENTO)=="si") { 
+    $fecha2 = trim($row['FECHA_FINAL1']);
+?>
+<td style="text-align:center">
+    <?php 
+    echo ($fecha2 !== '' && $fecha2 !== '0000-00-00')
+        ? date('d/m/Y', strtotime($fecha2))
+        : '';
+    ?>
+</td>
 <?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS1'];?></td>
@@ -456,7 +488,17 @@ if (!empty($row["FOTO_ESTADO_PROVEE"])) {
 <?php  if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TOTAL1'];?></td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['ULTIMO_DIA1'];?></td>
+<?php  
+if ($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA1",$altaeventos,$DEPARTAMENTO)=="si") { 
+    $fecha3 = trim($row['ULTIMO_DIA1']);
+?>
+<td style="text-align:center">
+    <?php 
+    echo ($fecha3 !== '' && $fecha3 !== '0000-00-00')
+        ? date('d/m/Y', strtotime($fecha3))
+        : '';
+    ?>
+</td>
 <?php } ?>
 <?php } ?>
 
