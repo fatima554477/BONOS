@@ -443,8 +443,20 @@ echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NOMBRE_EVENTO'];?></td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['FECHA_INICIO_EVENTO'])); ?></td>
+<?php  
+if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si") { 
+    $fecha = trim($row['FECHA_INICIO_EVENTO']);
+?>
+<td style="text-align:center">
+    <?php 
+    echo ($fecha !== '' && $fecha !== '0000-00-00')
+        ? date('d/m/Y', strtotime($fecha))
+        : '';
+    ?>
+</td>
 <?php } ?>
+
+
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_COMERCIAL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NOMBRE_COMERCIAL_EVENTO'];?></td>
 <?php } ?>
@@ -478,9 +490,10 @@ echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 <?php 
 $urlFOTO_ESTADO_PROVEE = "";
 if (!empty($row["FOTO_ESTADO_PROVEE"])) {
-	$urlFOTO_ESTADO_PROVEE = "<a target='_blank' href='includes/archivos/".$row["FOTO_ESTADO_PROVEE"]."'>Visualizar!</a>";
+	$urlFOTO_ESTADO_PROVEE = $database->descargararchivo($row["FOTO_ESTADO_PROVEE"]);
 }
 ?>
+
 
 <?php  if($database->plantilla_filtro($nombreTabla,"TIPO_DE_MONEDA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TIPO_DE_MONEDA_1'];?></td>
 <?php } ?>
@@ -497,11 +510,34 @@ if (!empty($row["FOTO_ESTADO_PROVEE"])) {
 <?php  if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $urlFOTO_ESTADO_PROVEE; ?></td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"FECHA_INICIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['FECHA_INICIO'])); ?></td>
+
+
+<?php  
+if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO",$altaeventos,$DEPARTAMENTO)=="si") { 
+    $fecha1 = trim($row['FECHA_INICIO']);
+?>
+<td style="text-align:center">
+    <?php 
+    echo ($fecha1 !== '' && $fecha1 !== '0000-00-00')
+        ? date('d/m/Y', strtotime($fecha1))
+        : '';
+    ?>
+</td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"FECHA_FINAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['FECHA_FINAL'])); ?></td>  
+<?php  
+if ($database->plantilla_filtro($nombreTabla,"FECHA_FINAL",$altaeventos,$DEPARTAMENTO)=="si") { 
+    $fecha2 = trim($row['FECHA_FINAL']);
+?>
+<td style="text-align:center">
+    <?php 
+    echo ($fecha2 !== '' && $fecha2 !== '0000-00-00')
+        ? date('d/m/Y', strtotime($fecha2))
+        : '';
+    ?>
+</td>
 <?php } ?>
+
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS'];?></td>
 <?php } ?>
@@ -518,8 +554,20 @@ if (!empty($row["FOTO_ESTADO_PROVEE"])) {
 <?php  if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TOTAL'];?></td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['ULTIMO_DIA'])); ?></td>
+<?php  
+if ($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA",$altaeventos,$DEPARTAMENTO)=="si") { 
+    $fecha3 = trim($row['ULTIMO_DIA']);
+?>
+<td style="text-align:center">
+    <?php 
+    echo ($fecha3 !== '' && $fecha3 !== '0000-00-00')
+        ? date('d/m/Y', strtotime($fecha3))
+        : '';
+    ?>
+</td>
 <?php } ?>
+
+
 <?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"OBSERVACIONES_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['OBSERVACIONES_PERSONAL'];?></td>

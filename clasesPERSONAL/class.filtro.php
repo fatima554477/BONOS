@@ -116,12 +116,12 @@ IF($sWhere2!=""){
                         $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
                         .' left join 01informacionpersonal ON 04personal.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
                         .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion'
-                        .' where '.$baseConditions.' and ('.$sWhere22.') ';
+                        .' where '.$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\' and ('.$sWhere22.') ';
                 }ELSE{
                 $sWhere3  = ' 04altaeventos left join 04personal ON 04altaeventos.id = 04personal.idRelacion'
                         .' left join 01informacionpersonal ON 04personal.NOMBRE_PERSONAL = 01informacionpersonal.idRelacion'
                         .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion where '
-                        .$baseConditions;
+                        .$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\'';
 		}
 
 
