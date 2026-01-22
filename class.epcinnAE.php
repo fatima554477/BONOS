@@ -4,7 +4,8 @@ clase EPC INNOVA
 CREADO : 10/mayo/2023
 TESTER: FATIMA ARELLANO
 PROGRAMER: SANDOR ACTUALIZACION: 1 MAY 2023
-
+FECHA sandor: 
+FECHA fatima: 01 JUNIO 2025     
 */
 	define('__ROOT3__', dirname(dirname(__FILE__)));
 	require __ROOT3__."/includes/class.epcinn.php";	
@@ -131,6 +132,7 @@ $variablequery = mysqli_query($conn,$variable);
 		strtolower($extension[$cuenta]) == 'xml' or 
 		strtolower($extension[$cuenta]) == 'txt' or
 		strtolower($extension[$cuenta]) == 'xlsx' or
+		strtolower($extension[$cuenta]) == 'htm' or
 		strtolower($extension[$cuenta]) == 'xls'  		
 		){ //gif o jpg
 		/*if ($tamanyoarchivo <= $tamanyomax) { //archivo demasioado grande*/
@@ -229,20 +231,22 @@ $variablequery = mysqli_query($conn,$variable);
 	$ResultadoPais[] = 'nnnnnnn'.$_POST['busqueda'];
 	}
 
-	public function altaeventos ($NUMERO_EVENTO,$FECHA_ALTA_EVENTO , $STATUS_EVENTO , $FECHA_AUTORIZACION_EVENTO , $MONTOC_TOTAL_EVENTO , $MONTO_TOTAL_AVION ,$CANTIDAD_PORCENTAJEV,$FEE_COBRADO,$PORCENTAJE_FEE, $MONTO_TOTAL_DEL_EVENTO , $NOMBRE_COMERCIAL_EVENTO , $NOMBRE_FISCAL_EVENTO , $NOMBRE_EVENTO , $NOMBRE_CORTO_EVENTO , $NOMBRE_CONTACTO_EVENTO , $CELULAR_CONTACTO_1 , $CORREO_CONTACTO_1 , $AREA_CONTACTO_CLIENTE , $OBSERVACIONES_1 , $TIPO_DE_EVENTO , $FORMATO_EVENTO , $PAIS_DEL_EVENTO , $CIUDAD_DEL_EVENTO , $HOTEL_LUGAR , $NUMERO_DE_PERSONAS , $FECHA_INICIO_EVENTO , $NOMBRE_COMERCIAL , $FECHA_FINAL_EVENTO , $HORA_TERMINO_EVENTO , $FECHA_LLEGADA_STAFF , $HORA_LLEGADA_STAFF , $FECHA_REGRESO_STAFF , $HORA_REGRESO_STAFF , $MATERIAL_EQUIPO_BODEGA, $FECHA_INICIO_MONTAJE, $HORA_INICIO_MONTAJE, $FECHA_DESMONTAJE,$HORA_DESMONTAJE, $LUGAR_MONTAJE,$SERVICIO_OTORGAR,$MONEDAS,$NOMBRE_VENDEDOR,$NOMBRE_EJECUTIVOEVENTO,$hALTAEVENTOS,$enviaraltaeventos, $borraraltaeventos,$IPaltaeventos){
+	public function altaeventos ($NUMERO_EVENTO,$FECHA_ALTA_EVENTO , $STATUS_EVENTO , $FECHA_AUTORIZACION_EVENTO , $MONTOC_TOTAL_EVENTO , $MONTO_TOTAL_AVION ,$CANTIDAD_PORCENTAJEV,$FEE_COBRADO,$PORCENTAJE_FEE, $MONTO_TOTAL_DEL_EVENTO , $NOMBRE_COMERCIAL_EVENTO , $NOMBRE_FISCAL_EVENTO , $NOMBRE_EVENTO , $NOMBRE_CORTO_EVENTO , $NOMBRE_CONTACTO_EVENTO , $CELULAR_CONTACTO_1 , $CORREO_CONTACTO_1 , $AREA_CONTACTO_CLIENTE , $OBSERVACIONES_1 , $TIPO_DE_EVENTO , $FORMATO_EVENTO , $PAIS_DEL_EVENTO , $CIUDAD_DEL_EVENTO , $HOTEL_LUGAR , $NUMERO_DE_PERSONAS , $FECHA_INICIO_EVENTO , $NOMBRE_COMERCIAL , $FECHA_FINAL_EVENTO , $HORA_TERMINO_EVENTO , $FECHA_LLEGADA_STAFF , $HORA_LLEGADA_STAFF , $FECHA_REGRESO_STAFF , $HORA_REGRESO_STAFF , $MATERIAL_EQUIPO_BODEGA, $FECHA_INICIO_MONTAJE, $HORA_INICIO_MONTAJE, $FECHA_DESMONTAJE,$HORA_DESMONTAJE, $LUGAR_MONTAJE,$SERVICIO_OTORGAR,$MONEDAS,$NOMBRE_VENDEDOR,$NOMBRE_EJECUTIVOEVENTO,$CIERRE_TOTAL,$TOTAL_AVION_SINIVA,$NOMBRE_INGRESO,$hALTAEVENTOS,$NOMBRE_AUDITOR,$enviaraltaeventos, $borraraltaeventos,$IPaltaeventos){
 		$CANTIDAD_PORCENTAJEV  = str_replace(',','',$CANTIDAD_PORCENTAJEV);
 		$MONTO_TOTAL_DEL_EVENTO  = str_replace(',','',$MONTO_TOTAL_DEL_EVENTO);
 		$MONTO_TOTAL_AVION  = str_replace(',','',$MONTO_TOTAL_AVION);
 		$FEE_COBRADO  = str_replace(',','',$FEE_COBRADO);
 		$MONTOC_TOTAL_EVENTO  = str_replace(',','',$MONTOC_TOTAL_EVENTO);		
+		$TOTAL_AVION_SINIVA  = str_replace(',','',$TOTAL_AVION_SINIVA);		
 		$conn = $this->db();
 		$existe = $this->revisar_altaeventos();
 		$session = isset($_SESSION['id'])?$_SESSION['id']:'';                                     
 		if($session != ''){
 			
-		$var1 = "update 04altaeventos set   NUMERO_EVENTO = '".$NUMERO_EVENTO."' , FECHA_ALTA_EVENTO = '".$FECHA_ALTA_EVENTO."' ,  STATUS_EVENTO = '".$STATUS_EVENTO."' , FECHA_AUTORIZACION_EVENTO = '".$FECHA_AUTORIZACION_EVENTO."' , MONTOC_TOTAL_EVENTO = '".$MONTOC_TOTAL_EVENTO."' , MONTO_TOTAL_AVION = '".$MONTO_TOTAL_AVION."' , CANTIDAD_PORCENTAJEV = '".$CANTIDAD_PORCENTAJEV."' , FEE_COBRADO = '".$FEE_COBRADO."' , PORCENTAJE_FEE = '".$PORCENTAJE_FEE."' , MONTO_TOTAL_DEL_EVENTO = '".$MONTO_TOTAL_DEL_EVENTO."' , NOMBRE_COMERCIAL_EVENTO = '".$NOMBRE_COMERCIAL_EVENTO."' , NOMBRE_FISCAL_EVENTO = '".$NOMBRE_FISCAL_EVENTO."' , NOMBRE_EVENTO = '".$NOMBRE_EVENTO."' , NOMBRE_CORTO_EVENTO = '".$NOMBRE_CORTO_EVENTO."' , NOMBRE_CONTACTO_EVENTO = '".$NOMBRE_CONTACTO_EVENTO."' , CELULAR_CONTACTO_1 = '".$CELULAR_CONTACTO_1."' , CORREO_CONTACTO_1 = '".$CORREO_CONTACTO_1."' , AREA_CONTACTO_CLIENTE = '".$AREA_CONTACTO_CLIENTE."' , OBSERVACIONES_1 = '".$OBSERVACIONES_1."' , TIPO_DE_EVENTO = '".$TIPO_DE_EVENTO."' , FORMATO_EVENTO = '".$FORMATO_EVENTO."' , PAIS_DEL_EVENTO = '".$PAIS_DEL_EVENTO."' , CIUDAD_DEL_EVENTO = '".$CIUDAD_DEL_EVENTO."' , HOTEL_LUGAR = '".$HOTEL_LUGAR."' , NUMERO_DE_PERSONAS = '".$NUMERO_DE_PERSONAS."' , FECHA_INICIO_EVENTO = '".$FECHA_INICIO_EVENTO."' , NOMBRE_COMERCIAL = '".$NOMBRE_COMERCIAL."' , FECHA_FINAL_EVENTO = '".$FECHA_FINAL_EVENTO."' , HORA_TERMINO_EVENTO = '".$HORA_TERMINO_EVENTO."' , FECHA_LLEGADA_STAFF = '".$FECHA_LLEGADA_STAFF."' , HORA_LLEGADA_STAFF = '".$HORA_LLEGADA_STAFF."' , FECHA_REGRESO_STAFF = '".$FECHA_REGRESO_STAFF."' , HORA_REGRESO_STAFF = '".$HORA_REGRESO_STAFF."' , MATERIAL_EQUIPO_BODEGA = '".$MATERIAL_EQUIPO_BODEGA."' , FECHA_INICIO_MONTAJE = '".$FECHA_INICIO_MONTAJE."' , HORA_INICIO_MONTAJE = '".$HORA_INICIO_MONTAJE."' , FECHA_DESMONTAJE = '".$FECHA_DESMONTAJE."' , HORA_DESMONTAJE = '".$HORA_DESMONTAJE."' , LUGAR_MONTAJE = '".$LUGAR_MONTAJE."' , SERVICIO_OTORGAR = '".$SERVICIO_OTORGAR."' , MONEDAS = '".$MONEDAS."' , NOMBRE_VENDEDOR = '".$NOMBRE_VENDEDOR."' , NOMBRE_EJECUTIVOEVENTO = '".$NOMBRE_EJECUTIVOEVENTO."' , hALTAEVENTOS = '".$hALTAEVENTOS."' where id = '".$IPaltaeventos."' ; ";
+		$var1 = "update 04altaeventos set   NUMERO_EVENTO = '".$NUMERO_EVENTO."' , FECHA_ALTA_EVENTO = '".$FECHA_ALTA_EVENTO."' ,  STATUS_EVENTO = '".$STATUS_EVENTO."' , FECHA_AUTORIZACION_EVENTO = '".$FECHA_AUTORIZACION_EVENTO."' , MONTOC_TOTAL_EVENTO = '".$MONTOC_TOTAL_EVENTO."' , MONTO_TOTAL_AVION = '".$MONTO_TOTAL_AVION."' , CANTIDAD_PORCENTAJEV = '".$CANTIDAD_PORCENTAJEV."' , FEE_COBRADO = '".$FEE_COBRADO."' , PORCENTAJE_FEE = '".$PORCENTAJE_FEE."' , MONTO_TOTAL_DEL_EVENTO = '".$MONTO_TOTAL_DEL_EVENTO."' , NOMBRE_COMERCIAL_EVENTO = '".$NOMBRE_COMERCIAL_EVENTO."' , NOMBRE_FISCAL_EVENTO = '".$NOMBRE_FISCAL_EVENTO."' , NOMBRE_EVENTO = '".$NOMBRE_EVENTO."' , NOMBRE_CORTO_EVENTO = '".$NOMBRE_CORTO_EVENTO."' , NOMBRE_CONTACTO_EVENTO = '".$NOMBRE_CONTACTO_EVENTO."' , CELULAR_CONTACTO_1 = '".$CELULAR_CONTACTO_1."' , CORREO_CONTACTO_1 = '".$CORREO_CONTACTO_1."' , AREA_CONTACTO_CLIENTE = '".$AREA_CONTACTO_CLIENTE."' , OBSERVACIONES_1 = '".$OBSERVACIONES_1."' , TIPO_DE_EVENTO = '".$TIPO_DE_EVENTO."' , FORMATO_EVENTO = '".$FORMATO_EVENTO."' , PAIS_DEL_EVENTO = '".$PAIS_DEL_EVENTO."' , CIUDAD_DEL_EVENTO = '".$CIUDAD_DEL_EVENTO."' , HOTEL_LUGAR = '".$HOTEL_LUGAR."' , NUMERO_DE_PERSONAS = '".$NUMERO_DE_PERSONAS."' , FECHA_INICIO_EVENTO = '".$FECHA_INICIO_EVENTO."' , NOMBRE_COMERCIAL = '".$NOMBRE_COMERCIAL."' , FECHA_FINAL_EVENTO = '".$FECHA_FINAL_EVENTO."' , HORA_TERMINO_EVENTO = '".$HORA_TERMINO_EVENTO."' , FECHA_LLEGADA_STAFF = '".$FECHA_LLEGADA_STAFF."' , HORA_LLEGADA_STAFF = '".$HORA_LLEGADA_STAFF."' , FECHA_REGRESO_STAFF = '".$FECHA_REGRESO_STAFF."' , HORA_REGRESO_STAFF = '".$HORA_REGRESO_STAFF."' , MATERIAL_EQUIPO_BODEGA = '".$MATERIAL_EQUIPO_BODEGA."' , FECHA_INICIO_MONTAJE = '".$FECHA_INICIO_MONTAJE."' , HORA_INICIO_MONTAJE = '".$HORA_INICIO_MONTAJE."' , FECHA_DESMONTAJE = '".$FECHA_DESMONTAJE."' , HORA_DESMONTAJE = '".$HORA_DESMONTAJE."' , LUGAR_MONTAJE = '".$LUGAR_MONTAJE."' , SERVICIO_OTORGAR = '".$SERVICIO_OTORGAR."' , MONEDAS = '".$MONEDAS."' , NOMBRE_VENDEDOR = '".$NOMBRE_VENDEDOR."' , NOMBRE_EJECUTIVOEVENTO = '".$NOMBRE_EJECUTIVOEVENTO."' , CIERRE_TOTAL = '".$CIERRE_TOTAL."' , TOTAL_AVION_SINIVA = '".$TOTAL_AVION_SINIVA."' , NOMBRE_INGRESO = '".$NOMBRE_INGRESO."' , NOMBRE_AUDITOR = '".$NOMBRE_AUDITOR."' , hALTAEVENTOS = '".$hALTAEVENTOS."' where id = '".$IPaltaeventos."' ; ";
 	
-		$var2 = "insert into 04altaeventos ( NUMERO_EVENTO, FECHA_ALTA_EVENTO, STATUS_EVENTO, FECHA_AUTORIZACION_EVENTO, MONTOC_TOTAL_EVENTO, MONTO_TOTAL_AVION,CANTIDAD_PORCENTAJEV,FEE_COBRADO, PORCENTAJE_FEE,MONTO_TOTAL_DEL_EVENTO, NOMBRE_COMERCIAL_EVENTO, NOMBRE_FISCAL_EVENTO, NOMBRE_EVENTO, NOMBRE_CORTO_EVENTO, NOMBRE_CONTACTO_EVENTO, CELULAR_CONTACTO_1, CORREO_CONTACTO_1, AREA_CONTACTO_CLIENTE, OBSERVACIONES_1, TIPO_DE_EVENTO, FORMATO_EVENTO, PAIS_DEL_EVENTO, CIUDAD_DEL_EVENTO, HOTEL_LUGAR, NUMERO_DE_PERSONAS, FECHA_INICIO_EVENTO, NOMBRE_COMERCIAL, FECHA_FINAL_EVENTO, HORA_TERMINO_EVENTO, FECHA_LLEGADA_STAFF, HORA_LLEGADA_STAFF, FECHA_REGRESO_STAFF, HORA_REGRESO_STAFF,MATERIAL_EQUIPO_BODEGA,FECHA_INICIO_MONTAJE,HORA_INICIO_MONTAJE,FECHA_DESMONTAJE,HORA_DESMONTAJE,LUGAR_MONTAJE,SERVICIO_OTORGAR,MONEDAS,NOMBRE_VENDEDOR,NOMBRE_EJECUTIVOEVENTO, hALTAEVENTOS, idRelacion) values ( '".$NUMERO_EVENTO."' , '".$FECHA_ALTA_EVENTO."' , '".$STATUS_EVENTO."' , '".$FECHA_AUTORIZACION_EVENTO."' , '".$MONTOC_TOTAL_EVENTO."' , '".$MONTO_TOTAL_AVION."' , '".$CANTIDAD_PORCENTAJEV."' , '".$FEE_COBRADO."' , '".$PORCENTAJE_FEE."' , '".$MONTO_TOTAL_DEL_EVENTO."' , '".$NOMBRE_COMERCIAL_EVENTO."' , '".$NOMBRE_FISCAL_EVENTO."' , '".$NOMBRE_EVENTO."' , '".$NOMBRE_CORTO_EVENTO."' , '".$NOMBRE_CONTACTO_EVENTO."' , '".$CELULAR_CONTACTO_1."' , '".$CORREO_CONTACTO_1."' , '".$AREA_CONTACTO_CLIENTE."' , '".$OBSERVACIONES_1."' , '".$TIPO_DE_EVENTO."' , '".$FORMATO_EVENTO."' , '".$PAIS_DEL_EVENTO."' , '".$CIUDAD_DEL_EVENTO."' , '".$HOTEL_LUGAR."' , '".$NUMERO_DE_PERSONAS."' , '".$FECHA_INICIO_EVENTO."' , '".$NOMBRE_COMERCIAL."' , '".$FECHA_FINAL_EVENTO."' , '".$HORA_TERMINO_EVENTO."' , '".$FECHA_LLEGADA_STAFF."' , '".$HORA_LLEGADA_STAFF."' , '".$FECHA_REGRESO_STAFF."' , '".$HORA_REGRESO_STAFF."' , '".$MATERIAL_EQUIPO_BODEGA."' , '".$FECHA_INICIO_MONTAJE."' , '".$HORA_INICIO_MONTAJE."' , '".$FECHA_DESMONTAJE."' , '".$HORA_DESMONTAJE."' , '".$LUGAR_MONTAJE."' , '".$SERVICIO_OTORGAR."' , '".$MONEDAS."' , '".$NOMBRE_VENDEDOR."' , '".$NOMBRE_EJECUTIVOEVENTO."' , '".$hALTAEVENTOS."' , '".$_SESSION['id']."');  ";	
+		$var2 = "insert into 04altaeventos ( NUMERO_EVENTO, FECHA_ALTA_EVENTO, STATUS_EVENTO, FECHA_AUTORIZACION_EVENTO, MONTOC_TOTAL_EVENTO, MONTO_TOTAL_AVION,CANTIDAD_PORCENTAJEV,FEE_COBRADO, PORCENTAJE_FEE,MONTO_TOTAL_DEL_EVENTO, NOMBRE_COMERCIAL_EVENTO, NOMBRE_FISCAL_EVENTO, NOMBRE_EVENTO, NOMBRE_CORTO_EVENTO, NOMBRE_CONTACTO_EVENTO, CELULAR_CONTACTO_1, CORREO_CONTACTO_1, AREA_CONTACTO_CLIENTE, OBSERVACIONES_1, TIPO_DE_EVENTO, FORMATO_EVENTO, PAIS_DEL_EVENTO, CIUDAD_DEL_EVENTO, HOTEL_LUGAR, NUMERO_DE_PERSONAS, FECHA_INICIO_EVENTO, NOMBRE_COMERCIAL, FECHA_FINAL_EVENTO, HORA_TERMINO_EVENTO, FECHA_LLEGADA_STAFF, HORA_LLEGADA_STAFF, FECHA_REGRESO_STAFF, HORA_REGRESO_STAFF,MATERIAL_EQUIPO_BODEGA,FECHA_INICIO_MONTAJE,HORA_INICIO_MONTAJE,FECHA_DESMONTAJE,HORA_DESMONTAJE,LUGAR_MONTAJE,SERVICIO_OTORGAR,MONEDAS,NOMBRE_VENDEDOR,NOMBRE_EJECUTIVOEVENTO,CIERRE_TOTAL,TOTAL_AVION_SINIVA,
+		NOMBRE_INGRESO, NOMBRE_AUDITOR, hALTAEVENTOS, idRelacion) values ( '".$NUMERO_EVENTO."' , '".$FECHA_ALTA_EVENTO."' , '".$STATUS_EVENTO."' , '".$FECHA_AUTORIZACION_EVENTO."' , '".$MONTOC_TOTAL_EVENTO."' , '".$MONTO_TOTAL_AVION."' , '".$CANTIDAD_PORCENTAJEV."' , '".$FEE_COBRADO."' , '".$PORCENTAJE_FEE."' , '".$MONTO_TOTAL_DEL_EVENTO."' , '".$NOMBRE_COMERCIAL_EVENTO."' , '".$NOMBRE_FISCAL_EVENTO."' , '".$NOMBRE_EVENTO."' , '".$NOMBRE_CORTO_EVENTO."' , '".$NOMBRE_CONTACTO_EVENTO."' , '".$CELULAR_CONTACTO_1."' , '".$CORREO_CONTACTO_1."' , '".$AREA_CONTACTO_CLIENTE."' , '".$OBSERVACIONES_1."' , '".$TIPO_DE_EVENTO."' , '".$FORMATO_EVENTO."' , '".$PAIS_DEL_EVENTO."' , '".$CIUDAD_DEL_EVENTO."' , '".$HOTEL_LUGAR."' , '".$NUMERO_DE_PERSONAS."' , '".$FECHA_INICIO_EVENTO."' , '".$NOMBRE_COMERCIAL."' , '".$FECHA_FINAL_EVENTO."' , '".$HORA_TERMINO_EVENTO."' , '".$FECHA_LLEGADA_STAFF."' , '".$HORA_LLEGADA_STAFF."' , '".$FECHA_REGRESO_STAFF."' , '".$HORA_REGRESO_STAFF."' , '".$MATERIAL_EQUIPO_BODEGA."' , '".$FECHA_INICIO_MONTAJE."' , '".$HORA_INICIO_MONTAJE."' , '".$FECHA_DESMONTAJE."' , '".$HORA_DESMONTAJE."' , '".$LUGAR_MONTAJE."' , '".$SERVICIO_OTORGAR."' , '".$MONEDAS."' , '".$NOMBRE_VENDEDOR."' , '".$NOMBRE_EJECUTIVOEVENTO."' , '".$CIERRE_TOTAL."' , '".$TOTAL_AVION_SINIVA."' , '".$NOMBRE_INGRESO."' , '".$NOMBRE_AUDITOR."' , '".$hALTAEVENTOS."' , '".$_SESSION['id']."');  ";	
 			
 	   	    if($IPaltaeventos != 'enviaraltaeventos' and $IPaltaeventos >= '1'){
 
@@ -296,8 +300,12 @@ $variablequery = mysqli_query($conn,$variable);
 
 	public function borraraltaeventos($id){
 		$conn = $this->db();
-		$variablequery = "delete from 04altaeventos where id = '".$id."' ";
-		$arrayquery = mysqli_query($conn,$variablequery);
+		$var1 = "DELETE FROM 04altaeventos where id = '".$id."' "; 
+		mysqli_query($conn,$var1) or die('P44'.mysqli_error($conn));
+		
+		$var2 = "DELETE FROM `04NUMEROevento` WHERE `idRelacion` = '".$id."' ";
+		mysqli_query($conn,$var2) or die('P44'.mysqli_error($conn));
+		
 		RETURN 
 		
 		"<P style='color:green;font-size:25px;'>ELEMENTO BORRADO</P>";
@@ -579,7 +587,7 @@ $variablequery = mysqli_query($conn,$variable);
 	public function un_solo_colaborador_nombre($id,$tabla,$campo){
 	$conn = $this->db();
 	$explotado = explode('^^',$id);
-	$variable = "select id ,APELLIDO_PATERNO, ".$campo."  from ".$tabla."
+	$variable = "select id ,NOMBRE_2,APELLIDO_PATERNO,APELLIDO_MATERNO, ".$campo."  from ".$tabla."
 	WHERE idRelacion = '".$explotado[0]."' ";
 	$variablequery = mysqli_query($conn,$variable);
 	$row = mysqli_fetch_array($variablequery);
@@ -778,14 +786,13 @@ $variablequery = mysqli_query($conn,$variable);
 
 
 	public function NUEVODOCUCIERRE($nuevo_documento_cierre , $hnuevodocucierre,$enviarCIERRENUEVO,$IPCIERRENUEVO){
-		
 		$conn = $this->db();
 		//$existe = $this->revisar_guardar_cierrenuevo();
 		$session = isset($_SESSION['id'])?$_SESSION['id']:'';  
 		if($session != ''){
 			
 		 $var1 = "update 04nuevodocumentocierre set 
-		 nuevo_documento_cierre = '".$nuevo_documento_cierre."' , hnuevodocucierre = '".$hnuevodocucierre."'  where id = '".$IPCIERRENUEVO."' ; ";
+		 nuevo_documento_cierre = '".$nuevo_documento_cierre."' where id = '".$IPCIERRENUEVO."' ; ";
 	
 		 $var2 = " insert into 04nuevodocumentocierre (nuevo_documento_cierre, hnuevodocucierre, idRelacion) values ( '".$nuevo_documento_cierre."' , '".$hnuevodocucierre."' , '".$session."' ); ";		
 			
@@ -801,10 +808,11 @@ $variablequery = mysqli_query($conn,$variable);
         }else{
 		echo "TU SESIÓN HA TERMINADO";	
 		}
-		
 	}
 
 
+	
+	
 	public function Listado_nuevocierre2($id){
 		$conn = $this->db();
 		$variablequery = "select * from 04nuevodocumentocierre  where id = '".$id."' ";
@@ -1173,7 +1181,7 @@ public function CRONOVUELOS($DOCUMENTO_CRONOVUELOS ,$OBSERVACIONES_CRONOVUELOS,$
 
   ///////////////////////////// PAGOS INGRESOS/////////////////////////
 
-        public function pagoingreso( $DOCUMENTO_INGRESOS ,$ADJUNTO_INGRESOS, $OBSERVACIONES_INGRESOS, $MONTOCON_IVA,$FECHA_INGRESOS , $hPAGOSINGRESOS1,$IpINGRESOS,$enviarpagosingre ){
+        public function pagoingreso($DOCUMENTO_INGRESOS ,$ADJUNTO_INGRESOS, $OBSERVACIONES_INGRESOS, $MONTOCON_IVA,$FE_PAGOI,$FE_TIMBRADO,$FECHA_INGRESOS ,$TIPO_DE_DOCUMENTO,$FOLIO,$RAZON_SOCIAL,$CONCEPTO,$STATUSF, $hPAGOSINGRESOS1,$IpINGRESOS,$enviarpagosingre){
 			
 		$OBSERVACIONES_INGRESOS = str_replace(',','',$OBSERVACIONES_INGRESOS);
 		$MONTOCON_IVA = str_replace(',','',$MONTOCON_IVA);
@@ -1184,12 +1192,24 @@ public function CRONOVUELOS($DOCUMENTO_CRONOVUELOS ,$OBSERVACIONES_CRONOVUELOS,$
 			
 		 $var1 = "update 04pagosingresos  set  
 		 DOCUMENTO_INGRESOS = '".$DOCUMENTO_INGRESOS."' , 
+		 
+		 FE_PAGOI = '".$FE_PAGOI."' , 
+		 FE_TIMBRADO = '".$FE_TIMBRADO."' , 
 		 OBSERVACIONES_INGRESOS = '".$OBSERVACIONES_INGRESOS."' ,  
 		 MONTOCON_IVA = '".$MONTOCON_IVA."' ,  
+		 FECHA_INGRESOS = '".$FECHA_INGRESOS."' , 
+		
+		 
+		 TIPO_DE_DOCUMENTO = '".$TIPO_DE_DOCUMENTO."' ,  
+		 FOLIO = '".$FOLIO."' ,  
+		 RAZON_SOCIAL = '".$RAZON_SOCIAL."' ,  
+		 CONCEPTO = '".$CONCEPTO."' ,  
+		 STATUSF = '".$STATUSF."' ,  
+		 
 		 hPAGOSINGRESOS1 = '".$hPAGOSINGRESOS1."'
 		 where id = '".$IpINGRESOS."' ;  ";
 	
-		 $var2 = "insert into 04pagosingresos  ( DOCUMENTO_INGRESOS,ADJUNTO_INGRESOS, OBSERVACIONES_INGRESOS,MONTOCON_IVA, FECHA_INGRESOS, hPAGOSINGRESOS1, idRelacion) values ( '".$DOCUMENTO_INGRESOS."' , '".$ADJUNTO_INGRESOS."' , '".$OBSERVACIONES_INGRESOS."' , '".$MONTOCON_IVA."' , '".$FECHA_INGRESOS."' , '".$hPAGOSINGRESOS1."' , '".$session."' ); ";		
+		 $var2 = "insert into 04pagosingresos  ( DOCUMENTO_INGRESOS,ADJUNTO_INGRESOS, FE_PAGOI,FE_TIMBRADO,OBSERVACIONES_INGRESOS,MONTOCON_IVA, FECHA_INGRESOS,TIPO_DE_DOCUMENTO,FOLIO,RAZON_SOCIAL,CONCEPTO,STATUSF, hPAGOSINGRESOS1, idRelacion) values ( '".$DOCUMENTO_INGRESOS."' , '".$ADJUNTO_INGRESOS."' , '".$FE_PAGOI."' , '".$FE_TIMBRADO."' , '".$OBSERVACIONES_INGRESOS."' , '".$MONTOCON_IVA."' , '".$FECHA_INGRESOS."' , '".$TIPO_DE_DOCUMENTO."' , '".$FOLIO."' , '".$RAZON_SOCIAL."' , '".$CONCEPTO."' , '".$STATUSF."' , '".$hPAGOSINGRESOS1."' , '".$session."' ); ";		
 			
 			
 	    if($enviarpagosingre=='enviarpagosingre'){
@@ -1262,13 +1282,15 @@ public function CRONOVUELOS($DOCUMENTO_CRONOVUELOS ,$OBSERVACIONES_CRONOVUELOS,$
 		return $row['totalpagado'];
 		
 	}
-	
 
 	
   ///////////////////////////// PAGOS EGRESOS/////////////////////////
 
-        public function pagoegreso( $DOCUMENTO_EGRESO , $ADJUNTO_EGRESO, $MONTO_EGRESO, $FECHA_EGRESO , $hpagosegresos1, $IpEGRESOS,$enviarpagosEgreso ){
+  
+
+        public function pagoegreso($DOCUMENTO_EGRESO, $ADJUNTO_EGRESO,$MONTO_OTRO, $MONTO_EGRESO,$FE_PAGOE,$FE_TIMBRADOE, $FECHA_EGRESO ,$TIPO_DE_DOCUMENTO1,$FOLIO1,$RAZON_SOCIAL1,$CONCEPTO1,$STATUSF1,$hpagosegresos1, $IpEGRESOS,$enviarpagosEgreso ){
 		$MONTO_EGRESO = str_replace(',','',$MONTO_EGRESO);
+		$MONTO_OTRO = str_replace(',','',$MONTO_OTRO);
 		//enviarpagosEgreso
 		$conn = $this->db();
 		$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';  
@@ -1276,11 +1298,23 @@ public function CRONOVUELOS($DOCUMENTO_CRONOVUELOS ,$OBSERVACIONES_CRONOVUELOS,$
 			
 		 $var1 = "update 04pagoegresos  set
 		 DOCUMENTO_EGRESO = '".$DOCUMENTO_EGRESO."' ,
+		 
+		 MONTO_OTRO = '".$MONTO_OTRO."' ,
 		 MONTO_EGRESO = '".$MONTO_EGRESO."' ,
+		 FE_PAGOE = '".$FE_PAGOE."' ,
+		 FE_TIMBRADOE = '".$FE_TIMBRADOE."' ,
+		 FECHA_EGRESO = '".$FECHA_EGRESO."' ,
+		 
+		 TIPO_DE_DOCUMENTO1 = '".$TIPO_DE_DOCUMENTO1."' ,  
+		 FOLIO1 = '".$FOLIO1."' ,  
+		 RAZON_SOCIAL1 = '".$RAZON_SOCIAL1."' ,  
+		 CONCEPTO1 = '".$CONCEPTO1."' , 
+		 STATUSF1 = '".$STATUSF1."' ,
+		 
 		 hpagosegresos1 = '".$hpagosegresos1."'
 		 where id = '".$IpEGRESOS."' ;  ";
 	
-		 $var2 = "insert into 04pagoegresos  (DOCUMENTO_EGRESO,ADJUNTO_EGRESO, MONTO_EGRESO, FECHA_EGRESO, hpagosegresos1, idRelacion) values ( '".$DOCUMENTO_EGRESO."' , '".$ADJUNTO_EGRESO."' , '".$MONTO_EGRESO."' , '".$FECHA_EGRESO."' , '".$hpagosegresos1."' , '".$session."' ); ";		
+		 $var2 = "insert into 04pagoegresos  (DOCUMENTO_EGRESO,ADJUNTO_EGRESO, MONTO_OTRO,MONTO_EGRESO,FE_PAGOE, FE_TIMBRADOE,FECHA_EGRESO,TIPO_DE_DOCUMENTO1,FOLIO1,RAZON_SOCIAL1,CONCEPTO1,STATUSF1, hpagosegresos1, idRelacion) values ( '".$DOCUMENTO_EGRESO."' , '".$ADJUNTO_EGRESO."' , '".$MONTO_OTRO."' , '".$MONTO_EGRESO."' , '".$FE_PAGOE."' , '".$FE_TIMBRADOE."' , '".$FECHA_EGRESO."' , '".$TIPO_DE_DOCUMENTO1."' , '".$FOLIO1."' , '".$RAZON_SOCIAL1."' , '".$CONCEPTO1."' , '".$STATUSF1."' , '".$hpagosegresos1."' , '".$session."' ); ";		
 			
 			
 	    if($enviarpagosEgreso=='enviarpagosEgreso'){
@@ -1352,7 +1386,8 @@ public function CRONOVUELOS($DOCUMENTO_CRONOVUELOS ,$OBSERVACIONES_CRONOVUELOS,$
 		$row = mysqli_fetch_array($arrayquery);
 		return $row['totalpagado'];
 		
-	}
+	}			 
+
 					 
 		
   ///////////////////////////// BOLETOS AVION/////////////////////////
@@ -1444,8 +1479,7 @@ public function CRONOVUELOS($DOCUMENTO_CRONOVUELOS ,$OBSERVACIONES_CRONOVUELOS,$
 		
 	}
 	
-	
-/*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*//*resumen ingreso egreso*/
+
 
 	public function resumeningresos(){
 		$conn = $this->db();
@@ -1538,14 +1572,190 @@ public function borra_COTIPRO($id){
 }
 	
 	
+
 	
+	
+	
+//////////////////  COTIZACIÓN DEL CLIENTES ///////////////////////////////////////////////
+
+    public function COTICLIENTES($NOMBRE_COTIZACION,$NOMBRE_CLIENTES, $DOCUMENTO_COTICLIENTES,$ADJUNTO_COTICLIENTES, $OBSERVACIONES_COTICLIENTES, $FECHA_COTICLIENTES, $hCOTICLIENTES, $IpCOTICLIENTES,$enviarCOTICLIENTES ){
+	
+	
+	$DOCUMENTO_COTICLIENTES  = str_replace(',','',$DOCUMENTO_COTICLIENTES); 
+	
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';  
+	if($session != ''){                            
+		
+	 $var1 = "update 04COTICLIENTES  set
+	 NOMBRE_COTIZACION = '".$NOMBRE_COTIZACION."' ,
+	 NOMBRE_CLIENTES = '".$NOMBRE_CLIENTES."' , 
+	 DOCUMENTO_COTICLIENTES = '".$DOCUMENTO_COTICLIENTES."' ,  
+
+	 OBSERVACIONES_COTICLIENTES = '".$OBSERVACIONES_COTICLIENTES."' ,  
+	 FECHA_COTICLIENTES = '".$FECHA_COTICLIENTES."' ,  
+	 hCOTICLIENTES = '".$hCOTICLIENTES."'
+	 where id = '".$IpCOTICLIENTES."' ;  ";
+
+	 $var2 = "insert into 04COTICLIENTES (
+	 NOMBRE_COTIZACION, 
+	 NOMBRE_CLIENTES,
+	 DOCUMENTO_COTICLIENTES,
+	 ADJUNTO_COTICLIENTES, 
+	 OBSERVACIONES_COTICLIENTES,
+	 FECHA_COTICLIENTES, 
+	 hCOTICLIENTES, idRelacion) 
+	 values ( '".$NOMBRE_COTIZACION."' ,'".
+	 $NOMBRE_CLIENTES."' , '".
+	 $DOCUMENTO_COTICLIENTES."' , '".
+	 $ADJUNTO_COTICLIENTES."' , '".
+	 $OBSERVACIONES_COTICLIENTES."' , '".
+	 $FECHA_COTICLIENTES."' , '".
+	 $hCOTICLIENTES."' , '".$session."' ); ";	
+		
+		if($enviarCOTICLIENTES=='enviarCOTICLIENTES'){
+	mysqli_query($conn,$var1) or die('CE1601'.mysqli_error($conn));
+	return "Actualizado";
+				
+	}else{
+	mysqli_query($conn,$var2) or die('CE1605'.mysqli_error($conn));
+	return "Ingresado";
+	}
+		
+	}else{
+	echo "TU SESIÓN HA TERMINADO";	
+	}
+	
+}
+
+	
+public function Listado_COTICLIENTES(){
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	
+	$conn = $this->db();
+	$variablequery = "select * from 04COTICLIENTES WHERE idRelacion = '".$session."' order by id desc ";
+	return $arrayquery = mysqli_query($conn,$variablequery);
+	
+}	
+
+
+	public function Listado_COTICLIENTES2($id){
+	$conn = $this->db();
+	$variablequery = "select * from 04COTICLIENTES  where id = '".$id."' ";
+	return $arrayquery = mysqli_query($conn,$variablequery);
+}
+
+
+public function borra_COTICLIENTES($id){
+	$conn = $this->db();
+	$variablequery = "delete from 04COTICLIENTES where id = '".$id."' ";
+	$arrayquery = mysqli_query($conn,$variablequery);
+	RETURN 
+	
+	"<P style='color:green;font-size:25px;'>ELEMENTO BORRADO</P>";
+}
+	
+	
+	
+
+//////////////////  CONTRATOS ///////////////////////////////////////////////
+
+    public function CONTRATO($CONTRATO,$NOMBRE_CONTRATO, $DOCUMENTO_CONTRATO,$ADJUNTO_CONTRATO, $OBSERVACIONES_CONTRATO, $FECHA_CONTRATO, $hCONTRATO, $IpCONTRATO,$enviarCONTRATO ){
+	
+	
+	$DOCUMENTO_CONTRATO  = str_replace(',','',$DOCUMENTO_CONTRATO); 
+	
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';  
+	if($session != ''){ 
+    $CONTRATO               = mysqli_real_escape_string($conn, $CONTRATO);
+    $NOMBRE_CONTRATO        = mysqli_real_escape_string($conn, $NOMBRE_CONTRATO);
+    $OBSERVACIONES_CONTRATO = mysqli_real_escape_string($conn, $OBSERVACIONES_CONTRATO);
+
+
+  
+
+    $IpCONTRATO = mysqli_real_escape_string($conn, $IpCONTRATO);
+    $session    = mysqli_real_escape_string($conn, $session);	
+		
+	 $var1 = "update 04CONTRATO  set
+	 CONTRATO = '".$CONTRATO."' ,
+	 NOMBRE_CONTRATO = '".$NOMBRE_CONTRATO."' , 
+	 DOCUMENTO_CONTRATO = '".$DOCUMENTO_CONTRATO."' ,  
+
+	 OBSERVACIONES_CONTRATO = '".$OBSERVACIONES_CONTRATO."' ,  
+	 FECHA_CONTRATO = '".$FECHA_CONTRATO."' ,  
+	 hCONTRATO = '".$hCONTRATO."'
+	 where id = '".$IpCONTRATO."' ;  ";
+
+	 $var2 = "insert into 04CONTRATO (
+	 CONTRATO, 
+	 NOMBRE_CONTRATO,
+	 DOCUMENTO_CONTRATO,
+	 ADJUNTO_CONTRATO, 
+	 OBSERVACIONES_CONTRATO,
+	 FECHA_CONTRATO, 
+	 hCONTRATO, idRelacion) 
+	 values ( '".$CONTRATO."' ,'".
+	 $NOMBRE_CONTRATO."' , '".
+	 $DOCUMENTO_CONTRATO."' , '".
+	 $ADJUNTO_CONTRATO."' , '".
+	 $OBSERVACIONES_CONTRATO."' , '".
+	 $FECHA_CONTRATO."' , '".
+	 $hCONTRATO."' , '".$session."' ); ";	
+		
+		if($enviarCONTRATO=='enviarCONTRATO'){
+	mysqli_query($conn,$var1) or die('CE1601'.mysqli_error($conn));
+	return "Actualizado";
+				
+	}else{
+	mysqli_query($conn,$var2) or die('CE1605'.mysqli_error($conn));
+	return "Ingresado";
+	}
+		
+	}else{
+	echo "TU SESIÓN HA TERMINADO";	
+	}
+	
+}
+
+	
+public function Listado_CONTRATO(){
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	
+	$conn = $this->db();
+	$variablequery = "select * from 04CONTRATO WHERE idRelacion = '".$session."' order by id desc ";
+	return $arrayquery = mysqli_query($conn,$variablequery);
+	
+}	
+
+
+	public function Listado_CONTRATO2($id){
+	$conn = $this->db();
+	$variablequery = "select * from 04CONTRATO  where id = '".$id."' ";
+	return $arrayquery = mysqli_query($conn,$variablequery);
+}
+
+
+public function borra_CONTRATO($id){
+	$conn = $this->db();
+	$variablequery = "delete from 04CONTRATO where id = '".$id."' ";
+	$arrayquery = mysqli_query($conn,$variablequery);
+	RETURN 
+	
+	"<P style='color:green;font-size:25px;'>ELEMENTO BORRADO</P>";
+}
+	
+	
+ 	
 	
 ///////////////////////////// PERSONAL2 2  /////////////////////////
 
     public function PERSONAL2($NOMBRE_PERSONAL2 ,$PUESTO_PERSONAL2 ,$WHAT_PERSONAL2 , $EMAIL_PERSONAL2 ,$FECHA_INICIO1,$FECHA_FINAL1,$NUMERO_DIAS1, $MONTO_BONO1,$MONTO_BONO_TOTAL1,$TOTAL1,$ULTIMO_DIA1, $VIATICOS_PERSONAL2 , $OBSERVACIONES_PERSONAL2 , $PERSONAL2_FECHA_ULTIMA_CARGA , $hDatosPERSONAL2,$ENVIARpersonal2,$IPpersonal2){
 		
     $conn = $this->db();
-	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';  
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:''; 
+
 	if($session != ''){
 		
 		$MONTO_BONO1 = str_replace(',','',$MONTO_BONO1);
@@ -1559,13 +1769,12 @@ public function borra_COTIPRO($id){
 
     $TOTAL1 = str_replace(',','',$TOTAL1);
     $TOTAL1 = str_replace('$','',$TOTAL1);		                           
-    
+
+	$idPersonal = explode('^^',$NOMBRE_PERSONAL2);
+
     $var1 = "update 04personal2  set
 
-     NOMBRE_PERSONAL2 = '".$NOMBRE_PERSONAL2."' , 
-    PUESTO_PERSONAL2 = '".$PUESTO_PERSONAL2."' , 
-    WHAT_PERSONAL2 = '".$WHAT_PERSONAL2."' , 
-    EMAIL_PERSONAL2 = '".$EMAIL_PERSONAL2."' , 
+
  
     FECHA_INICIO1 = '".$FECHA_INICIO1."' , 
     FECHA_FINAL1 = '".$FECHA_FINAL1."' , 
@@ -1581,7 +1790,7 @@ public function borra_COTIPRO($id){
     where id = '".$IPpersonal2."' ;  ";
 
     $var2 = "insert into 04personal2 (NOMBRE_PERSONAL2, PUESTO_PERSONAL2, WHAT_PERSONAL2, EMAIL_PERSONAL2,FECHA_INICIO1,FECHA_FINAL1,NUMERO_DIAS1,MONTO_BONO1, MONTO_BONO_TOTAL1, TOTAL1, ULTIMO_DIA1,
-    VIATICOS_PERSONAL2, OBSERVACIONES_PERSONAL2, PERSONAL2_FECHA_ULTIMA_CARGA, hDatosPERSONAL2, idRelacion) values ( '".$NOMBRE_PERSONAL2."' , '".$PUESTO_PERSONAL2."' , '".$WHAT_PERSONAL2."' , '".$EMAIL_PERSONAL2."' , '".$FECHA_INICIO1."' , '".$FECHA_FINAL1."' , '".$NUMERO_DIAS1."' , '".$MONTO_BONO1."' , '".$MONTO_BONO_TOTAL1."' , '".$TOTAL1."' , '".$ULTIMO_DIA1."' , '".$VIATICOS_PERSONAL2."' , '".$OBSERVACIONES_PERSONAL2."' , '".$PERSONAL2_FECHA_ULTIMA_CARGA."' , '".$hDatosPERSONAL2."' , '".$session."' ); ";		
+    VIATICOS_PERSONAL2, OBSERVACIONES_PERSONAL2, PERSONAL2_FECHA_ULTIMA_CARGA, hDatosPERSONAL2, idRelacion, idPersonal) values ( '".$NOMBRE_PERSONAL2."' , '".$PUESTO_PERSONAL2."' , '".$WHAT_PERSONAL2."' , '".$EMAIL_PERSONAL2."' , '".$FECHA_INICIO1."' , '".$FECHA_FINAL1."' , '".$NUMERO_DIAS1."' , '".$MONTO_BONO1."' , '".$MONTO_BONO_TOTAL1."' , '".$TOTAL1."' , '".$ULTIMO_DIA1."' , '".$VIATICOS_PERSONAL2."' , '".$OBSERVACIONES_PERSONAL2."' , '".$PERSONAL2_FECHA_ULTIMA_CARGA."' , '".$hDatosPERSONAL2."' , '".$session."'  , '".$idPersonal[0]."' ); ";		
     
      if($ENVIARpersonal2=='ENVIARpersonal2'){
      mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
@@ -1608,7 +1817,7 @@ public function borra_COTIPRO($id){
      }	
 
 
-     public function listado_personal22($id){
+     public function listado_personal33($id){
      $conn = $this->db();
       $variablequery = "select * from 04personal2  where id = '".$id."' ";
      return $arrayquery = mysqli_query($conn,$variablequery);
@@ -1637,7 +1846,7 @@ public function borra_COTIPRO($id){
 	
   ///////////////////////////// PERSONAL  /////////////////////////
 
-        public function PERSONAL($NOMBRE_PERSONAL ,$PUESTO_PERSONAL ,$WHAT_PERSONAL , $EMAIL_PERSONAL ,$FECHA_INICIO,$FECHA_FINAL,$NUMERO_DIAS, $MONTO_BONO,$MONTO_BONO_TOTAL,$VIATICOS_PERSONAL ,$TOTAL, $ULTIMO_DIA, $OBSERVACIONES_PERSONAL , $PERSONAL_FECHA_ULTIMA_CARGA , $hDatosPERSONAL,$ENVIARpersonal,$IPpersonal){
+        public function PERSONAL($NOMBRE_PERSONAL ,$PUESTO_PERSONAL ,$WHAT_PERSONAL , $EMAIL_PERSONAL ,$FECHA_INICIO,$FECHA_FINAL,$NUMERO_DIAS, $MONTO_BONO,$MONTO_BONO_TOTAL,$VIATICOS_PERSONAL ,$TOTAL, $ULTIMO_DIA, $NUMERO_EVENTO,$OBSERVACIONES_PERSONAL , $PERSONAL_FECHA_ULTIMA_CARGA , $hDatosPERSONAL,$ENVIARpersonal,$IPpersonal){
 		
     $conn = $this->db();
 	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';  
@@ -1653,12 +1862,10 @@ public function borra_COTIPRO($id){
 
     $TOTAL = str_replace(',','',$TOTAL);
     $TOTAL = str_replace('$','',$TOTAL);	                          
-			
+	$idPersonal = explode('^^',$NOMBRE_PERSONAL);
 		 $var1 = "update 04personal  set
-         NOMBRE_PERSONAL = '".$NOMBRE_PERSONAL."' , 
-		 PUESTO_PERSONAL = '".$PUESTO_PERSONAL."' , 
-		 WHAT_PERSONAL = '".$WHAT_PERSONAL."' , 
-		 EMAIL_PERSONAL = '".$EMAIL_PERSONAL."' ,
+
+
          FECHA_INICIO = '".$FECHA_INICIO."' , 
          FECHA_FINAL = '".$FECHA_FINAL."' , 
          NUMERO_DIAS = '".$NUMERO_DIAS."' , 
@@ -1667,12 +1874,13 @@ public function borra_COTIPRO($id){
          VIATICOS_PERSONAL = '".$VIATICOS_PERSONAL."' ,		 
          TOTAL = '".$TOTAL."' , 
          ULTIMO_DIA = '".$ULTIMO_DIA."' , 		 
+         NUMERO_EVENTO = '".$NUMERO_EVENTO."' , 		 
 		 OBSERVACIONES_PERSONAL = '".$OBSERVACIONES_PERSONAL."' ,
 		 PERSONAL_FECHA_ULTIMA_CARGA = '".$PERSONAL_FECHA_ULTIMA_CARGA."' ,
 		 hDatosPERSONAL = '".$hDatosPERSONAL."'
 		 where id = '".$IPpersonal."' ;  ";
 	
-		 $var2 = "insert into 04personal (NOMBRE_PERSONAL, PUESTO_PERSONAL, WHAT_PERSONAL, EMAIL_PERSONAL,FECHA_INICIO,FECHA_FINAL,NUMERO_DIAS,MONTO_BONO,MONTO_BONO_TOTAL,VIATICOS_PERSONAL,TOTAL,ULTIMO_DIA,  OBSERVACIONES_PERSONAL, PERSONAL_FECHA_ULTIMA_CARGA, hDatosPERSONAL, idRelacion) values ( '".$NOMBRE_PERSONAL."' , '".$PUESTO_PERSONAL."' , '".$WHAT_PERSONAL."' , '".$EMAIL_PERSONAL."' , '".$FECHA_INICIO."' , '".$FECHA_FINAL."' , '".$NUMERO_DIAS."' , '".$MONTO_BONO."' , '".$MONTO_BONO_TOTAL."' , '".$VIATICOS_PERSONAL."' , '".$TOTAL."' , '".$ULTIMO_DIA."' , '".$OBSERVACIONES_PERSONAL."' , '".$PERSONAL_FECHA_ULTIMA_CARGA."' , '".$hDatosPERSONAL."' , '".$session."' ); ";		
+		 $var2 = "insert into 04personal (NOMBRE_PERSONAL, PUESTO_PERSONAL, WHAT_PERSONAL, EMAIL_PERSONAL,FECHA_INICIO,FECHA_FINAL,NUMERO_DIAS,MONTO_BONO,MONTO_BONO_TOTAL,VIATICOS_PERSONAL,TOTAL,ULTIMO_DIA,NUMERO_EVENTO,  OBSERVACIONES_PERSONAL, PERSONAL_FECHA_ULTIMA_CARGA, hDatosPERSONAL, idRelacion, idPersonal) values ( '".$NOMBRE_PERSONAL."' , '".$PUESTO_PERSONAL."' , '".$WHAT_PERSONAL."' , '".$EMAIL_PERSONAL."' , '".$FECHA_INICIO."' , '".$FECHA_FINAL."' , '".$NUMERO_DIAS."' , '".$MONTO_BONO."' , '".$MONTO_BONO_TOTAL."' , '".$VIATICOS_PERSONAL."' , '".$TOTAL."' , '".$ULTIMO_DIA."' , '".$NUMERO_EVENTO."' , '".$OBSERVACIONES_PERSONAL."' , '".$PERSONAL_FECHA_ULTIMA_CARGA."' , '".$hDatosPERSONAL."' , '".$session."' , '".$idPersonal[0]."'); ";		
 			
 	    if($ENVIARpersonal=='ENVIARpersonal'){
 		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
@@ -1782,6 +1990,65 @@ public function borra_COTIPRO($id){
 	}
 	}	
 	
+	
+/////////////////////////////////////////PARA AUTORIZAR/////////////////////////////////////	
+public function actualizapersonalAUT($pasara1_personalAUT_id, $pasapersonalAUT_text){
+    $conn    = $this->db();
+    $session = isset($_SESSION['idevento']) ? $_SESSION['idevento'] : '';
+    $usuario = isset($_SESSION['idem'])     ? $_SESSION['idem']     : '';
+
+    // Saneado mínimo
+    $idPersonal = (int)$pasara1_personalAUT_id;
+    $valor      = ($pasapersonalAUT_text === 'si') ? 'si' : 'no';
+
+    if ($session == '' || $usuario == '') {
+        echo "TU SESIÓN HA TERMINADO";
+        return;
+    }
+
+    // 1) ¿Quién es el vendedor del evento?
+    $queryV   = "SELECT NOMBRE_VENDEDOR_id FROM 04altaeventos WHERE id = '".$conn->real_escape_string($session)."' LIMIT 1";
+    $resV     = mysqli_query($conn, $queryV);
+    $rowV     = mysqli_fetch_array($resV, MYSQLI_ASSOC);
+    $vendedor = isset($rowV['NOMBRE_VENDEDOR_id']) ? $rowV['NOMBRE_VENDEDOR_id'] : '';
+
+    // 2) ¿El usuario tiene permiso PERSONALAUTORIZA (ver=si)?
+    $tienePermisoPersonal = false;
+    if (method_exists($this, 'variablespermisos')) {
+        $tienePermisoPersonal = ($this->variablespermisos('', 'PERSONALAUTORIZA', 'ver') === 'si');
+    } else {
+        // Fallback directo a BD (ajusta nombres de campos si difieren)
+        $qPerm = "
+            SELECT ver
+            FROM 05permisos
+            WHERE idRelacion = '".$conn->real_escape_string($usuario)."'
+              AND modulo = 'PERSONALAUTORIZA'
+            LIMIT 1
+        ";
+        if ($rPerm = mysqli_query($conn, $qPerm)) {
+            $p = mysqli_fetch_assoc($rPerm);
+            $tienePermisoPersonal = (isset($p['ver']) && $p['ver'] === 'si');
+        }
+    }
+
+    // 3) Regla de autorización combinada
+    $puedeAutorizar = ($usuario == $vendedor) || $tienePermisoPersonal;
+
+    if (!$puedeAutorizar) {
+        return "Sin permiso";
+    }
+
+    // 4) Actualización
+    $var1 = "
+        UPDATE 04personal
+        SET autorizaAUT = '".$conn->real_escape_string($valor)."'
+        WHERE id = ".$idPersonal."
+        LIMIT 1
+    ";
+    mysqli_query($conn, $var1) or die('P156'.mysqli_error($conn));
+
+    return "Actualizado";
+}
 
     
 //////////////////  vehiculos eventos ///////////////////////////////////////////////

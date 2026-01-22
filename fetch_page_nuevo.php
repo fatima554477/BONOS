@@ -22,11 +22,13 @@
 <tr>
 <td width="30%" align="center">
 	<span>Mostrar</span>
-	<select  class="form-select mb-3" id="per_page" onchange="load2(1);">
-		<option value="50" <?php if(!empty($_REQUEST['per_page'])){echo 'selected';} ?>>50</option>
-		<option value="100" <?php if($_REQUEST['per_page']=='100'){echo 'selected';} ?>>100</option>
-		<option value="150" <?php if($_REQUEST['per_page']=='150'){echo 'selected';} ?>>15</option>
-		<option value="200000" <?php if($_REQUEST['per_page']=='200000'){echo 'selected';} ?>>TODOS</option>
+	<select  class="form-select mb-3" id="per_page2" onchange="load2(1);">
+		<option value="10" <?php if(!empty($_REQUEST['per_page2'])){echo 'selected';} ?>>10</option>
+		<option value="15" <?php if($_REQUEST['per_page2']=='15'){echo 'selected';} ?>>15</option>
+		<option value="50" <?php if($_REQUEST['per_page2']=='50'){echo 'selected';} ?>>50</option>
+		<option value="100" <?php if($_REQUEST['per_page2']=='100'){echo 'selected';} ?>>100</option>
+		
+		<option value="200000" <?php if($_REQUEST['per_page2']=='200000'){echo 'selected';} ?>>TODOS</option>
 	</select>
 </td>
 
@@ -37,15 +39,6 @@
 <td width="30%" align="center">
 	<span>PLANTILLA</span>
 	
-	<!--<select  class="form-select mb-3" id="DEPARTAMENTO2WE" onchange="load(1);">
-	
-	<option value="DEFAULT" <?php if($_SESSION['DEPARTAMENTO']=='DEFAULT'){echo 'selected';} ?>>DEFAULT</option>
-	
-	<option value="SANDOR" <?php if($_SESSION['DEPARTAMENTO']=='SANDOR'){echo 'selected';} ?>>SANDOR</option>
-	
-	<option value="SANDOR3" <?php if($_SESSION['DEPARTAMENTO']=='SANDOR3'){echo 'selected';} ?>>SANDOR3</option>
-
-	</select>-->
 
 
 

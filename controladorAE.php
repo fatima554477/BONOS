@@ -1,4 +1,12 @@
 <?php
+/*
+clase EPC INNOVA
+CREADO : 10/mayo/2023
+TESTER: FATIMA ARELLANO
+PROGRAMER: SANDOR ACTUALIZACION: 1 MAY 2023
+FECHA sandor: 
+FECHA fatima: 01 JUNIO  2025     
+*/
     if(!isset($_SESSION)) 
     { 
         session_start(); 
@@ -79,6 +87,19 @@ $enviarCOTIPRO = isset($_POST["enviarCOTIPRO"])?$_POST["enviarCOTIPRO"]:"";
 $IpCOTIPRO = isset($_POST["IpCOTIPRO"])?$_POST["IpCOTIPRO"]:"";
 $borra_COTIPRO = isset($_POST["borra_COTIPRO"])?$_POST["borra_COTIPRO"]:"";
 $EMAIL_COTIPRO = isset($_POST["EMAIL_COTIPRO"])?$_POST["EMAIL_COTIPRO"]:"";
+
+$hCOTICLIENTES = isset($_POST["hCOTICLIENTES"])?$_POST["hCOTICLIENTES"]:"";
+$enviarCOTICLIENTES = isset($_POST["enviarCOTICLIENTES"])?$_POST["enviarCOTICLIENTES"]:"";
+$IpCOTICLIENTES = isset($_POST["IpCOTICLIENTES"])?$_POST["IpCOTICLIENTES"]:"";
+$borra_COTICLIENTES = isset($_POST["borra_COTICLIENTES"])?$_POST["borra_COTICLIENTES"]:"";
+$EMAIL_COTICLIENTES = isset($_POST["EMAIL_COTICLIENTES"])?$_POST["EMAIL_COTICLIENTES"]:"";
+
+$hCONTRATO = isset($_POST["hCONTRATO"])?$_POST["hCONTRATO"]:"";
+$enviarCONTRATO = isset($_POST["enviarCONTRATO"])?$_POST["enviarCONTRATO"]:"";
+$IpCONTRATO = isset($_POST["IpCONTRATO"])?$_POST["IpCONTRATO"]:"";
+$borra_CONTRATO = isset($_POST["borra_CONTRATO"])?$_POST["borra_CONTRATO"]:"";
+$EMAIL_CONTRATO = isset($_POST["EMAIL_CONTRATO"])?$_POST["EMAIL_CONTRATO"]:"";
+
 $hDatosPERSONAL2= isset($_POST["hDatosPERSONAL2"])?$_POST["hDatosPERSONAL2"]:"";
 $ENVIARpersonal2= isset($_POST["ENVIARpersonal2"])?$_POST["ENVIARpersonal2"]:"";
 $borra_PERSONAL2= isset($_POST["borra_PERSONAL2"])?$_POST["borra_PERSONAL2"]:"";
@@ -965,7 +986,7 @@ $IPpersonal2 = isset($_POST["IPpersonal2"])?$_POST["IPpersonal2"]:"";
 
 	
      echo $altaeventos->PERSONAL2($NOMBRE_PERSONAL2 ,$PUESTO_PERSONAL2 ,$WHAT_PERSONAL2 , $EMAIL_PERSONAL2 ,$FECHA_INICIO1,$FECHA_FINAL1,$NUMERO_DIAS1, $MONTO_BONO1,$MONTO_BONO_TOTAL1,$TOTAL1,$ULTIMO_DIA1, $VIATICOS_PERSONAL2 , $OBSERVACIONES_PERSONAL2 , $PERSONAL2_FECHA_ULTIMA_CARGA , $hDatosPERSONAL2,$ENVIARpersonal2,$IPpersonal2);  
-
+	$_SESSION['NOMBRE_PERSONAL21']="";
 
 }
 
@@ -980,8 +1001,17 @@ $NOMBRE_PERSONAL21 = isset($_POST['NOMBRE_PERSONAL21'])?$_POST['NOMBRE_PERSONAL2
 
 if($NOMBRE_PERSONAL21==true){
 	$NOMBRE_PERSONAL22 = isset($_POST['NOMBRE_PERSONAL22'])?$_POST['NOMBRE_PERSONAL22']:'';
-	$_SESSION['NOMBRE_PERSONAL21']=$NOMBRE_PERSONAL21;
+	
+	if($NOMBRE_PERSONAL21=='nada'){
+	$_SESSION['NOMBRE_PERSONAL21']='';
+	}else{
+	$_SESSION['NOMBRE_PERSONAL21']=$NOMBRE_PERSONAL21;		
+	}
+
+	
     echo $NOMBRE_PERSONAL22;
+	
+	
 }
 
 $pasara1_personal2_id= isset($_POST["pasara1_personal2_id"])?$_POST["pasara1_personal2_id"]:"";
@@ -1034,34 +1064,56 @@ echo $conexion2->email($EMAILnombre, $html, $adjuntos, $embebida, $Subject,$smtp
  //include_once (__ROOT1__."/includes/crea_funciones.php"); 
 
 ///////////////////////////////PERSONAL///////////////////////////////////////
-if($hDatosPERSONAL == 'hDatosPERSONAL' OR $ENVIARpersonal=='ENVIARpersonal'){
+if ($hDatosPERSONAL == 'hDatosPERSONAL' OR $ENVIARpersonal == 'ENVIARpersonal') {
+
+    $NOMBRE_PERSONAL = isset($_POST["NOMBRE_PERSONAL"]) ? $_POST["NOMBRE_PERSONAL"] : "";
+    $PUESTO_PERSONAL = isset($_POST["PUESTO_PERSONAL"]) ? $_POST["PUESTO_PERSONAL"] : "";
+    $WHAT_PERSONAL = isset($_POST["WHAT_PERSONAL"]) ? $_POST["WHAT_PERSONAL"] : "";
+    $EMAIL_PERSONAL = isset($_POST["EMAIL_PERSONAL"]) ? $_POST["EMAIL_PERSONAL"] : "";
+    $FECHA_INICIO = isset($_POST["FECHA_INICIO"]) ? trim($_POST["FECHA_INICIO"]) : "";
+    $FECHA_FINAL = isset($_POST["FECHA_FINAL"]) ? trim($_POST["FECHA_FINAL"]) : "";
+    $NUMERO_DIAS = isset($_POST["NUMERO_DIAS"]) ? $_POST["NUMERO_DIAS"] : "";
+    $MONTO_BONO = isset($_POST["MONTO_BONO"]) ? $_POST["MONTO_BONO"] : "";
+    $NUMERO_EVENTO = isset($_POST["NUMERO_EVENTO"]) ? $_POST["NUMERO_EVENTO"] : "";
+    $MONTO_BONO_TOTAL = isset($_POST["MONTO_BONO_TOTAL"]) ? $_POST["MONTO_BONO_TOTAL"] : "";
+    $TOTAL = isset($_POST["TOTAL"]) ? $_POST["TOTAL"] : "";
+    $ULTIMO_DIA = isset($_POST["ULTIMO_DIA"]) ? $_POST["ULTIMO_DIA"] : "";
+    $VIATICOS_PERSONAL = isset($_POST["VIATICOS_PERSONAL"]) ? $_POST["VIATICOS_PERSONAL"] : "";
+    $OBSERVACIONES_PERSONAL = isset($_POST["OBSERVACIONES_PERSONAL"]) ? $_POST["OBSERVACIONES_PERSONAL"] : "";
+    $PERSONAL_FECHA_ULTIMA_CARGA = isset($_POST["PERSONAL_FECHA_ULTIMA_CARGA"]) ? $_POST["PERSONAL_FECHA_ULTIMA_CARGA"] : "";
+    $hDatosPERSONAL = isset($_POST["hDatosPERSONAL"]) ? $_POST["hDatosPERSONAL"] : "";
+    $IPpersonal = isset($_POST["IPpersonal"]) ? $_POST["IPpersonal"] : "";
 
 
-$NOMBRE_PERSONAL = isset($_POST["NOMBRE_PERSONAL"])?$_POST["NOMBRE_PERSONAL"]:"";
-$PUESTO_PERSONAL = isset($_POST["PUESTO_PERSONAL"])?$_POST["PUESTO_PERSONAL"]:"";
-$WHAT_PERSONAL = isset($_POST["WHAT_PERSONAL"])?$_POST["WHAT_PERSONAL"]:"";
-$EMAIL_PERSONAL = isset($_POST["EMAIL_PERSONAL"])?$_POST["EMAIL_PERSONAL"]:"";
-$FECHA_INICIO = isset($_POST["FECHA_INICIO"])?$_POST["FECHA_INICIO"]:"";
-$FECHA_FINAL = isset($_POST["FECHA_FINAL"])?$_POST["FECHA_FINAL"]:"";
-$NUMERO_DIAS = isset($_POST["NUMERO_DIAS"])?$_POST["NUMERO_DIAS"]:"";
-$MONTO_BONO = isset($_POST["MONTO_BONO"])?$_POST["MONTO_BONO"]:"";
-$MONTO_BONO_TOTAL = isset($_POST["MONTO_BONO_TOTAL"])?$_POST["MONTO_BONO_TOTAL"]:"";
-$TOTAL = isset($_POST["TOTAL"])?$_POST["TOTAL"]:"";
-$ULTIMO_DIA = isset($_POST["ULTIMO_DIA"])?$_POST["ULTIMO_DIA"]:"";
-$VIATICOS_PERSONAL = isset($_POST["VIATICOS_PERSONAL"])?$_POST["VIATICOS_PERSONAL"]:"";
-$OBSERVACIONES_PERSONAL = isset($_POST["OBSERVACIONES_PERSONAL"])?$_POST["OBSERVACIONES_PERSONAL"]:"";
-$PERSONAL_FECHA_ULTIMA_CARGA = isset($_POST["PERSONAL_FECHA_ULTIMA_CARGA"])?$_POST["PERSONAL_FECHA_ULTIMA_CARGA"]:"";
-$hDatosPERSONAL = isset($_POST["hDatosPERSONAL"])?$_POST["hDatosPERSONAL"]:"";
-$IPpersonal = isset($_POST["IPpersonal"])?$_POST["IPpersonal"]:"";
+        // Si todo bien, ejecuta el alta
+        echo $altaeventos->PERSONAL(
+            $NOMBRE_PERSONAL,
+            $PUESTO_PERSONAL,
+            $WHAT_PERSONAL,
+            $EMAIL_PERSONAL,
+            $FECHA_INICIO,
+            $FECHA_FINAL,
+            $NUMERO_DIAS,
+            $MONTO_BONO,
+            $MONTO_BONO_TOTAL,
+            $VIATICOS_PERSONAL,
+            $TOTAL,
+            $ULTIMO_DIA,
+            $NUMERO_EVENTO,
+            $OBSERVACIONES_PERSONAL,
+            $PERSONAL_FECHA_ULTIMA_CARGA,
+            $hDatosPERSONAL,
+            $ENVIARpersonal,
+            $IPpersonal
+        );
 
-	
-     echo $altaeventos->PERSONAL($NOMBRE_PERSONAL ,$PUESTO_PERSONAL ,$WHAT_PERSONAL , $EMAIL_PERSONAL ,$FECHA_INICIO,$FECHA_FINAL,$NUMERO_DIAS, $MONTO_BONO,$MONTO_BONO_TOTAL,$VIATICOS_PERSONAL ,$TOTAL,$ULTIMO_DIA, $OBSERVACIONES_PERSONAL , $PERSONAL_FECHA_ULTIMA_CARGA , $hDatosPERSONAL,$ENVIARpersonal,$IPpersonal);  
-
-   		/*$RUTAFILTRO = 'calendariodeeventos2'; 
-		$claseactual = 'class.epcinnAE.php';
-		$tablesdb = '04personal';
-		include_once (__ROOT1__."/includes/crea_funciones_filtro_completo.php"); */	 
+        $_SESSION['NOMBRE_PERSONAL1'] = "";
+    
 }
+
+
+
+
 
      if($borra_PERSONAL == 'borra_PERSONAL' ){
 
@@ -1074,8 +1126,13 @@ $NOMBRE_PERSONAL1 = isset($_POST['NOMBRE_PERSONAL1'])?$_POST['NOMBRE_PERSONAL1']
 
 if($NOMBRE_PERSONAL1==true){
 	$NOMBRE_PERSONAL2 = isset($_POST['NOMBRE_PERSONAL2'])?$_POST['NOMBRE_PERSONAL2']:'';
-	$_SESSION['NOMBRE_PERSONAL1']=$NOMBRE_PERSONAL1;
+	if($NOMBRE_PERSONAL1=='borra'){
+	$_SESSION['NOMBRE_PERSONAL1']="";
+	}else{
+	$_SESSION['NOMBRE_PERSONAL1']=$NOMBRE_PERSONAL1;		
+	}
     echo $NOMBRE_PERSONAL2;
+	
 }
 
 $NOMBRE_PERSONAL12 = isset($_POST['NOMBRE_PERSONAL12'])?$_POST['NOMBRE_PERSONAL12']:'';
@@ -1093,9 +1150,14 @@ $pasapersonal_text= isset($_POST["pasapersonal_text"])?$_POST["pasapersonal_text
 if($pasara1_personal_id!='' and ($pasapersonal_text=='si' or $pasapersonal_text=='no') ){
 echo $altaeventos->actualizapersonal ($pasara1_personal_id , $pasapersonal_text  );
 }
+///////////////////////////////AUTORIZACIÓN////////////////////////
+$pasara1_personalAUT_id= isset($_POST["pasara1_personalAUT_id"])?$_POST["pasara1_personalAUT_id"]:"";
+$pasapersonalAUT_text= isset($_POST["pasapersonalAUT_text"])?$_POST["pasapersonalAUT_text"]:"";
 
+if($pasara1_personalAUT_id!='' and ($pasapersonalAUT_text=='si' or $pasapersonalAUT_text=='no') ){
+echo $altaeventos->actualizapersonalAUT ($pasara1_personalAUT_id , $pasapersonalAUT_text  );
+}
 
- 	//EMAIL personal//
 
 if($PERSONAL_ENVIAR_IMAIL ==true){
 
@@ -1234,15 +1296,14 @@ echo $conexion2->email($EMAILnombre, $html, $adjuntos, $embebida, $Subject,$smtp
 //////////////////EGRESOS/////////////////////////////////////////
 
 
-
 $pasarpagadoegreso_id= isset($_POST["pasarpagadoegreso_id"])?$_POST["pasarpagadoegreso_id"]:"";
 $pasarpagadoegreso_text= isset($_POST["pasarpagadoegreso_text"])?$_POST["pasarpagadoegreso_text"]:"";
 
 if($pasarpagadoegreso_id!='' and ($pasarpagadoegreso_text=='si' or $pasarpagadoegreso_text=='no') ){
-	//echo $pasarpagadoegreso_id.$pasarpagadoegreso_text;
 echo $altaeventos->actualizapagoegreso ($pasarpagadoegreso_id , $pasarpagadoegreso_text  );
 
 }
+
 
 
 
@@ -1259,12 +1320,22 @@ $ADJUNTO_EGRESO = $conexion->solocargar("ADJUNTO_EGRESO");
 	
 $DOCUMENTO_EGRESO = isset($_POST["DOCUMENTO_EGRESO"])?$_POST["DOCUMENTO_EGRESO"]:"";
 $MONTO_EGRESO = isset($_POST["MONTO_EGRESO"])?$_POST["MONTO_EGRESO"]:"";
+$FE_PAGOE = isset($_POST["FE_PAGOE"])?$_POST["FE_PAGOE"]:"";
+$FE_TIMBRADOE = isset($_POST["FE_TIMBRADOE"])?$_POST["FE_TIMBRADOE"]:"";
+$MONTO_OTRO = isset($_POST["MONTO_OTRO"])?$_POST["MONTO_OTRO"]:"";
 $FECHA_EGRESO = isset($_POST["FECHA_EGRESO"])?$_POST["FECHA_EGRESO"]:"";
+
+$TIPO_DE_DOCUMENTO1 = isset($_POST["TIPO_DE_DOCUMENTO1"])?$_POST["TIPO_DE_DOCUMENTO1"]:"";
+$FOLIO1 = isset($_POST["FOLIO1"])?$_POST["FOLIO1"]:"";
+$RAZON_SOCIAL1 = isset($_POST["RAZON_SOCIAL1"])?$_POST["RAZON_SOCIAL1"]:"";
+$CONCEPTO1 = isset($_POST["CONCEPTO1"])?$_POST["CONCEPTO1"]:"";
+$STATUSF1 = isset($_POST["STATUSF1"])?$_POST["STATUSF1"]:"";
+
 $hpagosegresos1 = isset($_POST["hpagosegresos1"])?$_POST["hpagosegresos1"]:""; 
 $IpEGRESOS = isset($_POST["IpEGRESOS"])?$_POST["IpEGRESOS"]:""; 
 
 
- echo $altaeventos->pagoegreso( $DOCUMENTO_EGRESO, $ADJUNTO_EGRESO1, $MONTO_EGRESO, $FECHA_EGRESO ,$hpagosegresos1, $IpEGRESOS,$enviarpagosEgreso );   
+ echo $altaeventos->pagoegreso( $DOCUMENTO_EGRESO, $ADJUNTO_EGRESO,$MONTO_OTRO, $MONTO_EGRESO,$FE_PAGOE,$FE_TIMBRADOE, $FECHA_EGRESO ,$TIPO_DE_DOCUMENTO1,$FOLIO1,$RAZON_SOCIAL1,$CONCEPTO1,$STATUSF1,$hpagosegresos1, $IpEGRESOS,$enviarpagosEgreso );   
 }	 
  //include_once (__ROOT1__."/includes/crea_funciones.php"); 
  
@@ -1334,6 +1405,9 @@ echo $altaeventos->actualizapagoingreso ($pasarpagadoingreso_id , $pasarpagadoin
 }
 
 
+
+
+
    if($hPAGOSINGRESOS1 == 'hPAGOSINGRESOS1' or $enviarpagosingre=='enviarpagosingre'){
 	   
 		  	   	   if( $_FILES["ADJUNTO_INGRESOS"] == true){
@@ -1347,11 +1421,20 @@ $ADJUNTO_INGRESOS = $conexion->solocargar("ADJUNTO_INGRESOS");
 $DOCUMENTO_INGRESOS = isset($_POST["DOCUMENTO_INGRESOS"])?$_POST["DOCUMENTO_INGRESOS"]:"";
 $OBSERVACIONES_INGRESOS = isset($_POST["OBSERVACIONES_INGRESOS"])?$_POST["OBSERVACIONES_INGRESOS"]:"";
 $MONTOCON_IVA = isset($_POST["MONTOCON_IVA"])?$_POST["MONTOCON_IVA"]:"";
+$FE_PAGOI = isset($_POST["FE_PAGOI"])?$_POST["FE_PAGOI"]:"";
+$FE_TIMBRADO = isset($_POST["FE_TIMBRADO"])?$_POST["FE_TIMBRADO"]:"";
 $FECHA_INGRESOS = isset($_POST["FECHA_INGRESOS"])?$_POST["FECHA_INGRESOS"]:"";
+
+$TIPO_DE_DOCUMENTO = isset($_POST["TIPO_DE_DOCUMENTO"])?$_POST["TIPO_DE_DOCUMENTO"]:"";
+$FOLIO = isset($_POST["FOLIO"])?$_POST["FOLIO"]:"";
+$RAZON_SOCIAL = isset($_POST["RAZON_SOCIAL"])?$_POST["RAZON_SOCIAL"]:"";
+$CONCEPTO = isset($_POST["CONCEPTO"])?$_POST["CONCEPTO"]:""; 
+$STATUSF = isset($_POST["STATUSF"])?$_POST["STATUSF"]:""; 
+
 $hPAGOSINGRESOS1 = isset($_POST["hPAGOSINGRESOS1"])?$_POST["hPAGOSINGRESOS1"]:"";
 $IpINGRESOS = isset($_POST["IpINGRESOS"])?$_POST["IpINGRESOS"]:""; 	
    
-		echo $altaeventos->pagoingreso(  $DOCUMENTO_INGRESOS ,$ADJUNTO_INGRESOS1, $OBSERVACIONES_INGRESOS, $MONTOCON_IVA,$FECHA_INGRESOS , $hPAGOSINGRESOS1,$IpINGRESOS,$enviarpagosingre );   
+		echo $altaeventos->pagoingreso(  $DOCUMENTO_INGRESOS ,$ADJUNTO_INGRESOS1, $OBSERVACIONES_INGRESOS, $MONTOCON_IVA,$FE_PAGOI,$FE_TIMBRADO,$FECHA_INGRESOS ,$TIPO_DE_DOCUMENTO,$FOLIO,$RAZON_SOCIAL,$CONCEPTO,$STATUSF, $hPAGOSINGRESOS1,$IpINGRESOS,$enviarpagosingre );   
 }	 
  
  if($borra_PAGOSINGRESOS == 'borra_PAGOSINGRESOS' ){
@@ -1800,7 +1883,7 @@ if($INICIALES_EMPRESA_EVENTO1 ==true){
 	}
 
 
-if($hnuevodocucierre == 'hnuevodocucierre' ){
+if($hnuevodocucierre == 'hnuevodocucierre' or $enviarCIERRENUEVO =='enviarCIERRENUEVO' ){
 	//enviarCIERRENUEVO
 	
 $nuevo_documento_cierre = isset($_POST["nuevo_documento_cierre"])?$_POST["nuevo_documento_cierre"]:"";
@@ -1949,14 +2032,42 @@ $SERVICIO_OTORGAR = isset($_POST["SERVICIO_OTORGAR"])?$_POST["SERVICIO_OTORGAR"]
 $MONEDAS = isset($_POST["MONEDAS"])?$_POST["MONEDAS"]:"";
 $NOMBRE_VENDEDOR = isset($_POST["NOMBRE_VENDEDOR"])?$_POST["NOMBRE_VENDEDOR"]:"";
 $NOMBRE_EJECUTIVOEVENTO = isset($_POST["NOMBRE_EJECUTIVOEVENTO"])?$_POST["NOMBRE_EJECUTIVOEVENTO"]:"";
+$CIERRE_TOTAL = isset($_POST["CIERRE_TOTAL"])?$_POST["CIERRE_TOTAL"]:"";
+$TOTAL_AVION_SINIVA = isset($_POST["TOTAL_AVION_SINIVA"])?$_POST["TOTAL_AVION_SINIVA"]:"";
+$NOMBRE_INGRESO = isset($_POST["NOMBRE_INGRESO"])?$_POST["NOMBRE_INGRESO"]:"";
+$NOMBRE_AUDITOR = isset($_POST["NOMBRE_AUDITOR"])?$_POST["NOMBRE_AUDITOR"]:"";
 $hALTAEVENTOS = isset($_POST["hALTAEVENTOS"])?$_POST["hALTAEVENTOS"]:""; 
 $IPaltaeventos = isset($_POST["IPaltaeventos"])?$_POST["IPaltaeventos"]:"";
 
+
+if (
+    $NOMBRE_VENDEDOR === "" ||
+    $NOMBRE_EJECUTIVOEVENTO === "" ||
+    $STATUS_EVENTO === "" ||
+    $MONEDAS === "" ||
+    $MONTO_TOTAL_DEL_EVENTO === "" ||
+    $NOMBRE_COMERCIAL_EVENTO === "" ||
+    $NOMBRE_EVENTO === "" ||
+    $NOMBRE_CORTO_EVENTO === "" ||
+    $TIPO_DE_EVENTO === "" ||
+    $PAIS_DEL_EVENTO === "" ||
+    $CIUDAD_DEL_EVENTO === "" ||
+    $HOTEL_LUGAR === "" ||
+    $NUMERO_DE_PERSONAS === "" ||
+    $FECHA_INICIO_EVENTO === "" ||
+    $FECHA_FINAL_EVENTO === "" ||
+    $SERVICIO_OTORGAR === ""
+)
+ {
+    echo "<p style='color:red; font-size:23px;'>FAVOR DE LLENAR TODOS LOS CAMPOS OBLIGATORIOS</p>";
+} else {
+
 	
-   echo $altaeventos->altaeventos ($NUMERO_EVENTO,$FECHA_ALTA_EVENTO , $STATUS_EVENTO , $FECHA_AUTORIZACION_EVENTO , $MONTOC_TOTAL_EVENTO , $MONTO_TOTAL_AVION ,$CANTIDAD_PORCENTAJEV,$FEE_COBRADO, $PORCENTAJE_FEE,$MONTO_TOTAL_DEL_EVENTO , $NOMBRE_COMERCIAL_EVENTO , $NOMBRE_FISCAL_EVENTO , $NOMBRE_EVENTO , $NOMBRE_CORTO_EVENTO , $NOMBRE_CONTACTO_EVENTO , $CELULAR_CONTACTO_1 , $CORREO_CONTACTO_1 , $AREA_CONTACTO_CLIENTE , $OBSERVACIONES_1 , $TIPO_DE_EVENTO , $FORMATO_EVENTO , $PAIS_DEL_EVENTO , $CIUDAD_DEL_EVENTO , $HOTEL_LUGAR , $NUMERO_DE_PERSONAS , $FECHA_INICIO_EVENTO , $NOMBRE_COMERCIAL , $FECHA_FINAL_EVENTO , $HORA_TERMINO_EVENTO , $FECHA_LLEGADA_STAFF , $HORA_LLEGADA_STAFF , $FECHA_REGRESO_STAFF , $HORA_REGRESO_STAFF , $MATERIAL_EQUIPO_BODEGA, $FECHA_INICIO_MONTAJE, $HORA_INICIO_MONTAJE, $FECHA_DESMONTAJE,$HORA_DESMONTAJE, $LUGAR_MONTAJE,$SERVICIO_OTORGAR,$MONEDAS,$NOMBRE_VENDEDOR,$NOMBRE_EJECUTIVOEVENTO,$hALTAEVENTOS,$enviaraltaeventos, $borraraltaeventos,$IPaltaeventos);
+   echo $altaeventos->altaeventos ($NUMERO_EVENTO,$FECHA_ALTA_EVENTO , $STATUS_EVENTO , $FECHA_AUTORIZACION_EVENTO , $MONTOC_TOTAL_EVENTO , $MONTO_TOTAL_AVION ,$CANTIDAD_PORCENTAJEV,$FEE_COBRADO, $PORCENTAJE_FEE,$MONTO_TOTAL_DEL_EVENTO , $NOMBRE_COMERCIAL_EVENTO , $NOMBRE_FISCAL_EVENTO , $NOMBRE_EVENTO , $NOMBRE_CORTO_EVENTO , $NOMBRE_CONTACTO_EVENTO , $CELULAR_CONTACTO_1 , $CORREO_CONTACTO_1 , $AREA_CONTACTO_CLIENTE , $OBSERVACIONES_1 , $TIPO_DE_EVENTO , $FORMATO_EVENTO , $PAIS_DEL_EVENTO , $CIUDAD_DEL_EVENTO , $HOTEL_LUGAR , $NUMERO_DE_PERSONAS , $FECHA_INICIO_EVENTO , $NOMBRE_COMERCIAL , $FECHA_FINAL_EVENTO , $HORA_TERMINO_EVENTO , $FECHA_LLEGADA_STAFF , $HORA_LLEGADA_STAFF , $FECHA_REGRESO_STAFF , $HORA_REGRESO_STAFF , $MATERIAL_EQUIPO_BODEGA, $FECHA_INICIO_MONTAJE, $HORA_INICIO_MONTAJE, $FECHA_DESMONTAJE,$HORA_DESMONTAJE, $LUGAR_MONTAJE,$SERVICIO_OTORGAR,$MONEDAS,$NOMBRE_VENDEDOR,$NOMBRE_EJECUTIVOEVENTO,$CIERRE_TOTAL,$TOTAL_AVION_SINIVA,$NOMBRE_INGRESO,$NOMBRE_AUDITOR,$hALTAEVENTOS,$enviaraltaeventos, $borraraltaeventos,$IPaltaeventos);
 	
 //include_once (__ROOT1__."/includes/crea_funciones.php");
 
+}
 }
 
 
@@ -2112,6 +2223,178 @@ if($hCOTIPRO == 'hCOTIPRO' or $enviarCOTIPRO=='enviarCOTIPRO'){
    echo $altaeventos->borra_COTIPRO( $borra_cotipro );
    }	
    	   //include_once (__ROOT1__."/includes/crea_funciones.php");  
+
+
+
+/////////////////////////COTIZACION DE CLIENTES////////////////////////////////////////
+
+
+if($hCOTICLIENTES == 'hCOTICLIENTES' or $enviarCOTICLIENTES=='enviarCOTICLIENTES'){
+	
+	
+	if( $_FILES["ADJUNTO_COTICLIENTES"] == true){
+	$ADJUNTO_COTICLIENTES = $conexion->solocargar("ADJUNTO_COTICLIENTES");
+	}if($ADJUNTO_COTICLIENTES=='2' or $ADJUNTO_COTICLIENTES=='' or $ADJUNTO_COTICLIENTES=='1'){
+	$ADJUNTO_COTICLIENTES1 = "";	
+	}else{
+	$ADJUNTO_COTICLIENTES1 = $ADJUNTO_COTICLIENTES;
+				 }
+   $NOMBRE_COTIZACION = isset($_POST["NOMBRE_COTIZACION"])?$_POST["NOMBRE_COTIZACION"]:"";	   				 
+   $NOMBRE_CLIENTES = isset($_POST["NOMBRE_CLIENTES"])?$_POST["NOMBRE_CLIENTES"]:"";
+   $DOCUMENTO_COTICLIENTES = isset($_POST["DOCUMENTO_COTICLIENTES"])?$_POST["DOCUMENTO_COTICLIENTES"]:"";
+
+   $OBSERVACIONES_COTICLIENTES = isset($_POST["OBSERVACIONES_COTICLIENTES"])?$_POST["OBSERVACIONES_COTICLIENTES"]:"";
+   $FECHA_COTICLIENTES = isset($_POST["FECHA_COTICLIENTES"])?$_POST["FECHA_COTICLIENTES"]:"";
+   $hCOTICLIENTES = isset($_POST["hCOTICLIENTES"])?$_POST["hCOTICLIENTES"]:""; 
+				 
+				 
+					 
+   echo $altaeventos->COTICLIENTES($NOMBRE_COTIZACION,$NOMBRE_CLIENTES, $DOCUMENTO_COTICLIENTES,$ADJUNTO_COTICLIENTES1, $OBSERVACIONES_COTICLIENTES, $FECHA_COTICLIENTES, $hCOTICLIENTES, $IpCOTICLIENTES,$enviarCOTICLIENTES );
+				 
+					
+				   
+   }
+   
+   elseif($EMAIL_COTICLIENTES ==true){
+   $conexion2 = new herramientas();
+   $NOMBRE_1 = 'Peticion';
+   $EMAILnombre = array($EMAIL_COTICLIENTES=>$NOMBRE_1);
+   $adjuntos = array(''=>'');
+   $Subject = 'DATOS SOLICITADOS';
+	/*nuevo*/
+   $array = isset($_POST['cotiCLIENTES'])?$_POST['cotiCLIENTES']:'';
+   if($array != ''){
+   $loopcuenta = count($array) - 1;$loopcuenta2 = count($array) - 2;
+   $or1='';
+   for($rrr=0;$rrr<=$loopcuenta;$rrr++){
+   if($rrr<=$loopcuenta2){$or1 = ' or ';}else{$or1 = '';}
+   $query1 .= ' id= '.$array[$rrr].$or1;
+   }
+   $query2 = str_replace('[object Object]','',$query1);
+   $query2 = "and (".$query2.") ";
+   }else{
+   echo "SELECCIONA UNA CASILLA DEL LISTADO DE ABAJO."; exit;
+   } 
+																				   
+   $MANDA_INFORMACION = $altaeventos->MANDA_INFORMACION('NOMBRE_CLIENTES,DOCUMENTO_COTICLIENTES, OBSERVACIONES_COTICLIENTES, FECHA_COTICLIENTES ',
+				 
+   'NOMBRE CLIENTES,MONTO, OBSERVACIONES,FECHA', '04COTICLIENTES',  " where idRelacion = '".$_SESSION['idevento']."' ".$query2/*nuevo*/ );
+   $variables = 'ADJUNTO_COTICLIENTES, ';
+   //DOCUMENTO_COTICLIENTES trim($variables, ',');
+				 
+   $cadenacompleta =substr($variables, 0, -2);
+				  
+   $adjuntos = $altaeventos->ADJUNTA_IMAGENES_EMAIL($cadenacompleta,'04COTICLIENTES', " where idRelacion = '".$_SESSION['idevento']."' ".$query2 );
+				 
+
+				 
+     $html = $altaeventos->html2('COTIZACIÓN DE CLIENTES ',$MANDA_INFORMACION );
+
+     $smtp = $altaeventos->array_smtp($var_INICIALES['iniciales_evento']);
+     $idlogo = $smtp['idRelacion'];
+     $logo = $altaeventos->variables_informacionfiscal_logo2($idlogo);
+				 
+   $embebida = array('../includes/archivos/'.$logo => 'ver');
+   echo $conexion2->email($EMAILnombre, $html, $adjuntos, $embebida, $Subject,$smtp);
+   }  
+					 
+	if($borra_COTICLIENTES == 'borra_COTICLIENTES' ){
+				 
+   $borra_cotiCLIENTES = isset($_POST["borra_cotiCLIENTES"])?$_POST["borra_cotiCLIENTES"]:"";
+   echo $altaeventos->borra_COTICLIENTES( $borra_cotiCLIENTES );
+   }	
+   	   //include_once (__ROOT1__."/includes/crea_funciones.php");  
+
+
+
+
+
+
+///////////////////////// CONTRATO////////////////////////////////////////
+
+
+if($hCONTRATO == 'hCONTRATO' or $enviarCONTRATO=='enviarCONTRATO'){
+	
+	
+	if( $_FILES["ADJUNTO_CONTRATO"] == true){
+	$ADJUNTO_CONTRATO = $conexion->solocargar("ADJUNTO_CONTRATO");
+	}if($ADJUNTO_CONTRATO=='2' or $ADJUNTO_CONTRATO=='' or $ADJUNTO_CONTRATO=='1'){
+	$ADJUNTO_CONTRATO1 = "";	
+	}else{
+	$ADJUNTO_CONTRATO1 = $ADJUNTO_CONTRATO;
+				 }
+   $CONTRATO = isset($_POST["CONTRATO"])?$_POST["CONTRATO"]:"";	   				 
+   $NOMBRE_CONTRATO = isset($_POST["NOMBRE_CONTRATO"])?$_POST["NOMBRE_CONTRATO"]:"";
+   $DOCUMENTO_CONTRATO = isset($_POST["DOCUMENTO_CONTRATO"])?$_POST["DOCUMENTO_CONTRATO"]:"";
+
+   $OBSERVACIONES_CONTRATO = isset($_POST["OBSERVACIONES_CONTRATO"])?$_POST["OBSERVACIONES_CONTRATO"]:"";
+   $FECHA_CONTRATO = isset($_POST["FECHA_CONTRATO"])?$_POST["FECHA_CONTRATO"]:"";
+   $hCONTRATO = isset($_POST["hCONTRATO"])?$_POST["hCONTRATO"]:""; 
+				 
+				 
+					 
+   echo $altaeventos->CONTRATO($CONTRATO,$NOMBRE_CONTRATO, $DOCUMENTO_CONTRATO,$ADJUNTO_CONTRATO1, $OBSERVACIONES_CONTRATO, $FECHA_CONTRATO, $hCONTRATO, $IpCONTRATO,$enviarCONTRATO );
+				 
+					
+				   
+   }
+   
+   elseif($EMAIL_CONTRATO ==true){
+   $conexion2 = new herramientas();
+   $NOMBRE_1 = 'Peticion';
+   $EMAILnombre = array($EMAIL_CONTRATO=>$NOMBRE_1);
+   $adjuntos = array(''=>'');
+   $Subject = 'DATOS SOLICITADOS';
+	/*nuevo*/
+   $array = isset($_POST['CONTRATO'])?$_POST['CONTRATO']:'';
+   if($array != ''){
+   $loopcuenta = count($array) - 1;$loopcuenta2 = count($array) - 2;
+   $or1='';
+   for($rrr=0;$rrr<=$loopcuenta;$rrr++){
+   if($rrr<=$loopcuenta2){$or1 = ' or ';}else{$or1 = '';}
+   $query1 .= ' id= '.$array[$rrr].$or1;
+   }
+   $query2 = str_replace('[object Object]','',$query1);
+   $query2 = "and (".$query2.") ";
+   }else{
+   echo "SELECCIONA UNA CASILLA DEL LISTADO DE ABAJO."; exit;
+   } 
+																				   
+   $MANDA_INFORMACION = $altaeventos->MANDA_INFORMACION('NOMBRE_CONTRATO,DOCUMENTO_CONTRATO, OBSERVACIONES_CONTRATO, FECHA_CONTRATO ',
+				 
+   'NOMBRE CONTRATO,MONTO, OBSERVACIONES,FECHA', '04CONTRATO',  " where idRelacion = '".$_SESSION['idevento']."' ".$query2/*nuevo*/ );
+   $variables = 'ADJUNTO_CONTRATO, ';
+   //DOCUMENTO_CONTRATO trim($variables, ',');
+				 
+   $cadenacompleta =substr($variables, 0, -2);
+				  
+   $adjuntos = $altaeventos->ADJUNTA_IMAGENES_EMAIL($cadenacompleta,'04CONTRATO', " where idRelacion = '".$_SESSION['idevento']."' ".$query2 );
+				 
+
+				 
+     $html = $altaeventos->html2('COTIZACIÓN DE CONTRATO ',$MANDA_INFORMACION );
+
+     $smtp = $altaeventos->array_smtp($var_INICIALES['iniciales_evento']);
+     $idlogo = $smtp['idRelacion'];
+     $logo = $altaeventos->variables_informacionfiscal_logo2($idlogo);
+				 
+   $embebida = array('../includes/archivos/'.$logo => 'ver');
+   echo $conexion2->email($EMAILnombre, $html, $adjuntos, $embebida, $Subject,$smtp);
+   }  
+					 
+	if($borra_CONTRATO == 'borra_CONTRATO' ){
+				 
+   $borra_CONTRA = isset($_POST["borra_CONTRA"])?$_POST["borra_CONTRA"]:"";
+   echo $altaeventos->borra_CONTRATO( $borra_CONTRA );
+   }	
+   	   //include_once (__ROOT1__."/includes/crea_funciones.php");  
+
+
+
+
+
+
+
 
 
 
@@ -2725,6 +3008,21 @@ foreach($_FILES AS $ETQIETA => $VALOR){
 }	
 
 } 
+ 
+ 
+  if($IpCOTICLIENTES == true and ( $_FILES["ADJUNTO_COTICLIENTES"] == true ) ){
+foreach($_FILES AS $ETQIETA => $VALOR){
+	echo $conexion->cargar($ETQIETA,'04COTICLIENTES','3',$IpCOTICLIENTES);
+}	
+
+} 
+ 
+  if($IpCONTRATO == true and ( $_FILES["ADJUNTO_CONTRATO"] == true ) ){
+foreach($_FILES AS $ETQIETA => $VALOR){
+	echo $conexion->cargar($ETQIETA,'04CONTRATO','3',$IpCONTRATO);
+}	
+
+}
  
  
 ?>
