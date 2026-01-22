@@ -66,8 +66,9 @@ $ULTIMA_CARGA_DATOBANCA = isset($_POST["ULTIMA_CARGA_DATOBANCA"])?trim($_POST["U
 $hDatosPERSONAL = isset($_POST["hDatosPERSONAL"])?trim($_POST["hDatosPERSONAL"]):"";  
 
 $per_page=intval($_POST["per_page"]);
-	$campos="*";
-	//Variables de paginación
+
+
+$campos="04personal.*, 01informacionpersonal.*, 01DATOSBANCARIOS.*, 04altaeventos.*";
 	$page = (isset($_POST["page"]) && !empty($_POST["page"]))?$_POST["page"]:1;
 	$adjacents  = 4; //espacio entre páginas después del número de adyacentes
 	$offset = ($page - 1) * $per_page;
@@ -251,7 +252,7 @@ if($database->plantilla_filtro($nombreTabla,"VIATICOS_PERSONAL",$altaeventos,$DE
 <?php } ?><?php 
 if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">TOTAL</th>
 <?php } ?><?php 
-if($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">ULTIMO DIA</th>
+if($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">ÚLTIMO DÍA PARA<br>COMPRAR VIATICOS</th>
 <?php } ?>
 
 
@@ -410,11 +411,43 @@ echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 		<?php 	if ($numrows<0){ ?>
 		</table>
 		<?php }else{ ?>		
-        <tbody>
-		<?php
-		$finales=0;
-		
-		foreach ($datos as $key=>$row){?>
+ <tbody>
+	<?php
+	$finales=0;
+
+	$MONTO_BONO12 = 0;
+	$MONTO_BONO_TOTAL12 = 0;
+	$VIATICOS_PERSONAL12 = 0;
+	$TOTAL12 = 0;
+	$colspan = 2;
+	$colspanFields = array(
+		"NUMERO_EVENTO",
+		"NOMBRE_EVENTO",
+		"FECHA_INICIO_EVENTO",
+		"NOMBRE_COMERCIAL_EVENTO",
+		"NOMBRE_FISCAL_EVENTO",
+		"PAIS_DEL_EVENTO",
+		"CIUDAD_DEL_EVENTO",
+		"NOMBRE_PERSONAL",
+		"PUESTO_PERSONAL2",
+		"WHAT_PERSONAL",
+		"EMAIL_PERSONAL2",
+		"TIPO_DE_MONEDA_1",
+		"INSTITUCION_FINANCIERA_1",
+		"NUMERO_DE_CUENTA_DB_1",
+		"NUMERO_CLABE_1",
+		"FOTO_ESTADO_PROVEE",
+		"FECHA_INICIO",
+		"FECHA_FINAL",
+		"NUMERO_DIAS"
+	);
+	foreach ($colspanFields as $colspanField) {
+		if ($database->plantilla_filtro($nombreTabla, $colspanField, $altaeventos, $DEPARTAMENTO) == "si") {
+			$colspan++;
+		}
+	}
+
+	foreach ($datos as $key=>$row){?>
 		 <tr style="background:#FFFFFF;">
 		 						<td>
     <input type="checkbox" 
@@ -542,17 +575,26 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_FINAL",$altaeventos,$DEPARTA
 <?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS'];?></td>
 <?php } ?>
 <?php if($database->variablespermisos('','PERSONALver','ver')=='si' ){ ?>
-<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['MONTO_BONO'];?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['MONTO_BONO'];
+$MONTO_BONO12 += floatval(str_replace(',', '', $row['MONTO_BONO']));
+?></td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['MONTO_BONO_TOTAL'];?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['MONTO_BONO_TOTAL'];
+$MONTO_BONO_TOTAL12 += floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL']));
+?></td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"VIATICOS_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['VIATICOS_PERSONAL'];?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"VIATICOS_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['VIATICOS_PERSONAL'];
+$VIATICOS_PERSONAL12 += floatval(str_replace(',', '', $row['VIATICOS_PERSONAL']));
+?></td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TOTAL'];?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TOTAL'];
+$TOTAL12 += floatval(str_replace(',', '', $row['TOTAL']));
+?></td>
 <?php } ?>
+
 
 <?php  
 if ($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA",$altaeventos,$DEPARTAMENTO)=="si") { 
@@ -583,6 +625,32 @@ if ($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA",$altaeventos,$DEPARTAM
 			$finales++;
 		}	
 	?>
+	<?php if($database->variablespermisos('','PERSONALver','ver')=='si' ){ ?>
+	<tr style="border-top:4px solid #c9c9c9;">
+		<td style="text-align:right; padding-right:45px;" colspan="<?php echo $colspan; ?>"><strong style="font-size:16px">TOTALES</strong></td>
+		<?php if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($MONTO_BONO12,2,'.',','); ?></strong></td>
+		<?php } ?>
+		<?php if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($MONTO_BONO_TOTAL12,2,'.',','); ?></strong></td>
+		<?php } ?>
+		<?php if($database->plantilla_filtro($nombreTabla,"VIATICOS_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($VIATICOS_PERSONAL12,2,'.',','); ?></strong></td>
+		<?php } ?>
+		<?php if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($TOTAL12,2,'.',','); ?></strong></td>
+		<?php } ?>
+		<?php if($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td></td>
+		<?php } ?>
+		<?php if($database->plantilla_filtro($nombreTabla,"OBSERVACIONES_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td></td>
+		<?php } ?>
+		<?php if($database->plantilla_filtro($nombreTabla,"PERSONAL_FECHA_ULTIMA_CARGA",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td></td>
+		<?php } ?>
+	</tr>
+	<?php } ?>
 		</tbody>
 		</table>
 		</div>

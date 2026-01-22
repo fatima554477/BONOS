@@ -37,7 +37,7 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 
                 $tables1 = '04altaeventos';
                 $tables = '04personal';
-                $baseConditions = " ( (NOMBRE_PERSONAL is not null or NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
+                $baseConditions = " ( ($tables.NOMBRE_PERSONAL is not null or $tables.NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
                 $sWhere2="";$sWhere3="";
 
 		
