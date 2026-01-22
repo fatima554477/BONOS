@@ -53,7 +53,7 @@ var hDatosPERSONAL2=$("#hDatosPERSONAL2_2").val();
 
 /*termina copiar y pegar*/
 			
-			var per_page=$("#per_page").val();
+			var per_page=$("#per_page2").val();
 			var parametros = {
 			"action2":"ajax2",
 			"page":page,
