@@ -962,7 +962,14 @@ echo number_format($resultado,2,'.',','). '^'. $resultado_php. '^'.$porcentaje ;
 
 ///////////////////////////////PERSONAL2 2///////////////////////////////////////
 if($hDatosPERSONAL2 == 'hDatosPERSONAL2' OR $ENVIARpersonal2=='ENVIARpersonal2'){
-
+	
+			  	   	   if( $_FILES["ADJUNTO_COMPROBANTE"] == true){
+$ADJUNTO_COMPROBANTE = $conexion->solocargar("ADJUNTO_COMPROBANTE");
+}if($ADJUNTO_COMPROBANTE=='2' or $ADJUNTO_COMPROBANTE=='' or $ADJUNTO_COMPROBANTE=='1'){
+ $ADJUNTO_COMPROBANTE1 = "";	
+}else{
+ $ADJUNTO_COMPROBANTE1 = $ADJUNTO_COMPROBANTE;
+} 
 
 $NOMBRE_PERSONAL2 = isset($_POST["NOMBRE_PERSONAL2"])?$_POST["NOMBRE_PERSONAL2"]:"";
 $PUESTO_PERSONAL2 = isset($_POST["PUESTO_PERSONAL2"])?$_POST["PUESTO_PERSONAL2"]:"";
@@ -977,6 +984,11 @@ $MONTO_BONO_TOTAL1 = isset($_POST["MONTO_BONO_TOTAL1"])?$_POST["MONTO_BONO_TOTAL
 $TOTAL1 = isset($_POST["TOTAL1"])?$_POST["TOTAL1"]:"";
 $ULTIMO_DIA1 = isset($_POST["ULTIMO_DIA1"])?$_POST["ULTIMO_DIA1"]:"";
 
+$FECHA_PPAGO1 = isset($_POST["FECHA_PPAGO1"]) ? $_POST["FECHA_PPAGO1"] : "";	
+$FORMA_PAGO1 = isset($_POST["FORMA_PAGO1"]) ? $_POST["FORMA_PAGO1"] : "";
+$FECHA_EFECTIVA1 = isset($_POST["FECHA_EFECTIVA1"]) ? $_POST["FECHA_EFECTIVA1"] : "";
+$NOMBRE_RECIBIO1 = isset($_POST["NOMBRE_RECIBIO1"]) ? $_POST["NOMBRE_RECIBIO1"] : "";
+
 
 $VIATICOS_PERSONAL2 = isset($_POST["VIATICOS_PERSONAL2"])?$_POST["VIATICOS_PERSONAL2"]:"";
 $OBSERVACIONES_PERSONAL2 = isset($_POST["OBSERVACIONES_PERSONAL2"])?$_POST["OBSERVACIONES_PERSONAL2"]:"";
@@ -985,7 +997,7 @@ $hDatosPERSONAL2 = isset($_POST["hDatosPERSONAL2"])?$_POST["hDatosPERSONAL2"]:""
 $IPpersonal2 = isset($_POST["IPpersonal2"])?$_POST["IPpersonal2"]:"";
 
 	
-     echo $altaeventos->PERSONAL2($NOMBRE_PERSONAL2 ,$PUESTO_PERSONAL2 ,$WHAT_PERSONAL2 , $EMAIL_PERSONAL2 ,$FECHA_INICIO1,$FECHA_FINAL1,$NUMERO_DIAS1, $MONTO_BONO1,$MONTO_BONO_TOTAL1,$TOTAL1,$ULTIMO_DIA1, $VIATICOS_PERSONAL2 , $OBSERVACIONES_PERSONAL2 , $PERSONAL2_FECHA_ULTIMA_CARGA , $hDatosPERSONAL2,$ENVIARpersonal2,$IPpersonal2);  
+     echo $altaeventos->PERSONAL2($NOMBRE_PERSONAL2 ,$PUESTO_PERSONAL2 ,$WHAT_PERSONAL2 , $EMAIL_PERSONAL2 ,$FECHA_INICIO1,$FECHA_FINAL1,$NUMERO_DIAS1, $MONTO_BONO1,$MONTO_BONO_TOTAL1,$TOTAL1,$ULTIMO_DIA1,      $FECHA_PPAGO1,$FORMA_PAGO1,$FECHA_EFECTIVA1,$NOMBRE_RECIBIO1,$ADJUNTO_COMPROBANTE, $VIATICOS_PERSONAL2 , $OBSERVACIONES_PERSONAL2 , $PERSONAL2_FECHA_ULTIMA_CARGA , $hDatosPERSONAL2,$ENVIARpersonal2,$IPpersonal2);  
 	$_SESSION['NOMBRE_PERSONAL21']="";
 
 }
@@ -1065,7 +1077,13 @@ echo $conexion2->email($EMAILnombre, $html, $adjuntos, $embebida, $Subject,$smtp
 
 ///////////////////////////////PERSONAL///////////////////////////////////////
 if ($hDatosPERSONAL == 'hDatosPERSONAL' OR $ENVIARpersonal == 'ENVIARpersonal') {
-
+			  	   	   if( $_FILES["ADJUNTO_COMPROBANTEP"] == true){
+$ADJUNTO_COMPROBANTEP = $conexion->solocargar("ADJUNTO_COMPROBANTEP");
+}if($ADJUNTO_COMPROBANTEP=='2' or $ADJUNTO_COMPROBANTEP=='' or $ADJUNTO_COMPROBANTEP=='1'){
+ $ADJUNTO_COMPROBANTEP1 = "";	
+}else{
+ $ADJUNTO_COMPROBANTEP1 = $ADJUNTO_COMPROBANTEP;
+}
     $NOMBRE_PERSONAL = isset($_POST["NOMBRE_PERSONAL"]) ? $_POST["NOMBRE_PERSONAL"] : "";
     $PUESTO_PERSONAL = isset($_POST["PUESTO_PERSONAL"]) ? $_POST["PUESTO_PERSONAL"] : "";
     $WHAT_PERSONAL = isset($_POST["WHAT_PERSONAL"]) ? $_POST["WHAT_PERSONAL"] : "";
@@ -1078,6 +1096,12 @@ if ($hDatosPERSONAL == 'hDatosPERSONAL' OR $ENVIARpersonal == 'ENVIARpersonal') 
     $MONTO_BONO_TOTAL = isset($_POST["MONTO_BONO_TOTAL"]) ? $_POST["MONTO_BONO_TOTAL"] : "";
     $TOTAL = isset($_POST["TOTAL"]) ? $_POST["TOTAL"] : "";
     $ULTIMO_DIA = isset($_POST["ULTIMO_DIA"]) ? $_POST["ULTIMO_DIA"] : "";
+	
+    $FECHA_PPAGO = isset($_POST["FECHA_PPAGO"]) ? $_POST["FECHA_PPAGO"] : "";	
+    $FORMA_PAGO = isset($_POST["FORMA_PAGO"]) ? $_POST["FORMA_PAGO"] : "";
+    $FECHA_EFECTIVA = isset($_POST["FECHA_EFECTIVA"]) ? $_POST["FECHA_EFECTIVA"] : "";
+    $NOMBRE_RECIBIO = isset($_POST["NOMBRE_RECIBIO"]) ? $_POST["NOMBRE_RECIBIO"] : "";
+	
     $VIATICOS_PERSONAL = isset($_POST["VIATICOS_PERSONAL"]) ? $_POST["VIATICOS_PERSONAL"] : "";
     $OBSERVACIONES_PERSONAL = isset($_POST["OBSERVACIONES_PERSONAL"]) ? $_POST["OBSERVACIONES_PERSONAL"] : "";
     $PERSONAL_FECHA_ULTIMA_CARGA = isset($_POST["PERSONAL_FECHA_ULTIMA_CARGA"]) ? $_POST["PERSONAL_FECHA_ULTIMA_CARGA"] : "";
@@ -1099,6 +1123,13 @@ if ($hDatosPERSONAL == 'hDatosPERSONAL' OR $ENVIARpersonal == 'ENVIARpersonal') 
             $VIATICOS_PERSONAL,
             $TOTAL,
             $ULTIMO_DIA,
+			
+            $FECHA_PPAGO,
+            $FORMA_PAGO,
+            $FECHA_EFECTIVA,
+            $NOMBRE_RECIBIO,
+            $ADJUNTO_COMPROBANTEP,
+			
             $NUMERO_EVENTO,
             $OBSERVACIONES_PERSONAL,
             $PERSONAL_FECHA_ULTIMA_CARGA,
@@ -3023,6 +3054,20 @@ foreach($_FILES AS $ETQIETA => $VALOR){
 }	
 
 }
- 
+
+
+  if($IPpersonal2 == true and ( $_FILES["ADJUNTO_COMPROBANTE"] == true ) ){
+foreach($_FILES AS $ETQIETA => $VALOR){
+	echo $conexion->cargar($ETQIETA,'04personal2','3',$IPpersonal2);
+}	
+
+}
+
+  if($IPpersonal == true and ( $_FILES["ADJUNTO_COMPROBANTEP"] == true ) ){
+foreach($_FILES AS $ETQIETA => $VALOR){
+	echo $conexion->cargar($ETQIETA,'04personal','3',$IPpersonal);
+}	
+
+} 
  
 ?>
