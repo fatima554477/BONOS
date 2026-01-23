@@ -65,6 +65,24 @@ $sWhere2.="  $tables1.NOMBRE_FISCAL_EVENTO LIKE  '%".$search['NOMBRE_FISCAL_EVEN
 if($search['NOMBRE_PERSONAL']!=""){
 $sWhere2.="  $tables.NOMBRE_PERSONAL LIKE '%".$search['NOMBRE_PERSONAL']."%' OR ";}
 
+if($search['FECHA_PPAGO']!=""){
+$sWhere2.="  $tables.FECHA_PPAGO LIKE '%".$search['FECHA_PPAGO']."%' OR ";}
+
+if($search['FORMA_PAGO']!=""){
+$sWhere2.="  $tables.FORMA_PAGO LIKE '%".$search['FORMA_PAGO']."%' OR ";}
+
+if($search['FECHA_EFECTIVA']!=""){
+$sWhere2.="  $tables.FECHA_EFECTIVA LIKE '%".$search['FECHA_EFECTIVA']."%' OR ";}
+
+if($search['ADJUNTO_COMPROBANTEP']!=""){
+$sWhere2.="  $tables.ADJUNTO_COMPROBANTEP LIKE '%".$search['ADJUNTO_COMPROBANTEP']."%' OR ";}
+
+if($search['NOMBRE_RECIBIO']!=""){
+$sWhere2.="  $tables.NOMBRE_RECIBIO LIKE '%".$search['NOMBRE_RECIBIO']."%' OR ";}
+
+
+
+
 if($search['PUESTO_PERSONAL2']!=""){
 $sWhere2.="  $tables.PUESTO_PERSONAL2 LIKE '%".$search['PUESTO_PERSONAL2']."%' OR ";}
 

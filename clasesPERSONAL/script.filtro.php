@@ -51,7 +51,11 @@ var VIATICOS_PERSONAL=$("#VIATICOS_PERSONAL_1").val();
 var TOTAL=$("#TOTAL_1").val();
 var ULTIMO_DIA=$("#ULTIMO_DIA_1").val();
 var OBSERVACIONES_PERSONAL=$("#OBSERVACIONES_PERSONAL_1").val();
-var PERSONAL_FECHA_ULTIMA_CARGA=$("#PERSONAL_FECHA_ULTIMA_CARGA_1").val();
+var FECHA_PPAGO=$("#FECHA_PPAGO_1").val();
+var FORMA_PAGO=$("#FORMA_PAGO_1").val();
+var FECHA_EFECTIVA=$("#FECHA_EFECTIVA_1").val();
+var ADJUNTO_COMPROBANTEP=$("#ADJUNTO_COMPROBANTEP").val();
+var NOMBRE_RECIBIO=$("#NOMBRE_RECIBIO_1").val();
 var hDatosPERSONAL=$("#hDatosPERSONAL_1").val();
 
 
@@ -99,6 +103,12 @@ var hDatosPERSONAL=$("#hDatosPERSONAL_1").val();
 
 'PERSONAL_FECHA_ULTIMA_CARGA':PERSONAL_FECHA_ULTIMA_CARGA,
 
+'FECHA_PPAGO':FECHA_PPAGO,
+'FORMA_PAGO':FORMA_PAGO,
+'FECHA_EFECTIVA':FECHA_EFECTIVA,
+'ADJUNTO_COMPROBANTEP':ADJUNTO_COMPROBANTEP,
+'NOMBRE_RECIBIO':NOMBRE_RECIBIO,
+
 'hDatosPERSONAL':hDatosPERSONAL,
 
 
@@ -107,7 +117,7 @@ var hDatosPERSONAL=$("#hDatosPERSONAL_1").val();
 			'DEPARTAMENTO2':DEPARTAMENTO2
 			};
 			$("#loader").fadeIn('slow');
-			$.ajax({
+					$.ajax({
 				url:'BONOS/clasesPERSONAL/controlador_filtro.php',
 				type: 'POST',				
 				data: parametros,
@@ -121,5 +131,48 @@ var hDatosPERSONAL=$("#hDatosPERSONAL_1").val();
 			})
 		}
 /* terminaB1*/		
-		
+
+function pasara1_personal(pasara1_personal_id){
+	var checkBox = document.getElementById("pasarapersonal"+pasara1_personal_id);
+	var pasapersonal_text = "";
+	if (checkBox.checked == true){
+		pasapersonal_text = "si";
+	}else{
+		pasapersonal_text = "no";
+	}
+	  $.ajax({
+		url:'calendariodeeventos2/controladorAE.php',
+		method:'POST',
+		data:{pasara1_personal_id:pasara1_personal_id,pasapersonal_text:pasapersonal_text},
+		beforeSend:function(){
+		$('#mensajefiltro').html('cargando');
+	},
+		success:function(data){
+		load(1);			
+		$('#mensajefiltro').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+	}
+	});
+}
+
+function pasara1_personalAUT(pasara1_personalAUT_id){
+	var checkBox = document.getElementById("pasarapersonalAUT"+pasara1_personalAUT_id);
+	var pasapersonalAUT_text = "";
+	if (checkBox.checked == true){
+		pasapersonalAUT_text = "si";
+	}else{
+		pasapersonalAUT_text = "no";
+	}
+	  $.ajax({
+		url:'calendariodeeventos2/controladorAE.php',
+		method:'POST',
+		data:{pasara1_personalAUT_id:pasara1_personalAUT_id,pasapersonalAUT_text:pasapersonalAUT_text},
+		beforeSend:function(){
+		$('#mensajefiltro').html('cargando');
+	},
+		success:function(data){
+		load(1);			
+		$('#mensajefiltro').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+	}
+	});
+}
 	</script>
