@@ -67,11 +67,7 @@ $queryVISTAPREV = $conexion->listado_personal2($identioficador);
 
 			 </tr>
 			 
-			 			 			 			 			 <tr>
-			 <td width="30%"><label>TOTAL DEL BONO</label></td>
-			 <td width="70%"><input type="text" name="MONTO_BONO_TOTAL" value="'.$row["MONTO_BONO_TOTAL"].'"></td>
-
-			 </tr>
+		
 			 
 			 
 			 		 <tr>
@@ -91,7 +87,9 @@ $queryVISTAPREV = $conexion->listado_personal2($identioficador);
 			 </tr>
 			 
 			 
-			 
+			 			 <tr>
+			 <td width="30%"><label>MOTIVO DEL BONO</label></td>
+			 <td width="70%"><input type="text" name="OBSERVACIONES_PERSONAL" value="'.$row["OBSERVACIONES_PERSONAL"].'"></td></tr>
 			 
 			 
 			 			 <tr>
@@ -112,7 +110,7 @@ $queryVISTAPREV = $conexion->listado_personal2($identioficador);
 
 			 
 			 <tr>
-<td width="30%"><label>DOCUMENTO:</label></td>
+<td width="30%"><label>COMPROBACIÓN DE PAGO:</label></td>
 <td width="70%"><div class="col-md-6"> 
 
 <div id="drop_file_zone" ondrop="upload_file(event, \'ADJUNTO_COMPROBANTEP\');" ondragover="return false" style="width:300px;"> <p>Suelta aquí o busca tu archivo</p> <p> <input class="form-control form-control-sm" id="ADJUNTO_COMPROBANTEP" type="text" onkeydown="return false" onclick="file_explorer(\'ADJUNTO_COMPROBANTEP\');" style="width:250px;" value="'.$row["ADJUNTO_COMPROBANTEP"].'" required /> </p> <input type="file" name="ADJUNTO_COMPROBANTEP" id="nono"/> <div id="2ADJUNTO_COMPROBANTEP"> "'.$urlADJUNTO_COMPROBANTEP.'" </div> </div> </div>
@@ -120,17 +118,15 @@ $queryVISTAPREV = $conexion->listado_personal2($identioficador);
 
 </td>
 </tr>
-
 			 			 <tr>
 			 <td width="30%"><label>PAX QUE COBRO</label></td>
 			 <td width="70%"><input type="text" name="NOMBRE_RECIBIO" value="'.$row["NOMBRE_RECIBIO"].'"></td>
 			 </tr> 
 			 
-			 <tr>
-			 <td width="30%"><label>MOTIVO DEL BONO</label></td>
-			 <td width="70%"><input type="text" name="OBSERVACIONES_PERSONAL" value="'.$row["OBSERVACIONES_PERSONAL"].'"></td>
 
-			 </tr>  <tr>
+
+
+		  <tr>
 			 <td width="30%"><label>FECHA DE ÚLTIMA CARGA</label></td>
 			 <td width="70%"><input type="text" name="PERSONAL_FECHA_ULTIMA_CARGA" value="'.$row["PERSONAL_FECHA_ULTIMA_CARGA"].'"></td>
 			 </tr>  
@@ -186,7 +182,7 @@ var fileobj;
 	        form_data.append("IPpersonal",  $("#IPpersonal").val());
 	        $.ajax({
 	            type: 'POST',
-	            url: 'calendariodeeventos2/controladorAE.php',
+	            url: 'controladorAE.php',
 				  dataType: "html",
 	            contentType: false,
 	            processData: false,
@@ -216,7 +212,7 @@ $('#2'+nombre).html('<a target="_blank" href="includes/archivos/'+$.trim(respons
 $("#clickpersonal").click(function(){
 	
    $.ajax({  
-    url:"calendariodeeventos2/controladorAE.php",
+    url:"controladorAE.php",
     method:"POST",  
     data:$('#listado_personalform').serialize(),
 
