@@ -1076,18 +1076,17 @@ echo $conexion2->email($EMAILnombre, $html, $adjuntos, $embebida, $Subject,$smtp
  //include_once (__ROOT1__."/includes/crea_funciones.php"); 
 
 ///////////////////////////////PERSONAL///////////////////////////////////////
+
+
+
 if ($hDatosPERSONAL == 'hDatosPERSONAL' OR $ENVIARpersonal == 'ENVIARpersonal') {
-$ADJUNTO_COMPROBANTEP = isset($_POST["ADJUNTO_COMPROBANTEP"]) ? $_POST["ADJUNTO_COMPROBANTEP"] : "";
-			  	   	   if( $_FILES["ADJUNTO_COMPROBANTEP"] == true){
+		  	   	   if( $_FILES["ADJUNTO_COMPROBANTEP"] == true){
 $ADJUNTO_COMPROBANTEP = $conexion->solocargar("ADJUNTO_COMPROBANTEP");
 }if($ADJUNTO_COMPROBANTEP=='2' or $ADJUNTO_COMPROBANTEP=='' or $ADJUNTO_COMPROBANTEP=='1'){
  $ADJUNTO_COMPROBANTEP1 = "";	
 }else{
  $ADJUNTO_COMPROBANTEP1 = $ADJUNTO_COMPROBANTEP;
-
 }
-
-
     $NOMBRE_PERSONAL = isset($_POST["NOMBRE_PERSONAL"]) ? $_POST["NOMBRE_PERSONAL"] : "";
     $PUESTO_PERSONAL = isset($_POST["PUESTO_PERSONAL"]) ? $_POST["PUESTO_PERSONAL"] : "";
     $WHAT_PERSONAL = isset($_POST["WHAT_PERSONAL"]) ? $_POST["WHAT_PERSONAL"] : "";
@@ -1132,7 +1131,7 @@ $ADJUNTO_COMPROBANTEP = $conexion->solocargar("ADJUNTO_COMPROBANTEP");
             $FORMA_PAGO,
             $FECHA_EFECTIVA,
             $NOMBRE_RECIBIO,
-            $ADJUNTO_COMPROBANTEP,
+            $ADJUNTO_COMPROBANTEP1,
 			
             $NUMERO_EVENTO,
             $OBSERVACIONES_PERSONAL,

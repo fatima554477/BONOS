@@ -36,14 +36,14 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 			 </tr>
 			 
 			 			 			 <tr>
-			 <td width="30%"><label>FECHA_INICIO DEL EVENTO</label></td>
+			 <td width="30%"><label>FECHA_INICIO DE LA CORDINACIÓN</label></td>
 			 <td width="70%"><input type="date" name="FECHA_INICIO" value="'.$row["FECHA_INICIO"].'"></td>
 
 			 </tr>
 	
 			 
 			 			 <tr>
-			 <td width="30%"><label>FECHA FINAL DEL EVENTO</label></td>
+			 <td width="30%"><label>FECHA FINAL DE LA CORDINACIÓN</label></td>
 			 <td width="70%"><input type="date" name="FECHA_FINAL" value="'.$row["FECHA_FINAL"].'"></td>
 
 			 </tr>
@@ -111,7 +111,7 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 
 			 
 <tr>
-<td width="30%"><label>DOCUMENTO:</label></td>
+<td width="30%"><label>COMPROBANTE DE PAGO</label></td>
 <td width="70%"><div class="col-md-6"> 
 
 <div id="drop_file_zone" ondrop="upload_file(event, \'ADJUNTO_COMPROBANTEP\');" ondragover="return false" style="width:300px;"> <p>Suelta aquí o busca tu archivo</p> <p> <input class="form-control form-control-sm" id="ADJUNTO_COMPROBANTEP" type="text" onkeydown="return false" onclick="file_explorer(\'ADJUNTO_COMPROBANTEP\');" style="width:250px;" value="'.$row["ADJUNTO_COMPROBANTEP"].'" required /> </p> <input type="file" name="ADJUNTO_COMPROBANTEP" id="nono"/> <div id="2ADJUNTO_COMPROBANTEP"> "'.$urlADJUNTO_COMPROBANTEP.'" </div> </div> 
