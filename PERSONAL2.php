@@ -41,7 +41,8 @@
         $encabezadoA = '<select class="form-select mb-3" aria-label="Default select example" 
                         id="NOMBRE_PERSONAL2" required name="NOMBRE_PERSONAL2" 
                         onchange="getemployee2();">
-                       <option value="nada" selected>SELECIONA UNA OPCIÓN</option>';
+                       <option value="
+					  " selected>SELECIONA UNA OPCIÓN</option>';
 
         $queryper = $altaeventos->lista_colaboradoreventos2();
         $fondos = array("fff0df","f4ffdf","dfffed","dffeff","dfe8ff","efdfff","ffdffd","efdfff","ffdfe9");
@@ -278,6 +279,11 @@
                <th width="20%"style="background:#c9e8e8">ULTIMO DÍA PARA <br>COMPROBAR VIATICOS:</th>
                <th width="20%"style="background:#c9e8e8">MOTIVO DEL BONO</th>
 			   <?php } ?>
+			                  <th width="20%"style="background:#c9e8e8">FECHA DE PROGRAMACIÓN<br> DE PAGO</th>
+               <th width="20%"style="background:#c9e8e8">FORMA DE PAGO</th>
+               <th width="20%"style="background:#c9e8e8">FORMA EFECTIVA DE PAGO</th>
+               <th width="20%"style="background:#c9e8e8">COMPROBANTE DE PAGO</th>
+               <th width="20%"style="background:#c9e8e8">PAX QUE COBRO</th>
                <th width="20%"style="background:#c9e8e8">FECHA DE <br>ÚLTIMA CARGA</th>
           </tr>
           <?php
@@ -321,6 +327,11 @@
           <td ><?php echo $row["TOTAL1"]; ?></td>
           <td ><?php echo $row["ULTIMO_DIA"]; ?></td>
           <td ><?php echo $row["OBSERVACIONES_PERSONAL2"]; ?></td>
+		       <td ><?php echo $row["FECHA_PPAGO1"]; ?></td>
+               <td ><?php echo $row["FORMA_PAGO1"]; ?></td>
+               <td ><?php echo $row["FECHA_EFECTIVA1"]; ?></td>             
+              <td ><?php echo $urlADJUNTO_COMPROBANTE; ?></td>
+			   <td ><?php echo $row["NOMBRE_RECIBIO1"]; ?></td>
           <td ><?php echo $row["PERSONAL2_FECHA_ULTIMA_CARGA"]; ?></td>                        
           <td>
           <?php if($conexion->variablespermisos('','PERSONALNUEVO','modificar')=='si' and $var_bloquea_fecha=='no'){ ?><input type="button" name="view" value="MODIFICAR" id="<?php echo $row["id"]; ?>" class="btn btn-info btn-xs view_dataDATOSpersonal2modifica" />

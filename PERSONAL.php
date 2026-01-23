@@ -253,7 +253,8 @@ $puedeAutorizar = (
     1px 18px 6px rgba(16,16,16,0.4),
     1px 22px 10px rgba(16,16,16,0.2),
     1px 25px 35px rgba(16,16,16,0.2),
-    1px 30px 60px rgba(16,16,16,0.4);"id="mensajePERSONAL"></th></tr><?php } ?>
+    1px 30px 60px rgba(16,16,16,0.4);"  
+	id="mensajePERSONAL"></th></tr><?php } ?>
            
            
             </table>
@@ -304,17 +305,24 @@ $puedeAutorizar = (
                <th width="20%"style="background:#c9e8e8">MONTO <br>DE BONO</th>
                <th width="20%"style="background:#c9e8e8">TOTAL <br>DE BONO</th>
                <th width="20%"style="background:#c9e8e8">VIATICOS</th>
-               <th width="20%"style="background:#c9e8e8">TOTAL</th>
-			  
+               <th width="20%"style="background:#c9e8e8">TOTAL</th>			  
                <th width="20%"style="background:#c9e8e8">ULTIMO DÍA PARA <br>COMPROBAR VIATICOS:</th>
                <th width="20%"style="background:#c9e8e8">MOTIVO DEL BONO</th>
+			   
+               <th width="20%"style="background:#c9e8e8">FECHA DE PROGRAMACIÓN<br> DE PAGO</th>
+               <th width="20%"style="background:#c9e8e8">FORMA DE PAGO</th>
+               <th width="20%"style="background:#c9e8e8">FORMA EFECTIVA DE PAGO</th>
+               <th width="20%"style="background:#c9e8e8">COMPROBANTE DE PAGO</th>
+               <th width="20%"style="background:#c9e8e8">PAX QUE COBRO</th>
 			    <?php } ?>
                <th width="20%"style="background:#c9e8e8">FECHA DE <br>ÚLTIMA CARGA</th>
                </tr>
-               <?php
-               while($row = mysqli_fetch_array($querycontras))
-               {
-               ?>
+<?php
+$urlADJUNTO_COMPROBANTEP ='';
+while($row = mysqli_fetch_array($querycontras))
+{	
+	$urlADJUNTO_COMPROBANTEP = $conexion->descargararchivo($row["ADJUNTO_COMPROBANTEP"]);
+?>
                <tr style="background:#f5f9fc;text-align:center">
            
                <td style="text-align:center" >
@@ -366,6 +374,12 @@ $puedeAutorizar = (
 		  <?php } ?>
           <td ><?php echo $row["ULTIMO_DIA"]; ?></td>
                <td ><?php echo $row["OBSERVACIONES_PERSONAL"]; ?></td>
+			   
+               <td ><?php echo $row["FECHA_PPAGO"]; ?></td>
+               <td ><?php echo $row["FORMA_PAGO"]; ?></td>
+               <td ><?php echo $row["FECHA_EFECTIVA"]; ?></td>             
+             <td ><?php echo $urlADJUNTO_COMPROBANTEP; ?></td>
+			   <td ><?php echo $row["NOMBRE_RECIBIO"]; ?></td>
                <td ><?php echo $row["PERSONAL_FECHA_ULTIMA_CARGA"]; ?></td>                      
           <td>
           <?php if($conexion->variablespermisos('','PERSONAL','modificar')=='si' and $var_bloquea_fecha=='no'){ ?><input type="button" name="view" value="MODIFICAR" id="<?php echo $row["id"]; ?>" class="btn btn-info btn-xs view_dataDATOSpersonalmodifica" />

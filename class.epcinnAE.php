@@ -1853,7 +1853,31 @@ public function borra_CONTRATO($id){
 	
   ///////////////////////////// PERSONAL  /////////////////////////
 
-        public function PERSONAL($NOMBRE_PERSONAL ,$PUESTO_PERSONAL ,$WHAT_PERSONAL , $EMAIL_PERSONAL ,$FECHA_INICIO,$FECHA_FINAL,$NUMERO_DIAS, $MONTO_BONO,$MONTO_BONO_TOTAL,$VIATICOS_PERSONAL ,$TOTAL, $ULTIMO_DIA,$FECHA_PPAGO,$FORMA_PAGO,$FECHA_EFECTIVA,$NOMBRE_RECIBIO,$ADJUNTO_COMPROBANTEP,$NUMERO_EVENTO,$OBSERVACIONES_PERSONAL , $PERSONAL_FECHA_ULTIMA_CARGA , $hDatosPERSONAL,$ENVIARpersonal,$IPpersonal){
+        public function PERSONAL($NOMBRE_PERSONAL,
+            $PUESTO_PERSONAL,
+            $WHAT_PERSONAL,
+            $EMAIL_PERSONAL,
+            $FECHA_INICIO,
+            $FECHA_FINAL,
+            $NUMERO_DIAS,
+            $MONTO_BONO,
+            $MONTO_BONO_TOTAL,
+            $VIATICOS_PERSONAL,
+            $TOTAL,
+            $ULTIMO_DIA,
+			
+            $FECHA_PPAGO,
+            $FORMA_PAGO,
+            $FECHA_EFECTIVA,
+            $NOMBRE_RECIBIO,
+            $ADJUNTO_COMPROBANTEP1,
+			
+            $NUMERO_EVENTO,
+            $OBSERVACIONES_PERSONAL,
+            $PERSONAL_FECHA_ULTIMA_CARGA,
+            $hDatosPERSONAL,
+            $ENVIARpersonal,
+            $IPpersonal){
 		
     $conn = $this->db();
 	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';  
