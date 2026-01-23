@@ -484,7 +484,7 @@ echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 	$VIATICOS_PERSONAL12 = 0;
 	$TOTAL12 = 0;
     $colspan = 5;
-	$colspanFields = array(
+$colspanFields = array(
 		"NUMERO_EVENTO",
 		"NOMBRE_EVENTO",
 		"FECHA_INICIO_EVENTO",
@@ -506,10 +506,9 @@ echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 		"FECHA_EFECTIVA",
 		"ADJUNTO_COMPROBANTEP",
 		"NOMBRE_RECIBIO",
-		"FECHA_INICIO",
+	"FECHA_INICIO",
 		"FECHA_FINAL",
 		"NUMERO_DIAS"
-	);
 	);
 	foreach ($colspanFields as $colspanField) {
 		if ($database->plantilla_filtro($nombreTabla, $colspanField, $altaeventos, $DEPARTAMENTO) == "si") {
@@ -733,7 +732,17 @@ if ($database->plantilla_filtro($nombreTabla,"ULTIMO_DIA",$altaeventos,$DEPARTAM
 <?php  if($database->plantilla_filtro($nombreTabla,"PERSONAL_FECHA_ULTIMA_CARGA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['PERSONAL_FECHA_ULTIMA_CARGA'])); ?></td>
 <?php } ?>
 
+<td>
 
+    <input 
+        type="button" 
+        name="view" 
+        value="MODIFICAR" 
+        id="<?php echo $row["IDPERSONAL"]; ?>" 
+        class="btn btn-info btn-xs view_dataDATOSpersonalmodifica" 
+    />
+
+</td>
 			
 		</tr>
 			<?php

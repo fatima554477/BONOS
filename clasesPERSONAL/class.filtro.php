@@ -150,7 +150,7 @@ IF($sWhere2!=""){
 
 		
 		$sWhere3.="  order by $tables.id asc ";
-		$sql="SELECT $campos, 04altaeventos.id as id FROM $sWhere $sWhere3 LIMIT $offset,$per_page";
+		$sql="SELECT $campos, IDPERSONAL as id FROM $sWhere $sWhere3 LIMIT $offset,$per_page";
 		
 		$query=$this->mysqli->query($sql);
 		$sql1="SELECT $campos FROM $sWhere $sWhere3 ";
