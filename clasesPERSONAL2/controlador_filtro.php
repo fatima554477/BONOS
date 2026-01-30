@@ -159,6 +159,9 @@ $per_page=intval($_POST["per_page"]);
             <tr>
 <th style="background:#c9e8e8"></th>
 <th style="background:#c9e8e8">#</th>
+<th style="background:#c9e8e8">AUTORIZACIÓN <br>POR VYO</th>
+<th style="background:#c9e8e8">ADMIN</th>
+
 <?php /*inicia copiar y pegar iniciaA3*/ ?>
 
 <!--<hr/><H1>HTML FILTRO .PHP A3</H1><BR/>-->
@@ -246,6 +249,9 @@ if($database->plantilla_filtro($nombreTabla,"PERSONAL2_FECHA_ULTIMA_CARGA",$alta
             <tr>
 <td style="background:#c9e8e8"></td>
 <td style="background:#c9e8e8"></td>
+<td style="background:#c9e8e8"></td>
+<td style="background:#c9e8e8"></td>
+
 
 <?php  
 if($database->plantilla_filtro($nombreTabla,"NUMERO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8;text-align:center"><input type="text" class="form-control" id="NUMERO_EVENTO_2" value="<?php 
@@ -369,7 +375,7 @@ echo $PERSONAL2_FECHA_ULTIMA_CARGA; ?>"></td>
 	$MONTO_BONO_TOTAL12 = 0;
 	$VIATICOS_PERSONAL12 = 0;
 	$TOTAL12 = 0;
-	$colspan = 2;
+	$colspan = 5;
 	$colspanFields = array(
 		"NUMERO_EVENTO",
 		"NOMBRE_EVENTO",
@@ -412,8 +418,18 @@ echo $PERSONAL2_FECHA_ULTIMA_CARGA; ?>"></td>
                    fila.style.filter = 'none';
                    localStorage.removeItem('checkbox_' + id);
                }">
+
 </td>
-<td style="text-align:center" >
+<td style="text-align:center"><?php echo $row['id']; ?></td>
+<td style="text-align:center">
+<input type="checkbox" style="width:40PX;" class="form-check-input" id="pasarapersonal2<?php echo $row["id"]; ?>" name="pasarapersonal2<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>"  onclick="pasara1_personal2(<?php echo $row["id"]; ?>)"  	<?php if($row["autoriza"]=='si'){
+	echo "checked";
+} ?>/>
+</td>
+<td style="text-align:center">
+<input type="checkbox" style="width:40PX;" class="form-check-input" name="personal2[]" id="personal2" value="<?php echo $row["id"]; ?>"/>
+</td>
+
 <?php /*inicia copiar y pegar iniciaA5*/ ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center">
