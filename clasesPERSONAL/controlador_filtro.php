@@ -491,6 +491,7 @@ echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 	$VIATICOS_PERSONAL12 = 0;
 	$TOTAL12 = 0;
     $colspan = 5;
+
 $colspanFields = array(
 		"NUMERO_EVENTO",
 		"NOMBRE_EVENTO",
@@ -503,17 +504,7 @@ $colspanFields = array(
 		"PUESTO_PERSONAL2",
 		"WHAT_PERSONAL",
 		"EMAIL_PERSONAL2",
-		"TIPO_DE_MONEDA_1",
-		"INSTITUCION_FINANCIERA_1",
-	    "NUMERO_DE_CUENTA_DB_1",
-		"NUMERO_CLABE_1",
-		"FOTO_ESTADO_PROVEE",
-		"FECHA_PPAGO",
-		"FORMA_PAGO",
-		"FECHA_EFECTIVA",
-		"ADJUNTO_COMPROBANTEPP",
-		"NOMBRE_RECIBIO",
-	"FECHA_INICIO",
+		"FECHA_INICIO",
 		"FECHA_FINAL",
 		"NUMERO_DIAS"
 	);
@@ -638,7 +629,7 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_FINAL",$altaeventos,$DEPARTA
 <?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS'];?></td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['MONTO_BONO'];
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:right; padding-right:10px;"><?php echo $row['MONTO_BONO'];
 $MONTO_BONO12 += floatval(str_replace(',', '', $row['MONTO_BONO']));
 ?></td>
 <?php } ?>
@@ -647,11 +638,10 @@ $MONTO_BONO12 += floatval(str_replace(',', '', $row['MONTO_BONO']));
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TOTAL'];
+<?php  if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:right; padding-right:10px;"><?php echo $row['TOTAL'];
 $TOTAL12 += floatval(str_replace(',', '', $row['TOTAL']));
 ?></td>
 <?php } ?>
-
 
 
 
@@ -743,7 +733,7 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPA
         name="view" 
         value="MODIFICAR" 
         id="<?php echo $row["IDPERSONAL"]; ?>" 
-        class="btn btn-info btn-xs view_dataDATOSpersonalmodifica" 
+        class="btn btn-info btn-xs view_dataDATOSpersonalmodificaBONOS" 
     />
 
 </td>
@@ -757,12 +747,12 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPA
 	<tr style="border-top:4px solid #c9c9c9;">
 		<td style="text-align:right; padding-right:45px;" colspan="<?php echo $colspan; ?>"><strong style="font-size:16px">TOTALES</strong></td>
 		<?php if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
-			<td style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($MONTO_BONO12,2,'.',','); ?></strong></td>
+			<td style="text-align:right; padding-right:10px;"><strong style="font-size:16px">$<?php echo number_format($MONTO_BONO12,2,'.',','); ?></strong></td>
 		<?php } ?>
 	
 	
-		<?php if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
-			<td style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($TOTAL12,2,'.',','); ?></strong></td>
+	<?php if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td style="text-align:right; padding-right:10px;"><strong style="font-size:16px">$<?php echo number_format($TOTAL12,2,'.',','); ?></strong></td>
 		<?php } ?>
 
 	</tr>
