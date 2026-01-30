@@ -17,7 +17,9 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
  <form  id="listado_personalform"> 
       <div class="table-responsive">  
            <table class="table table-bordered">';
-    $row = mysqli_fetch_array($queryVISTAPREV);
+      $row = mysqli_fetch_array($queryVISTAPREV);
+    $numeroEvento = isset($row["NUMERO_EVENTO"]) ? htmlspecialchars($row["NUMERO_EVENTO"], ENT_QUOTES) : "";
+    $hDatosPersonal = isset($row["hDatosPERSONAL"]) ? htmlspecialchars($row["hDatosPERSONAL"], ENT_QUOTES) : "";
     
      $puedeBorrarAdjuntoPersonal = ($conexion->variablespermisos('','PERSONAL','borrar')=='si' && (!isset($var_bloquea_fecha) || $var_bloquea_fecha=='no'));
       $adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTEP"])));
@@ -46,8 +48,8 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 			 <td width="30%"><label>NOMBRE</label></td>
 			 <td width="70%">
 			 '.$altaeventos->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1').'
-			 <input type="hidden" name="NUMERO_EVENTO" value="'.$row["NUMERO_EVENTO"].'">
-			 <input type="hidden" name="hDatosPERSONAL" value="'.$row["hDatosPERSONAL"].'">
+			 <input type="hidden" name="NUMERO_EVENTO" value="'.$numeroEvento.'">
+			 <input type="hidden" name="hDatosPERSONAL" value="'.$hDatosPersonal.'">
 			 </td>
 			 </tr>
 			 
