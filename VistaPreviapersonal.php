@@ -42,10 +42,12 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
              $output .= '
 	
 
-			 <tr>
+ <tr>
 			 <td width="30%"><label>NOMBRE</label></td>
 			 <td width="70%">
 			 '.$altaeventos->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1').'
+			 <input type="hidden" name="NUMERO_EVENTO" value="'.$row["NUMERO_EVENTO"].'">
+			 <input type="hidden" name="hDatosPERSONAL" value="'.$row["hDatosPERSONAL"].'">
 			 </td>
 			 </tr>
 			 
