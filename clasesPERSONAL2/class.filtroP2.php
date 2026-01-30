@@ -80,9 +80,25 @@ $sWhere2.="  01DATOSBANCARIOS.NUMERO_CLABE_1 LIKE '%".$search['NUMERO_CLABE_1'].
 if($search['FOTO_ESTADO_PROVEE']!=""){
 $sWhere2.="  01DATOSBANCARIOS.FOTO_ESTADO_PROVEE LIKE '%".$search['FOTO_ESTADO_PROVEE']."%' OR ";}
 
+if($search['FECHA_PPAGO1']!=""){
+$sWhere2.="  $tables.FECHA_PPAGO1 LIKE '%".$search['FECHA_PPAGO1']."%' OR ";}
+
+if($search['FORMA_PAGO1']!=""){
+$sWhere2.="  $tables.FORMA_PAGO1 LIKE '%".$search['FORMA_PAGO1']."%' OR ";}
+
+if($search['FECHA_EFECTIVA1']!=""){
+$sWhere2.="  $tables.FECHA_EFECTIVA1 LIKE '%".$search['FECHA_EFECTIVA1']."%' OR ";}
+
+if($search['ADJUNTO_COMPROBANTE']!=""){
+$sWhere2.="  $tables.ADJUNTO_COMPROBANTE LIKE '%".$search['ADJUNTO_COMPROBANTE']."%' OR ";}
+
+if($search['NOMBRE_RECIBIO1']!=""){
+$sWhere2.="  $tables.NOMBRE_RECIBIO1 LIKE '%".$search['NOMBRE_RECIBIO1']."%' OR ";}
+
 
 if($search['NOMBRE_PERSONAL2']!=""){
 $sWhere2.="  $tables.NOMBRE_PERSONAL2 LIKE '%".$search['NOMBRE_PERSONAL2']."%' OR ";}
+
 if($search['FECHA_INICIO1']!=""){
 $sWhere2.="  $tables.FECHA_INICIO1 LIKE '%".$search['FECHA_INICIO1']."%' OR ";}
 if($search['FECHA_FINAL1']!=""){
