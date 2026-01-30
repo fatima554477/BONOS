@@ -3743,7 +3743,25 @@ $(document).on('click', '.view_dataDATOSpersonalmodifica', function(){
 });
 
 
+$(document).on('click', '.view_dataDATOSpersonalmodificaBONOS', function(){
+  var personal_id = $(this).attr("IDPERSONAL");
+  $.ajax({
+    url: "BONOS/VistaPreviapersonal.php",
+    method: "POST",
+    data: { personal_id: personal_id },
+    beforeSend: function(){  
+      $('#mensajePERSONAL').html('CARGANDO');
 
+      setTimeout(function(){
+        $('#mensajePERSONAL').html('');
+      }, 2000);
+    },    
+    success: function(data){
+      $('#personal_detalles').html(data);
+      $('#dataModal').modal('show');
+    }
+  });
+});
 
 $(document).on('click', '.view_dataDATOSpersonalborrar', function(){
 
