@@ -7,19 +7,26 @@
 $identioficador = isset($_POST["personal_id"])?$_POST["personal_id"]:'';
 if($identioficador != '')
 {
- $output = '';
-	require "controladorAE.php";
+require "controladorAE.php";
 	$conexion = NEW accesoclase();
 
 $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
- $output .= '
+    $row = mysqli_fetch_array($queryVISTAPREV);
+    if(!$row){
+        echo "<div class='alert alert-warning'>Registro no encontrado.</div>";
+        exit;
+    }
+    $numeroEvento = isset($row["NUMERO_EVENTO"]) ? htmlspecialchars((string) $row["NUMERO_EVENTO"], ENT_QUOTES) : "";
+    $hDatosPersonal = isset($row["hDatosPERSONAL"]) ? htmlspecialchars((string) $row["hDatosPERSONAL"], ENT_QUOTES) : "";
+    $hiddenFields = '<input type="hidden" name="NUMERO_EVENTO" value="'.$numeroEvento.'">'
+        .'<input type="hidden" name="hDatosPERSONAL" value="'.$hDatosPersonal.'">';
+
+ $output = '
  <div id="mensajePERSONAL"></div> 
  <form  id="listado_personalform"> 
+      '.$hiddenFields.'
       <div class="table-responsive">  
            <table class="table table-bordered">';
-      $row = mysqli_fetch_array($queryVISTAPREV);
-    $numeroEvento = isset($row["NUMERO_EVENTO"]) ? htmlspecialchars($row["NUMERO_EVENTO"], ENT_QUOTES) : "";
-    $hDatosPersonal = isset($row["hDatosPERSONAL"]) ? htmlspecialchars($row["hDatosPERSONAL"], ENT_QUOTES) : "";
     
      $puedeBorrarAdjuntoPersonal = ($conexion->variablespermisos('','PERSONAL','borrar')=='si' && (!isset($var_bloquea_fecha) || $var_bloquea_fecha=='no'));
       $adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTEP"])));
@@ -48,8 +55,6 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 			 <td width="30%"><label>NOMBRE</label></td>
 			 <td width="70%">
 			 '.$altaeventos->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1').'
-			 <input type="hidden" name="NUMERO_EVENTO" value="'.$numeroEvento.'">
-			 <input type="hidden" name="hDatosPERSONAL" value="'.$hDatosPersonal.'">
 			 </td>
 			 </tr>
 			 

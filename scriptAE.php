@@ -3744,7 +3744,7 @@ $(document).on('click', '.view_dataDATOSpersonalmodifica', function(){
 
 
 $(document).on('click', '.view_dataDATOSpersonalmodificaBONOS', function(){
-  var personal_id = $(this).attr("IDPERSONAL");
+  var personal_id = $(this).attr("id");
   $.ajax({
     url: "BONOS/VistaPreviapersonal.php",
     method: "POST",
