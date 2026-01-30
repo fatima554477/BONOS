@@ -451,11 +451,66 @@ function pasara1_personalAUT(pasara1_personalAUT_id){
 
 }
 
+///////////////////////////////////////PARA DAR DE ALTA ADMIN//////////////////////////////////
+function pasara1_personalADMIN(pasara1_personalADMIN_id){
+
+	var checkBox = document.getElementById("admin"+pasara1_personalADMIN_id);
+	var pasapersonalADMIN_text = "";
+	if (checkBox.checked == true){
+	pasapersonalADMIN_text = "si";
+	}else{
+	pasapersonalADMIN_text = "no";
+	}
+	  $.ajax({
+		url:'calendariodeeventos2/controladorAE.php',
+		method:'POST',
+		data:{pasara1_personalADMIN_id:pasara1_personalADMIN_id,pasapersonalADMIN_text:pasapersonalADMIN_text},
+		beforeSend:function(){
+		$('#mensajePERSONAL').html('cargando');
+	},
+		success:function(data){
+			
+	$("#reset_personal").load(location.href + " #reset_personal");			
+			
+		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+	}
+	});
+
+}
+
+
+
+///////////////////////////////////////PARA DAR DE ALTA ADMIN//////////////////////////////////
+function pasara1_personal2ADMIN(pasara1_personal2ADMIN_id){
+
+	var checkBox = document.getElementById("admin"+pasara1_personal2ADMIN_id);
+	var pasapersonal2ADMIN_text = "";
+	if (checkBox.checked == true){
+	pasapersonal2ADMIN_text = "si";
+	}else{
+	pasapersonal2ADMIN_text = "no";
+	}
+	  $.ajax({
+		url:'calendariodeeventos2/controladorAE.php',
+		method:'POST',
+		data:{pasara1_personal2ADMIN_id:pasara1_personal2ADMIN_id,pasapersonal2ADMIN_text:pasapersonal2ADMIN_text},
+		beforeSend:function(){
+		$('#mensajePERSONAL').html('cargando');
+	},
+		success:function(data){
+			
+	$("#reset_personal").load(location.href + " #reset_personal");			
+			
+		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+	}
+	});
+
+}
+
 
 
 
 function pasara1_personal2(pasara1_personal2_id){
-	//$('#personal2_detalles4').html();
 
 
 	var checkBox = document.getElementById("pasarapersonal2"+pasara1_personal2_id);
@@ -3723,7 +3778,48 @@ $(document).on('click', '.view_dataDATOSpersonalborrar', function(){
 	});
   //AGREGAR	 
   
- });	
+});	
+
+$(document).on('click', '.view_dataPERSONALadjuntoBorrar', function(){
+  var personal_id = $(this).data("personal");
+  var archivo = $(this).data("archivo");
+  var borra_ADJUNTO_PERSONAL = "borra_ADJUNTO_PERSONAL";
+  var $adjuntoItem = $(this).closest("li");
+
+  $('#personal_detalles3').html();
+  $('#dataModal3').modal('show');
+  $('#btnYes').click(function() {
+    $.ajax({
+     url: 'calendariodeeventos2/controladorAE.php',
+     method:"POST",
+     data:{IPpersonal:personal_id, archivo:archivo, borra_ADJUNTO_PERSONAL:borra_ADJUNTO_PERSONAL},
+     
+      beforeSend:function(){  
+      $('#mensajePERSONAL').html('CARGANDO'); 
+      },    
+     success:function(data){
+        $('#dataModal3').modal('hide');	   
+        $("#mensajePERSONAL").html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+        var $listaAdjuntos = $adjuntoItem.closest("ul");
+        $adjuntoItem.remove();
+        if($listaAdjuntos.find("li").length === 0){
+          $listaAdjuntos.remove();
+        }
+        var $inputAdjunto = $('#ADJUNTO_COMPROBANTEP');
+        if($inputAdjunto.length){
+          var actuales = $inputAdjunto.val()
+            .split(',')
+            .map(function(item){ return item.trim(); })
+            .filter(function(item){ return item !== '' && item !== '2' && item !== archivo; });
+          $inputAdjunto.val(actuales.join(','));
+        }
+        $("#reset_personal").load(location.href + " #reset_personal");
+        $("#reset_personal_resumen").load(location.href + " #reset_personal_resumen");
+        $("#reset_totales").load(location.href + " #reset_totales");
+     }
+    });
+  });
+});
 
 /////////////EMAIL/////////////////
 $(document).on('click', '#enviarimailPERSONAL', function(){
@@ -3882,6 +3978,53 @@ $('#mensajePERSONAL2').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().
 }
 });
 });
+
+
+
+$(document).on('click', '.view_dataPERSONAL2adjuntoBorrar', function(){
+  var personal_id = $(this).data("personal");
+  var archivo = $(this).data("archivo");
+  var borra_ADJUNTO_PERSONAL2 = "borra_ADJUNTO_PERSONAL2";
+  var $adjuntoItem = $(this).closest("li");
+
+  $('#personal_detalles3').html();
+  $('#dataModal3').modal('show');
+  $('#btnYes').click(function() {
+  $.ajax({
+     url: 'calendariodeeventos2/controladorAE.php',
+     method:"POST",
+     data:{IPpersonal2:personal_id, archivo:archivo, borra_ADJUNTO_PERSONAL2:borra_ADJUNTO_PERSONAL2},
+     
+      beforeSend:function(){  
+      $('#mensajePERSONAL2').html('CARGANDO'); 
+      },    
+     success:function(data){
+        $('#dataModal3').modal('hide');	   
+        $("#mensajePERSONAL2").html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+        var $listaAdjuntos = $adjuntoItem.closest("ul");
+        $adjuntoItem.remove();
+   if($listaAdjuntos.find("li").length === 0){
+          $listaAdjuntos.remove();
+        }
+        var $inputAdjunto = $('#ADJUNTO_COMPROBANTE');
+        if($inputAdjunto.length){
+          var actuales = $inputAdjunto.val()
+            .split(',')
+            .map(function(item){ return item.trim(); })
+            .filter(function(item){ return item !== '' && item !== '2' && item !== archivo; });
+          $inputAdjunto.val(actuales.join(','));
+        }
+        $("#reset_personal2").load(location.href + " #reset_personal2");
+        $("#reset_personal_resumen").load(location.href + " #reset_personal_resumen");
+        $("#reset_totales").load(location.href + " #reset_totales");
+     }
+    });
+  });
+});
+
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

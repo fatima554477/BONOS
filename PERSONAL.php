@@ -4,8 +4,11 @@ $eventoPermisos   = $altaeventos->var_altaeventos();
 $vendedorEvento   = isset($eventoPermisos['NOMBRE_VENDEDOR_id']) ? $eventoPermisos['NOMBRE_VENDEDOR_id'] : '';
 $usuarioActual    = isset($_SESSION['idem']) ? $_SESSION['idem'] : '';
 
-// ¿Tiene permiso PERSONALAUTORIZA (ver=si)?
+
 $tienePermisoPersonal = ($conexion->variablespermisos('', 'PERSONALAUTORIZA', 'ver') === 'si');
+$puedeVerAdmin = ($conexion->variablespermisos('', 'PERSO', 'ver') === 'si');
+$puedeGuardarAdmin = ($conexion->variablespermisos('', 'PERSO', 'guardar') === 'si');
+$puedeModificarAdmin = ($conexion->variablespermisos('', 'PERSO', 'modificar') === 'si');
 
 // Puede autorizar si es el vendedor del evento O si tiene PERSONALAUTORIZA=ver=si
 $puedeAutorizar = (
@@ -290,7 +293,9 @@ $puedeAutorizar = (
                <tr style="text-align:center">
                <th width="15%"style="background:#c9e8e8">AUTORIZACIÓN <br>POR V Y O</th> 
                <th width="15%"style="background:#c9e8e8">AUTORIZA<br>P y CG</th> 
-               <th width="15%"style="background:#c9e8e8">ADMIN</th> 
+                  <?php if($puedeVerAdmin){ ?>
+               <th width="15%"style="background:#c9e8e8">AUDITORÍA</th> 
+			   <?php } ?> 
                <th width="15%"style="background:#c9e8e8">ENVIAR <br>POR EMAIL</th>
                <th width="20%"style="background:#c9e8e8">NOMBRE</th>
                <th width="20%"style="background:#c9e8e8">PUESTO</th>
@@ -321,8 +326,27 @@ $puedeAutorizar = (
 $urlADJUNTO_COMPROBANTEP ='';
 while($row = mysqli_fetch_array($querycontras))
 {	
-	$urlADJUNTO_COMPROBANTEP = $conexion->descargararchivo($row["ADJUNTO_COMPROBANTEP"]);
+	$adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTEP"])));
+	if($row["ADJUNTO_COMPROBANTEP"]=="" or $row["ADJUNTO_COMPROBANTEP"]=='2' or empty($adjuntosComprobante)){
+		$urlADJUNTO_COMPROBANTEP = '';
+	}else{
+		$urlADJUNTO_COMPROBANTEP = "<ul class='list-unstyled mb-0'>";
+	foreach ($adjuntosComprobante as $adjuntoComprobante) {
+			if ($adjuntoComprobante == '' || $adjuntoComprobante == '2') {
+				continue;
+			}
+			$botonBorrarAdjunto = '';
+			if ($puedeBorrarAdjuntoPersonal) {
+				$botonBorrarAdjunto = " <button type='button' class='btn btn-link p-0 text-danger view_dataPERSONALadjuntoBorrar' data-personal='".$row["id"]."' data-archivo='".$adjuntoComprobante."'>Borrar</button>";
+			}
+			$urlADJUNTO_COMPROBANTEP .= "<li class='d-flex align-items-center gap-2'><a target='_blank' href='includes/archivos/".$adjuntoComprobante."'>Visualizar!</a>".$botonBorrarAdjunto."</li>";
+		}
+		$urlADJUNTO_COMPROBANTEP .= "</ul>";
+
+	}
+
 ?>
+
                <tr style="background:#f5f9fc;text-align:center">
            
                <td style="text-align:center" >
@@ -339,13 +363,23 @@ while($row = mysqli_fetch_array($querycontras))
      
            </td>
            
-               <td style="text-align:center" >
-               <input type="checkbox" style="width:40PX;" class="form-check-input" name="personal[]" id="personal" value="<?php echo $row["id"]; ?>"/> </td>
+      
 
               
 
+ 
+
+              <?php if($puedeVerAdmin){ ?>
 <td style="text-align:center">
-    <input type="checkbox" style="width:40PX;" class="form-check-input"   name="admin[]" id="admin" value="<?php echo $row["id"]; ?>"/> </td>  
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="pasara1_personalADMIN(<?php echo $row["id"]; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td> 
+			  <?php } ?>
+	
+	
+	
+	
+	
+	         <td style="text-align:center" >
+               <input type="checkbox" style="width:40PX;" class="form-check-input" name="personal[]" id="personal" value="<?php echo $row["id"]; ?>"/> </td>
 
 
  			   
@@ -363,15 +397,16 @@ while($row = mysqli_fetch_array($querycontras))
            
                <td ><?php echo $altaeventos->un_solo_colaborador($row["NOMBRE_PERSONAL"],'01empresa','CORREO_4'); ?>
            </td>
-		   	<?php if($conexion->variablespermisos('','PERSONALver','ver')=='si' ){ ?>
+		  
            <td ><?php echo $row["FECHA_INICIO"]; ?></td>
           <td ><?php echo $row["FECHA_FINAL"]; ?></td>
+		   	<?php if($conexion->variablespermisos('','PERSONALver','ver')=='si' ){ ?>
           <td ><?php echo $row["NUMERO_DIAS"]; ?></td>
           <td ><?php echo $row["MONTO_BONO"]; ?></td>
           <td ><?php echo $row["MONTO_BONO_TOTAL"]; ?></td>
           <td ><?php echo $row["VIATICOS_PERSONAL"]; ?></td>
           <td ><?php echo $row["TOTAL"]; ?></td>
-		  <?php } ?>
+		 
           <td ><?php echo $row["ULTIMO_DIA"]; ?></td>
                <td ><?php echo $row["OBSERVACIONES_PERSONAL"]; ?></td>
 			   
@@ -380,6 +415,7 @@ while($row = mysqli_fetch_array($querycontras))
                <td ><?php echo $row["FECHA_EFECTIVA"]; ?></td>             
              <td ><?php echo $urlADJUNTO_COMPROBANTEP; ?></td>
 			   <td ><?php echo $row["NOMBRE_RECIBIO"]; ?></td>
+			    <?php } ?>
                <td ><?php echo $row["PERSONAL_FECHA_ULTIMA_CARGA"]; ?></td>                      
           <td>
           <?php if($conexion->variablespermisos('','PERSONAL','modificar')=='si' and $var_bloquea_fecha=='no'){ ?><input type="button" name="view" value="MODIFICAR" id="<?php echo $row["id"]; ?>" class="btn btn-info btn-xs view_dataDATOSpersonalmodifica" />
@@ -390,17 +426,20 @@ while($row = mysqli_fetch_array($querycontras))
 </td>  <?php } ?>
           </tr>
           <?php
-          $PERSUNTOTAL1 += $row["MONTO_BONO_TOTAL"];
-          $PERVIAT1 += $row["VIATICOS_PERSONAL"];
-          $PERTOTAL1 += $row["TOTAL"];
-          $MONTO_BONO1 += $row["MONTO_BONO"];
-          $NUMERO_DIAS1 += $row["NUMERO_DIAS"];
+     if(!isset($row["admin"]) || $row["admin"] != 'si'){
+              $PERSUNTOTAL1 += $row["MONTO_BONO_TOTAL"];
+              $PERVIAT1 += $row["VIATICOS_PERSONAL"];
+              $PERTOTAL1 += $row["TOTAL"];
+              $MONTO_BONO1 += $row["MONTO_BONO"];
+              $NUMERO_DIAS1 += $row["NUMERO_DIAS"];
+          }
           }
           ?>
-           	<?php if($conexion->variablespermisos('','PERSONALver','ver')=='si' ){ ?>
+           	<?php if($conexion->variablespermisos('','TOTALES_PERSOADMIN','ver')=='si' ){ ?>
           <tr>
 		  <td></td>
 		  <td></td>
+		  
           <td colspan='8' style="text-align:right;"><strong style="font-size:16px">TOTALES</strong></td>
           <td style="text-align:center;"> <?php echo number_format($NUMERO_DIAS1); ?></td>
           <td style="text-align:center;">$ <?php echo number_format($MONTO_BONO1,2,'.',','); ?></td>

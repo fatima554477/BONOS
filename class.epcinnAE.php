@@ -1751,7 +1751,7 @@ public function borra_CONTRATO($id){
 	
 ///////////////////////////// PERSONAL2 2  /////////////////////////
 
-    public function PERSONAL2($NOMBRE_PERSONAL2 ,$PUESTO_PERSONAL2 ,$WHAT_PERSONAL2 , $EMAIL_PERSONAL2 ,$FECHA_INICIO1,$FECHA_FINAL1,$NUMERO_DIAS1, $MONTO_BONO1,$MONTO_BONO_TOTAL1,$TOTAL1,$ULTIMO_DIA1,      $FECHA_PPAGO1,$FORMA_PAGO1,$FECHA_EFECTIVA1,$NOMBRE_RECIBIO1,$ADJUNTO_COMPROBANTE, $VIATICOS_PERSONAL2 , $OBSERVACIONES_PERSONAL2 , $PERSONAL2_FECHA_ULTIMA_CARGA , $hDatosPERSONAL2,$ENVIARpersonal2,$IPpersonal2){
+    public function PERSONAL2($NOMBRE_PERSONAL2 ,$PUESTO_PERSONAL2 ,$WHAT_PERSONAL2 , $EMAIL_PERSONAL2 ,$FECHA_INICIO1,$FECHA_FINAL1,$NUMERO_DIAS1, $MONTO_BONO1,$MONTO_BONO_TOTAL1,$TOTAL1,$ULTIMO_DIA1,      $FECHA_PPAGO1,$FORMA_PAGO1,$FECHA_EFECTIVA1,$NOMBRE_RECIBIO1,$ADJUNTO_COMPROBANTE1, $VIATICOS_PERSONAL2 , $OBSERVACIONES_PERSONAL2 , $PERSONAL2_FECHA_ULTIMA_CARGA , $hDatosPERSONAL2,$ENVIARpersonal2,$IPpersonal2){
 		
     $conn = $this->db();
 	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:''; 
@@ -1789,7 +1789,7 @@ public function borra_CONTRATO($id){
     FECHA_EFECTIVA1 = '".$FECHA_EFECTIVA1."' , 
 	
     NOMBRE_RECIBIO1 = '".$NOMBRE_RECIBIO1."' , 
-    ADJUNTO_COMPROBANTE = '".$ADJUNTO_COMPROBANTE."' , 
+    ADJUNTO_COMPROBANTE = '".$ADJUNTO_COMPROBANTE1."' , 
  
     VIATICOS_PERSONAL2 = '".$VIATICOS_PERSONAL2."' , 
     OBSERVACIONES_PERSONAL2 = '".$OBSERVACIONES_PERSONAL2."' ,
@@ -1797,7 +1797,7 @@ public function borra_CONTRATO($id){
     where id = '".$IPpersonal2."' ;  ";
 
     $var2 = "insert into 04personal2 (NOMBRE_PERSONAL2, PUESTO_PERSONAL2, WHAT_PERSONAL2, EMAIL_PERSONAL2,FECHA_INICIO1,FECHA_FINAL1,NUMERO_DIAS1,MONTO_BONO1, MONTO_BONO_TOTAL1, TOTAL1, ULTIMO_DIA1,FECHA_PPAGO1,FORMA_PAGO1,FECHA_EFECTIVA1,NOMBRE_RECIBIO1,ADJUNTO_COMPROBANTE,
-    VIATICOS_PERSONAL2, OBSERVACIONES_PERSONAL2, PERSONAL2_FECHA_ULTIMA_CARGA, hDatosPERSONAL2, idRelacion, idPersonal) values ( '".$NOMBRE_PERSONAL2."' , '".$PUESTO_PERSONAL2."' , '".$WHAT_PERSONAL2."' , '".$EMAIL_PERSONAL2."' , '".$FECHA_INICIO1."' , '".$FECHA_FINAL1."' , '".$NUMERO_DIAS1."' , '".$MONTO_BONO1."' , '".$MONTO_BONO_TOTAL1."' , '".$TOTAL1."' , '".$ULTIMO_DIA1."' , '".$FECHA_PPAGO1."' , '".$FORMA_PAGO1."' , '".$FECHA_EFECTIVA1."' , '".$NOMBRE_RECIBIO1."' , '".$ADJUNTO_COMPROBANTE."' , '".$VIATICOS_PERSONAL2."' , '".$OBSERVACIONES_PERSONAL2."' , '".$PERSONAL2_FECHA_ULTIMA_CARGA."' , '".$hDatosPERSONAL2."' , '".$session."'  , '".$idPersonal[0]."' ); ";		
+    VIATICOS_PERSONAL2, OBSERVACIONES_PERSONAL2, PERSONAL2_FECHA_ULTIMA_CARGA, hDatosPERSONAL2, idRelacion, idPersonal) values ( '".$NOMBRE_PERSONAL2."' , '".$PUESTO_PERSONAL2."' , '".$WHAT_PERSONAL2."' , '".$EMAIL_PERSONAL2."' , '".$FECHA_INICIO1."' , '".$FECHA_FINAL1."' , '".$NUMERO_DIAS1."' , '".$MONTO_BONO1."' , '".$MONTO_BONO_TOTAL1."' , '".$TOTAL1."' , '".$ULTIMO_DIA1."' , '".$FECHA_PPAGO1."' , '".$FORMA_PAGO1."' , '".$FECHA_EFECTIVA1."' , '".$NOMBRE_RECIBIO1."' , '".$ADJUNTO_COMPROBANTE1."' , '".$VIATICOS_PERSONAL2."' , '".$OBSERVACIONES_PERSONAL2."' , '".$PERSONAL2_FECHA_ULTIMA_CARGA."' , '".$hDatosPERSONAL2."' , '".$session."'  , '".$idPersonal[0]."' ); ";		
     
      if($ENVIARpersonal2=='ENVIARpersonal2'){
      mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
@@ -1911,7 +1911,7 @@ public function borra_CONTRATO($id){
          FECHA_EFECTIVA = '".$FECHA_EFECTIVA."' , 
 		 
          NOMBRE_RECIBIO = '".$NOMBRE_RECIBIO."' , 
-         ADJUNTO_COMPROBANTEP = '".$ADJUNTO_COMPROBANTEP."' , 
+        ADJUNTO_COMPROBANTEP = '".$ADJUNTO_COMPROBANTEP1."' , 
 		 
          NUMERO_EVENTO = '".$NUMERO_EVENTO."' , 		 
 		 OBSERVACIONES_PERSONAL = '".$OBSERVACIONES_PERSONAL."' ,
@@ -1919,7 +1919,7 @@ public function borra_CONTRATO($id){
 		 hDatosPERSONAL = '".$hDatosPERSONAL."'
 		 where id = '".$IPpersonal."' ;  ";
 	
-		 $var2 = "insert into 04personal (NOMBRE_PERSONAL, PUESTO_PERSONAL, WHAT_PERSONAL, EMAIL_PERSONAL,FECHA_INICIO,FECHA_FINAL,NUMERO_DIAS,MONTO_BONO,MONTO_BONO_TOTAL,VIATICOS_PERSONAL,TOTAL,ULTIMO_DIA,FECHA_PPAGO,FORMA_PAGO,FECHA_EFECTIVA,NOMBRE_RECIBIO,ADJUNTO_COMPROBANTEP,NUMERO_EVENTO,  OBSERVACIONES_PERSONAL, PERSONAL_FECHA_ULTIMA_CARGA, hDatosPERSONAL, idRelacion, idPersonal) values ( '".$NOMBRE_PERSONAL."' , '".$PUESTO_PERSONAL."' , '".$WHAT_PERSONAL."' , '".$EMAIL_PERSONAL."' , '".$FECHA_INICIO."' , '".$FECHA_FINAL."' , '".$NUMERO_DIAS."' , '".$MONTO_BONO."' , '".$MONTO_BONO_TOTAL."' , '".$VIATICOS_PERSONAL."' , '".$TOTAL."' , '".$ULTIMO_DIA."' , '".$FECHA_PPAGO."' , '".$FORMA_PAGO."' , '".$FECHA_EFECTIVA."' , '".$NOMBRE_RECIBIO."' , '".$ADJUNTO_COMPROBANTEP."' , '".$NUMERO_EVENTO."' , '".$OBSERVACIONES_PERSONAL."' , '".$PERSONAL_FECHA_ULTIMA_CARGA."' , '".$hDatosPERSONAL."' , '".$session."' , '".$idPersonal[0]."'); ";		
+		 $var2 = "insert into 04personal (NOMBRE_PERSONAL, PUESTO_PERSONAL, WHAT_PERSONAL, EMAIL_PERSONAL,FECHA_INICIO,FECHA_FINAL,NUMERO_DIAS,MONTO_BONO,MONTO_BONO_TOTAL,VIATICOS_PERSONAL,TOTAL,ULTIMO_DIA,FECHA_PPAGO,FORMA_PAGO,FECHA_EFECTIVA,NOMBRE_RECIBIO,ADJUNTO_COMPROBANTEP,NUMERO_EVENTO,  OBSERVACIONES_PERSONAL, PERSONAL_FECHA_ULTIMA_CARGA, hDatosPERSONAL, idRelacion, idPersonal) values ( '".$NOMBRE_PERSONAL."' , '".$PUESTO_PERSONAL."' , '".$WHAT_PERSONAL."' , '".$EMAIL_PERSONAL."' , '".$FECHA_INICIO."' , '".$FECHA_FINAL."' , '".$NUMERO_DIAS."' , '".$MONTO_BONO."' , '".$MONTO_BONO_TOTAL."' , '".$VIATICOS_PERSONAL."' , '".$TOTAL."' , '".$ULTIMO_DIA."' , '".$FECHA_PPAGO."' , '".$FORMA_PAGO."' , '".$FECHA_EFECTIVA."' , '".$NOMBRE_RECIBIO."' , '".$ADJUNTO_COMPROBANTEP1."' , '".$NUMERO_EVENTO."' , '".$OBSERVACIONES_PERSONAL."' , '".$PERSONAL_FECHA_ULTIMA_CARGA."' , '".$hDatosPERSONAL."' , '".$session."' , '".$idPersonal[0]."'); ";		
 			
 	    if($ENVIARpersonal=='ENVIARpersonal'){
 		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
@@ -1958,13 +1958,71 @@ public function borra_CONTRATO($id){
 		return $arrayquery = mysqli_query($conn,$variablequery);
 	}
 	
-	    public function borra_PERSONAL($id){
+    public function borra_PERSONAL($id){
 		$conn = $this->db();
 		$variablequery = "delete from 04personal where id = '".$id."' ";
 		$arrayquery = mysqli_query($conn,$variablequery);
 		RETURN 
 		
 		"<P style='color:green;font-size:25px;'>ELEMENTO BORRADO</P>";
+	}
+
+public function borra_ADJUNTO_PERSONAL($id, $archivo){
+		$conn = $this->db();
+		$archivo = trim($archivo);
+		if($archivo == ''){
+			return "<P style='color:red;font-size:25px;'>ARCHIVO NO ENCONTRADO</P>";
+		}
+
+		$consulta = mysqli_query($conn, "select ADJUNTO_COMPROBANTEP from 04personal where id = '".$id."' limit 1");
+		$fila = mysqli_fetch_array($consulta, MYSQLI_ASSOC);
+		$adjuntos = array();
+		if($fila && isset($fila["ADJUNTO_COMPROBANTEP"])){
+			$adjuntos = array_filter(array_map('trim', explode(',', $fila["ADJUNTO_COMPROBANTEP"])), function($valor){
+				return $valor !== '' && $valor !== '2';
+			});
+		}
+		$adjuntos = array_values(array_filter($adjuntos, function($valor) use ($archivo){
+			return $valor !== $archivo;
+		}));
+		$valorAdjuntos = implode(',', $adjuntos);
+		mysqli_query($conn, "update 04personal set ADJUNTO_COMPROBANTEP = '".$valorAdjuntos."' where id = '".$id."' ");
+
+		$archivoPath = __ROOT3__.'/includes/archivos/'.$archivo;
+		if(file_exists($archivoPath)){
+			unlink($archivoPath);
+		}
+
+		return "<P style='color:green;font-size:25px;'>ARCHIVO BORRADO</P>";
+	}
+
+	public function borra_ADJUNTO_PERSONAL2($id, $archivo){
+		$conn = $this->db();
+		$archivo = trim($archivo);
+		if($archivo == ''){
+			return "<P style='color:red;font-size:25px;'>ARCHIVO NO ENCONTRADO</P>";
+		}
+
+		$consulta = mysqli_query($conn, "select ADJUNTO_COMPROBANTE from 04personal2 where id = '".$id."' limit 1");
+		$fila = mysqli_fetch_array($consulta, MYSQLI_ASSOC);
+		$adjuntos = array();
+		if($fila && isset($fila["ADJUNTO_COMPROBANTE"])){
+			$adjuntos = array_filter(array_map('trim', explode(',', $fila["ADJUNTO_COMPROBANTE"])), function($valor){
+				return $valor !== '' && $valor !== '2';
+			});
+		}
+		$adjuntos = array_values(array_filter($adjuntos, function($valor) use ($archivo){
+			return $valor !== $archivo;
+		}));
+		$valorAdjuntos = implode(',', $adjuntos);
+		mysqli_query($conn, "update 04personal2 set ADJUNTO_COMPROBANTE = '".$valorAdjuntos."' where id = '".$id."' ");
+
+		$archivoPath = __ROOT3__.'/includes/archivos/'.$archivo;
+		if(file_exists($archivoPath)){
+			unlink($archivoPath);
+		}
+
+		return "<P style='color:green;font-size:25px;'>ARCHIVO BORRADO</P>";
 	}
 
 	
@@ -2086,10 +2144,50 @@ public function actualizapersonalAUT($pasara1_personalAUT_id, $pasapersonalAUT_t
     ";
     mysqli_query($conn, $var1) or die('P156'.mysqli_error($conn));
 
-    return "Actualizado";
+  return "Actualizado";
 }
 
-    
+/////////////////////////////////////////PARA ADMIN/////////////////////////////////////
+public function actualizapersonalADMIN($pasara1_personalADMIN_id, $pasapersonalADMIN_text){
+
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	if($session != ''){
+		$idPersonal = (int)$pasara1_personalADMIN_id;
+		$valor = ($pasapersonalADMIN_text === 'si') ? 'si' : 'no';
+
+		$var1 = "
+			UPDATE 04personal
+			SET admin = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+
+	}
+}
+
+/////////////////////////////////////////PARA ADMIN/////////////////////////////////////
+public function actualizapersonal2ADMIN($pasara1_personal2ADMIN_id, $pasapersonal2ADMIN_text){
+
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	if($session != ''){
+		$idPersonal = (int)$pasara1_personal2ADMIN_id;
+		$valor = ($pasapersonal2ADMIN_text === 'si') ? 'si' : 'no';
+
+		$var1 = "
+			UPDATE 04personal2
+			SET admin = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+
+	}
+}    
 //////////////////  vehiculos eventos ///////////////////////////////////////////////
 
     public function VEHICULO($VEHICULOSEVE_VEHICULO , $VEHICULOSEVE_CANTIDAD , $VEHICULOSEVE_ENTREGA ,$VEHICULOSEVE_FOTO, $VEHICULOSEVE_LUGAR , $VEHICULOSEVE_HORA , $VEHICULOSEVE_DEVOLU , $VEHICULOSEVE_LUDEVO , $VEHICULOSEVE_HORADEVO , $VEHICULOSEVE_SOLICITUD , $VEHICULOSEVE_DIAS , $VEHICULOSEVE_COSTO , $VEHICULOSEVE_IVA, $VEHICULOSEVE_SUB , $PRECIOPESOS_SOFTWARE , $VEHICULOSEVE_OBSERVA ,$COLORV,$PLACASV, $HVEHICULOSEVE,$enviarVEHICULOSEVE,$IpVEHICULOSEVE){
