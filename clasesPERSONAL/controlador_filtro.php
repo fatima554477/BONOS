@@ -538,7 +538,7 @@ $colspanFields = array(
 <?php /*inicia copiar y pegar iniciaA5*/ ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center">
-<a href="calendarioDEeventos2.php?idevento=<?php echo $row['id']; ?>"><?php echo $row['NUMERO_EVENTO'];?></a>
+<a href="calendarioDEeventos2.php?idevento=<?php echo $row['IDPERSONAL']; ?>"><?php echo $row['NUMERO_EVENTO'];?></a>
 </td>
 <?php } ?>
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NOMBRE_EVENTO'];?></td>
@@ -726,23 +726,35 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPA
 <?php  if($database->plantilla_filtro($nombreTabla,"PERSONAL_FECHA_ULTIMA_CARGA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['PERSONAL_FECHA_ULTIMA_CARGA'])); ?></td>
 <?php } ?>
 
+
+
 <td>
+    <?php $personalId = !empty($row["PERSONAL_ID"]) ? $row["PERSONAL_ID"] : $row["id"]; ?>
 
     <input 
         type="button" 
         name="view" 
         value="MODIFICAR" 
-        id="<?php echo $row["IDPERSONAL"]; ?>" 
+        id="<?php echo $personalId; ?>" 
         class="btn btn-info btn-xs view_dataDATOSpersonalmodificaBONOS" 
     />
 
+
 </td>
+
 			
+
 		</tr>
+
 			<?php
+
 			$finales++;
+
 		}	
+
 	?>
+
+
 
 	<tr style="border-top:4px solid #c9c9c9;">
 		<td style="text-align:right; padding-right:45px;" colspan="<?php echo $colspan; ?>"><strong style="font-size:16px">TOTALES</strong></td>
