@@ -434,7 +434,7 @@ echo $PERSONAL2_FECHA_ULTIMA_CARGA; ?>"></td>
 	$VIATICOS_PERSONAL12 = 0;
 	$TOTAL12 = 0;
 	$colspan = 5;
-	$colspanFields = array(
+$colspanFields = array(
 		"NUMERO_EVENTO",
 		"NOMBRE_EVENTO",
 		"FECHA_INICIO_EVENTO",
@@ -444,19 +444,9 @@ echo $PERSONAL2_FECHA_ULTIMA_CARGA; ?>"></td>
 		"PUESTO_PERSONAL2",
 		"WHAT_PERSONAL2",
 		"EMAIL_PERSONAL2",
-		"TIPO_DE_MONEDA_1",
-		"INSTITUCION_FINANCIERA_1",
-	    "NUMERO_DE_CUENTA_DB_1",
-		"NUMERO_CLABE_1",
-		"FOTO_ESTADO_PROVEE",
-		"FECHA_PPAGO1",
-		"FORMA_PAGO1",
-		"FECHA_EFECTIVA1",
-		"ADJUNTO_COMPROBANTE",
-		"NOMBRE_RECIBIO1",
 		"FECHA_INICIO1",
-		"FECHA_FINAL1",
-		"NUMERO_DIAS1"
+	
+		
 	);
 	foreach ($colspanFields as $colspanField) {
 		if ($database->plantilla_filtro($nombreTabla, $colspanField, $altaeventos, $DEPARTAMENTO) == "si") {
@@ -563,7 +553,10 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_FINAL1",$altaeventos,$DEPART
 </td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS1'];?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS1'];
+$NUMERO_DIAS112 += floatval($row['NUMERO_DIAS1']);
+
+?></td>
 <?php } ?>
 
 
@@ -681,6 +674,9 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA1",$altaeventos,$DEP
 	
 	<tr style="border-top:4px solid #c9c9c9;">
 		<td style="text-align:right; padding-right:45px;" colspan="<?php echo $colspan; ?>"><strong style="font-size:16px">TOTALES</strong></td>
+					<?php if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS1",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td style="text-align:center;"><strong style="font-size:16px"><?php echo number_format($NUMERO_DIAS112); ?></strong></td>
+		<?php } ?>
 		<?php if($database->plantilla_filtro($nombreTabla,"MONTO_BONO1",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
 			<td style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($MONTO_BONO12,2,'.',','); ?></strong></td>
 		<?php } ?>
