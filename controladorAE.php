@@ -1236,14 +1236,45 @@ if($pasara1_personalADMIN_id!='' and ($pasapersonalADMIN_text=='si' or $pasapers
 echo $altaeventos->actualizapersonalADMIN ($pasara1_personalADMIN_id , $pasapersonalADMIN_text  );
 }
 
+			  ///////////////////////////////VYO////////////////////////
+$pasara1_personalVYO_id= isset($_POST["pasara1_personalVYO_id"])?$_POST["pasara1_personalVYO_id"]:"";
+$pasapersonalVYO_text= isset($_POST["pasapersonalVYO_text"])?$_POST["pasapersonalVYO_text"]:"";
 
-///////////////////////////////ADMIN////////////////////////
+if($pasara1_personalVYO_id!='' and ($pasapersonalVYO_text=='si' or $pasapersonalVYO_text=='no') ){
+echo $altaeventos->actualizapersonalVYO ($pasara1_personalVYO_id , $pasapersonalVYO_text  );
+}
+
+			  ///////////////////////////////DIRECCION////////////////////////
+$pasara1_personalDIRECCION_id= isset($_POST["pasara1_personalDIRECCION_id"])?$_POST["pasara1_personalDIRECCION_id"]:"";
+$pasapersonalDIRECCION_text= isset($_POST["pasapersonalDIRECCION_text"])?$_POST["pasapersonalDIRECCION_text"]:"";
+
+if($pasara1_personalDIRECCION_id!='' and ($pasapersonalDIRECCION_text=='si' or $pasapersonalDIRECCION_text=='no') ){
+echo $altaeventos->actualizapersonalDIRECCION ($pasara1_personalDIRECCION_id , $pasapersonalDIRECCION_text  );
+}
+///////////////////////////////ADMIN2////////////////////////
 $pasara1_personal2ADMIN_id= isset($_POST["pasara1_personal2ADMIN_id"])?$_POST["pasara1_personal2ADMIN_id"]:"";
 $pasapersonal2ADMIN_text= isset($_POST["pasapersonal2ADMIN_text"])?$_POST["pasapersonal2ADMIN_text"]:"";
 
 if($pasara1_personal2ADMIN_id!='' and ($pasapersonal2ADMIN_text=='si' or $pasapersonalADMIN_text=='no') ){
 echo $altaeventos->actualizapersonal2ADMIN ($pasara1_personal2ADMIN_id , $pasapersonal2ADMIN_text  );
 }
+
+///////////////////////////////VYO2////////////////////////
+$pasara1_personal2VYO_id= isset($_POST["pasara1_personal2VYO_id"])?$_POST["pasara1_personal2VYO_id"]:"";
+$pasapersonal2VYO_text= isset($_POST["pasapersonal2VYO_text"])?$_POST["pasapersonal2VYO_text"]:"";
+
+if($pasara1_personal2VYO_id!='' and ($pasapersonal2VYO_text=='si' or $pasapersonalVYO_text=='no') ){
+echo $altaeventos->actualizapersonal2VYO ($pasara1_personal2VYO_id , $pasapersonal2VYO_text  );
+}
+
+///////////////////////////////DIRECCION2////////////////////////
+$pasara1_personal2DIRECCION_id= isset($_POST["pasara1_personal2DIRECCION_id"])?$_POST["pasara1_personal2DIRECCION_id"]:"";
+$pasapersonal2DIRECCION_text= isset($_POST["pasapersonal2DIRECCION_text"])?$_POST["pasapersonal2DIRECCION_text"]:"";
+
+if($pasara1_personal2DIRECCION_id!='' and ($pasapersonal2DIRECCION_text=='si' or $pasapersonalDIRECCION_text=='no') ){
+echo $altaeventos->actualizapersonal2DIRECCION ($pasara1_personal2DIRECCION_id , $pasapersonal2DIRECCION_text  );
+}
+
 
 
 if($PERSONAL_ENVIAR_IMAIL ==true){

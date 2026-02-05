@@ -2167,6 +2167,46 @@ public function actualizapersonalADMIN($pasara1_personalADMIN_id, $pasapersonalA
 
 	}
 }
+/////////////////////////////////////////PARA VYO/////////////////////////////////////
+public function actualizapersonalVYO($pasara1_personalVYO_id, $pasapersonalVYO_text){
+
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	if($session != ''){
+		$idPersonal = (int)$pasara1_personalVYO_id;
+		$valor = ($pasapersonalVYO_text === 'si') ? 'si' : 'no';
+
+		$var1 = "
+			UPDATE 04personal
+			SET VYO = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+
+	}
+}
+/////////////////////////////////////////PARA DIRECCION/////////////////////////////////////
+public function actualizapersonalDIRECCION($pasara1_personalDIRECCION_id, $pasapersonalDIRECCION_text){
+
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	if($session != ''){
+		$idPersonal = (int)$pasara1_personalDIRECCION_id;
+		$valor = ($pasapersonalDIRECCION_text === 'si') ? 'si' : 'no';
+
+		$var1 = "
+			UPDATE 04personal
+			SET DIRECCION = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+
+	}
+}
 
 /////////////////////////////////////////PARA ADMIN/////////////////////////////////////
 public function actualizapersonal2ADMIN($pasara1_personal2ADMIN_id, $pasapersonal2ADMIN_text){
@@ -2187,7 +2227,50 @@ public function actualizapersonal2ADMIN($pasara1_personal2ADMIN_id, $pasapersona
 		return "Actualizado";
 
 	}
-}    
+}   
+
+/////////////////////////////////////////PARA VYO/////////////////////////////////////
+public function actualizapersonal2VYO($pasara1_personal2VYO_id, $pasapersonal2VYO_text){
+
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	if($session != ''){
+		$idPersonal = (int)$pasara1_personal2VYO_id;
+		$valor = ($pasapersonal2VYO_text === 'si') ? 'si' : 'no';
+
+		$var1 = "
+			UPDATE 04personal2
+			SET VYO = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+
+	}
+}
+
+
+/////////////////////////////////////////PARA DIRECCION/////////////////////////////////////
+public function actualizapersonal2DIRECCION($pasara1_personal2DIRECCION_id, $pasapersonal2DIRECCION_text){
+
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	if($session != ''){
+		$idPersonal = (int)$pasara1_personal2DIRECCION_id;
+		$valor = ($pasapersonal2DIRECCION_text === 'si') ? 'si' : 'no';
+
+		$var1 = "
+			UPDATE 04personal2
+			SET DIRECCION = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+
+	}
+} 
 //////////////////  vehiculos eventos ///////////////////////////////////////////////
 
     public function VEHICULO($VEHICULOSEVE_VEHICULO , $VEHICULOSEVE_CANTIDAD , $VEHICULOSEVE_ENTREGA ,$VEHICULOSEVE_FOTO, $VEHICULOSEVE_LUGAR , $VEHICULOSEVE_HORA , $VEHICULOSEVE_DEVOLU , $VEHICULOSEVE_LUDEVO , $VEHICULOSEVE_HORADEVO , $VEHICULOSEVE_SOLICITUD , $VEHICULOSEVE_DIAS , $VEHICULOSEVE_COSTO , $VEHICULOSEVE_IVA, $VEHICULOSEVE_SUB , $PRECIOPESOS_SOFTWARE , $VEHICULOSEVE_OBSERVA ,$COLORV,$PLACASV, $HVEHICULOSEVE,$enviarVEHICULOSEVE,$IpVEHICULOSEVE){
