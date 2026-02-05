@@ -185,6 +185,7 @@ if($database->plantilla_filtro($nombreTabla,"PAIS_DEL_EVENTO",$altaeventos,$DEPA
 if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">CIUDAD DEL EVENTO </th>
 <?php } ?>
 <th style="background:#c9e8e8">AUTORIZACIÓN <br>POR VYO</th>
+<th style="background:#c9e8e8">AUTORIZACIÓN <br>POR DIRECCIÓN</th>
 <th style="background:#c9e8e8">ADMIN</th>
 <?php 
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE DEL PERSONAL</th>
@@ -504,14 +505,9 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 <?php  if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['CIUDAD_DEL_EVENTO'];?></td>
 <?php } ?>
 
-<td style="text-align:center">
-<input type="checkbox" style="width:40PX;" class="form-check-input" id="pasarapersonal2<?php echo $row["id"]; ?>" name="pasarapersonal2<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>"  onclick="pasara1_personal2(<?php echo $row["id"]; ?>)"  	<?php if($row["autoriza"]=='si'){
-	echo "checked";
-} ?>/>
-</td>
-<td style="text-align:center">
-<input type="checkbox" style="width:40PX;" class="form-check-input" name="personal2[]" id="personal2" value="<?php echo $row["id"]; ?>"/>
-</td>
+<td></td>
+<td></td>
+<td></td>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><a href="colaboradores.php?id=<?php echo $row["NOMBRE_PERSONAL2"]; ?>"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL2"],'01informacionpersonal','NOMBRE_1'); ?></a></td>
 <?php } ?>
