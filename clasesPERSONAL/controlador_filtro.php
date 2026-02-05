@@ -208,7 +208,7 @@ if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DE
 <?php } ?>
 
 <th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR V Y O</th>
-<th style="background:#c9e8e8;text-align:center">AUTORIZA<br>P y CG</th>
+<th style="background:#c9e8e8;text-align:center">AUTORIZA<br>POR DIRECCIÓN</th>
 <th style="background:#c9e8e8;text-align:center">ADMIN</th>
 
 <?php
@@ -575,15 +575,9 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 <?php  if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['CIUDAD_DEL_EVENTO'];?></td>
 <?php } ?>
 
-<td style="text-align:center">
-    <input type="checkbox" style="width:40PX;" class="form-check-input" id="pasarapersonal<?php echo $row["id"]; ?>" name="pasarapersonal<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="pasara1_personal(<?php echo $row["id"]; ?>)" <?php if (isset($row["autoriza"]) && $row["autoriza"] === 'si') { echo "checked"; } ?>/>
-</td>
-<td style="text-align:center">
-    <input type="checkbox" style="width:40PX;" class="form-check-input" id="pasarapersonalAUT<?php echo $row["id"]; ?>" name="pasarapersonalAUT<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="pasara1_personalAUT(<?php echo $row["id"]; ?>)" <?php if (isset($row["autorizaAUT"]) && $row["autorizaAUT"] === 'si') { echo "checked"; } ?>/>
-</td>
-<td style="text-align:center">
-    <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin" value="<?php echo $row["id"]; ?>"/>
-</td>
+<td></td>
+<td></td>
+<td></td>
 
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><a href="colaboradores.php?id=<?php echo $row["NOMBRE_PERSONAL"]; ?>"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1'); ?></a></td>

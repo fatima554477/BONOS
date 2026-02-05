@@ -180,47 +180,5 @@ beforeSend: function(objeto){
 		}
 /* terminaB1*/		
 
-function pasara1_personal(pasara1_personal_id){
-	var checkBox = document.getElementById("pasarapersonal"+pasara1_personal_id);
-	var pasapersonal_text = "";
-	if (checkBox.checked == true){
-		pasapersonal_text = "si";
-	}else{
-		pasapersonal_text = "no";
-	}
-	  $.ajax({
-		url:'calendariodeeventos2/controladorAE.php',
-		method:'POST',
-		data:{pasara1_personal_id:pasara1_personal_id,pasapersonal_text:pasapersonal_text},
-		beforeSend:function(){
-		$('#mensajefiltro').html('cargando');
-	},
-		success:function(data){
-		load(1);			
-		$('#mensajefiltro').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
-	}
-	});
-}
 
-function pasara1_personalAUT(pasara1_personalAUT_id){
-	var checkBox = document.getElementById("pasarapersonalAUT"+pasara1_personalAUT_id);
-	var pasapersonalAUT_text = "";
-	if (checkBox.checked == true){
-		pasapersonalAUT_text = "si";
-	}else{
-		pasapersonalAUT_text = "no";
-	}
-	  $.ajax({
-		url:'calendariodeeventos2/controladorAE.php',
-		method:'POST',
-		data:{pasara1_personalAUT_id:pasara1_personalAUT_id,pasapersonalAUT_text:pasapersonalAUT_text},
-		beforeSend:function(){
-		$('#mensajefiltro').html('cargando');
-	},
-		success:function(data){
-		load(1);			
-		$('#mensajefiltro').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
-	}
-	});
-}
 	</script>
