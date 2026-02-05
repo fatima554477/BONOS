@@ -67,7 +67,7 @@ $hDatosPERSONAL = isset($_POST["hDatosPERSONAL"])?trim($_POST["hDatosPERSONAL"])
 $FECHA_PPAGO = isset($_POST["FECHA_PPAGO"])?trim($_POST["FECHA_PPAGO"]):"";  
 $FORMA_PAGO = isset($_POST["FORMA_PAGO"])?trim($_POST["FORMA_PAGO"]):"";  
 $FECHA_EFECTIVA = isset($_POST["FECHA_EFECTIVA"])?trim($_POST["FECHA_EFECTIVA"]):"";  
-$ADJUNTO_COMPROBANTEPP = isset($_POST["ADJUNTO_COMPROBANTEPP"])?trim($_POST["ADJUNTO_COMPROBANTEPP"]):"";  
+$ADJUNTO_COMPROBANTEP = isset($_POST["ADJUNTO_COMPROBANTEP"])?trim($_POST["ADJUNTO_COMPROBANTEP"]):"";  
 $NOMBRE_RECIBIO = isset($_POST["NOMBRE_RECIBIO"])?trim($_POST["NOMBRE_RECIBIO"]):"";  
 
 $per_page=intval($_POST["per_page"]);
@@ -115,7 +115,7 @@ $campos="04personal.*, 01informacionpersonal.*, 01DATOSBANCARIOS.*, 04altaevento
 "FECHA_PPAGO"=>$FECHA_PPAGO,
 "FORMA_PAGO"=>$FORMA_PAGO,
 "FECHA_EFECTIVA"=>$FECHA_EFECTIVA,
-"ADJUNTO_COMPROBANTEPP"=>$ADJUNTO_COMPROBANTEPP,
+"ADJUNTO_COMPROBANTEP"=>$ADJUNTO_COMPROBANTEP,
 "NOMBRE_RECIBIO"=>$NOMBRE_RECIBIO,
 
  "per_page"=>$per_page,
@@ -280,7 +280,7 @@ if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAME
 if($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FORMA EFECTIVA DE PAGO</th>
 <?php } ?>
 <?php 
-if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEPP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">COMPROBANTE DE PAGO</th>
+if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">COMPROBANTE DE PAGO</th>
 <?php } ?>
 <?php 
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_RECIBIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">PAX QUE COBRO</th>
@@ -295,7 +295,7 @@ if($database->plantilla_filtro($nombreTabla,"NOMBRE_RECIBIO",$altaeventos,$DEPAR
 <?php 
 if($database->plantilla_filtro($nombreTabla,"PERSONAL_FECHA_ULTIMA_CARGA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center"> FECHA ULTIMA CARGA</th>
 <?php } ?>
-
+<th style="background:#c9e8e8"></th>
 
 <?php /*termina copiar y terminaA3*/ ?>
             </tr>
@@ -447,8 +447,8 @@ echo $FECHA_EFECTIVA; ?>"></td>
 <?php } ?>
 
 <?php  
-if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEPP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="ADJUNTO_COMPROBANTEPP_1" value="<?php 
-echo $ADJUNTO_COMPROBANTEPP; ?>"></td>
+if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="ADJUNTO_COMPROBANTEP_1" value="<?php 
+echo $ADJUNTO_COMPROBANTEP; ?>"></td>
 <?php } ?>
 
 <?php  
@@ -474,7 +474,7 @@ echo $PERSONAL_FECHA_ULTIMA_CARGA; ?>"></td>
 <?php } ?>
 <?php /*termina copiar y terminaA4*/ ?>
 	
-
+<td style="background:#c9e8e8"></td>
 
 	
             </tr>			
@@ -506,7 +506,7 @@ $colspanFields = array(
 		"EMAIL_PERSONAL2",
 		"FECHA_INICIO",
 		"FECHA_FINAL",
-		"NUMERO_DIAS"
+		
 	);
 	foreach ($colspanFields as $colspanField) {
 		if ($database->plantilla_filtro($nombreTabla, $colspanField, $altaeventos, $DEPARTAMENTO) == "si") {
@@ -626,7 +626,9 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_FINAL",$altaeventos,$DEPARTA
 <?php } ?>
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS'];?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS'];
+$NUMERO_DIAS12 += floatval($row['NUMERO_DIAS']);
+?></td>
 <?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:right; padding-right:10px;"><?php echo $row['MONTO_BONO'];
@@ -651,24 +653,7 @@ $TOTAL12 += floatval(str_replace(',', '', $row['TOTAL']));
 <?php  if($database->plantilla_filtro($nombreTabla,"OBSERVACIONES_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['OBSERVACIONES_PERSONAL'];?></td>
 <?php } ?>
 
-<?php 
-$urlFOTO_ESTADO_PROVEE = "";
-if (!empty($row["FOTO_ESTADO_PROVEE"])) {
-	$urlFOTO_ESTADO_PROVEE = $database->descargararchivo($row["FOTO_ESTADO_PROVEE"]);
-}
-$urlADJUNTO_COMPROBANTEP = "";
-$adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTEP"])));
-if (!empty($adjuntosComprobante)) {
-	$urlADJUNTO_COMPROBANTEP = "<ul class='list-unstyled mb-0'>";
-	foreach ($adjuntosComprobante as $adjuntoComprobante) {
-		if ($adjuntoComprobante == '' || $adjuntoComprobante == '2') {
-			continue;
-		}
-		$urlADJUNTO_COMPROBANTEP .= "<li><a target='_blank' href='includes/archivos/".$adjuntoComprobante."'>Visualizar!</a></li>";
-	}
-	$urlADJUNTO_COMPROBANTEP .= "</ul>";
-}
-?>
+
 
 
 <?php  if($database->plantilla_filtro($nombreTabla,"TIPO_DE_MONEDA_1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TIPO_DE_MONEDA_1'];?></td>
@@ -714,8 +699,21 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPA
     ?>
 </td>
 <?php } ?>
-
-<?php  if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEPP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $urlADJUNTO_COMPROBANTEPP; ?></td>
+<?php 
+$urlADJUNTO_COMPROBANTEP = "";
+$adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTEP"])));
+if (!empty($adjuntosComprobante)) {
+	$urlADJUNTO_COMPROBANTEP = "<ul class='list-unstyled mb-0'>";
+	foreach ($adjuntosComprobante as $adjuntoComprobante) {
+		if ($adjuntoComprobante == '' || $adjuntoComprobante == '2') {
+			continue;
+		}
+		$urlADJUNTO_COMPROBANTEP .= "<li><a target='_blank' href='includes/archivos/".$adjuntoComprobante."'>Visualizar!</a></li>";
+	}
+	$urlADJUNTO_COMPROBANTEP .= "</ul>";
+}
+?>
+<?php  if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $urlADJUNTO_COMPROBANTEP; ?></td>
 <?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_RECIBIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NOMBRE_RECIBIO'];?></td>
@@ -758,6 +756,10 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPA
 
 	<tr style="border-top:4px solid #c9c9c9;">
 		<td style="text-align:right; padding-right:45px;" colspan="<?php echo $colspan; ?>"><strong style="font-size:16px">TOTALES</strong></td>
+			<?php if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+			<td style="text-align:center;"><strong style="font-size:16px"><?php echo number_format($NUMERO_DIAS12); ?></strong></td>
+		<?php } ?>
+		
 		<?php if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
 			<td style="text-align:right; padding-right:10px;"><strong style="font-size:16px">$<?php echo number_format($MONTO_BONO12,2,'.',','); ?></strong></td>
 		<?php } ?>
