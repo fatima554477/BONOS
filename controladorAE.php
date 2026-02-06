@@ -14,7 +14,7 @@ FECHA fatima: 01 JUNIO  2025
 
 define('__ROOT1__', dirname(dirname(__FILE__)));
 include_once (__ROOT1__."/includes/error_reporting.php");
-include_once (__ROOT1__."/calendariodeeventos2/class.epcinnAE.php");
+include_once (__ROOT1__."/BONOS/class.epcinnAE.php");
 
 $altaeventos  = NEW accesoclase();
 $conexion = NEW colaboradores();
@@ -1255,7 +1255,7 @@ echo $altaeventos->actualizapersonalDIRECCION ($pasara1_personalDIRECCION_id , $
 $pasara1_personal2ADMIN_id= isset($_POST["pasara1_personal2ADMIN_id"])?$_POST["pasara1_personal2ADMIN_id"]:"";
 $pasapersonal2ADMIN_text= isset($_POST["pasapersonal2ADMIN_text"])?$_POST["pasapersonal2ADMIN_text"]:"";
 
-if($pasara1_personal2ADMIN_id!='' and ($pasapersonal2ADMIN_text=='si' or $pasapersonalADMIN_text=='no') ){
+if($pasara1_personal2ADMIN_id!='' and ($pasapersonal2ADMIN_text=='si' or $pasapersonal2ADMIN_text=='no') ){
 echo $altaeventos->actualizapersonal2ADMIN ($pasara1_personal2ADMIN_id , $pasapersonal2ADMIN_text  );
 }
 
@@ -1263,7 +1263,7 @@ echo $altaeventos->actualizapersonal2ADMIN ($pasara1_personal2ADMIN_id , $pasape
 $pasara1_personal2VYO_id= isset($_POST["pasara1_personal2VYO_id"])?$_POST["pasara1_personal2VYO_id"]:"";
 $pasapersonal2VYO_text= isset($_POST["pasapersonal2VYO_text"])?$_POST["pasapersonal2VYO_text"]:"";
 
-if($pasara1_personal2VYO_id!='' and ($pasapersonal2VYO_text=='si' or $pasapersonalVYO_text=='no') ){
+if($pasara1_personal2VYO_id!='' and ($pasapersonal2VYO_text=='si' or $pasapersonal2VYO_text=='no') ){
 echo $altaeventos->actualizapersonal2VYO ($pasara1_personal2VYO_id , $pasapersonal2VYO_text  );
 }
 
@@ -1271,7 +1271,7 @@ echo $altaeventos->actualizapersonal2VYO ($pasara1_personal2VYO_id , $pasaperson
 $pasara1_personal2DIRECCION_id= isset($_POST["pasara1_personal2DIRECCION_id"])?$_POST["pasara1_personal2DIRECCION_id"]:"";
 $pasapersonal2DIRECCION_text= isset($_POST["pasapersonal2DIRECCION_text"])?$_POST["pasapersonal2DIRECCION_text"]:"";
 
-if($pasara1_personal2DIRECCION_id!='' and ($pasapersonal2DIRECCION_text=='si' or $pasapersonalDIRECCION_text=='no') ){
+if($pasara1_personal2DIRECCION_id!='' and ($pasapersonal2DIRECCION_text=='si' or $pasapersonal2DIRECCION_text=='no') ){
 echo $altaeventos->actualizapersonal2DIRECCION ($pasara1_personal2DIRECCION_id , $pasapersonal2DIRECCION_text  );
 }
 

@@ -546,13 +546,13 @@ function pasara1_personal2ADMIN(pasara1_personal2ADMIN_id){
 		method:'POST',
 		data:{pasara1_personal2ADMIN_id:pasara1_personal2ADMIN_id,pasapersonal2ADMIN_text:pasapersonal2ADMIN_text},
 		beforeSend:function(){
-		$('#mensajePERSONAL').html('cargando');
+		$('#mensajePERSONAL2').html('cargando');
 	},
 		success:function(data){
 			
 	$("#reset_personal").load(location.href + " #reset_personal");			
 			
-		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+		$('#mensajePERSONAL2').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
 	}
 	});
 
@@ -573,13 +573,13 @@ function pasara1_personal2VYO(pasara1_personal2VYO_id){
 		method:'POST',
 		data:{pasara1_personal2VYO_id:pasara1_personal2VYO_id,pasapersonal2VYO_text:pasapersonal2VYO_text},
 		beforeSend:function(){
-		$('#mensajePERSONAL').html('cargando');
+		$('#mensajePERSONAL2').html('cargando');
 	},
 		success:function(data){
 			
 	$("#reset_personal2").load(location.href + " #reset_personal2");			
 			
-		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+		$('#mensajePERSONAL2').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
 	}
 	});
 
@@ -599,13 +599,13 @@ function pasara1_personal2DIRECCION(pasara1_personal2DIRECCION_id){
 		method:'POST',
 		data:{pasara1_personal2DIRECCION_id:pasara1_personal2DIRECCION_id,pasapersonal2DIRECCION_text:pasapersonal2DIRECCION_text},
 		beforeSend:function(){
-		$('#mensajePERSONAL').html('cargando');
+		$('#mensajePERSONAL2').html('cargando');
 	},
 		success:function(data){
 			
 	$("#reset_personal2").load(location.href + " #reset_personal2");			
 			
-		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+		$('#mensajePERSONAL2').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
 	}
 	});
 
@@ -3850,7 +3850,25 @@ $(document).on('click', '.view_dataDATOSpersonalmodifica', function(){
   });
 });
 
+$(document).on('click', '.view_dataDATOSpersonalmodificaBONOS', function(){
+  var personal_id = $(this).attr("id");
+  $.ajax({
+    url: "BONOS/VistaPreviapersonalBONOS.php",
+    method: "POST",
+    data: { personal_id: personal_id },
+    beforeSend: function(){  
+      $('#mensajePERSONAL').html('CARGANDO');
 
+      setTimeout(function(){
+        $('#mensajePERSONAL').html('');
+      }, 2000);
+    },    
+    success: function(data){
+      $('#personal_detalles').html(data);
+      $('#dataModal').modal('show');
+    }
+  });
+});
 
 
 $(document).on('click', '.view_dataDATOSpersonalborrar', function(){
@@ -4022,7 +4040,23 @@ $(document).on('click', '.view_dataDATOSpersonal2modifica', function(){
   });
  })
 
-
+$(document).on('click', '.view_dataDATOSpersonal2modificaBONOS', function(){
+  //$('#dataModal').modal();
+  var personal_id = $(this).attr("id");
+  $.ajax({
+   url:"BONOS/VistaPreviapersonal2.php",
+   method:"POST",
+   data:{personal_id:personal_id},
+    beforeSend:function(){  
+    $('#mensajePERSONAL2').html('CARGANDO'); 
+    },    
+   success:function(data){
+    $('#personal_detalles').html(data);
+    $('#personal_detalles').html(data);
+    $('#dataModal').modal('show');
+   }
+  });
+ })
 
 $(document).on('click', '.view_dataDATOSpersonal2borrar', function(){
 

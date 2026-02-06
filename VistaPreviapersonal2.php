@@ -271,7 +271,8 @@ $("#clickpersonal2").click(function(){
     }, 	
 	
     success:function(data){
-		$("#reset_personal2").load(location.href + " #reset_personal2");
+		load2(1);
+		//$("#reset_personal2").load(location.href + " #reset_personal2");
     $('#mensajePERSONAL2').html("<span id='ACTUALIZADO' >"+data+"</span>"); 
 
 			$('#dataModal').modal('hide');
