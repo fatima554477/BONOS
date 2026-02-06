@@ -170,13 +170,32 @@ beforeSend: function(objeto){
     });
   }, 1000);
 },
-				success:function(data){
+			success:function(data){
 					$(".datos_ajax").html(data).fadeIn('slow');
+					restoreRowSelections();
 					$("#loader").html("");
 				}
 			})
 	}
 	/* terminaB1*/		
+
+	function restoreRowSelections(){
+		$(".datos_ajax input.checkbox[data-id]").each(function(){
+			var id = $(this).data("id");
+			var fila = this.closest("tr");
+			if (localStorage.getItem("checkbox_" + id) === "checked") {
+				this.checked = true;
+				if (fila) {
+					fila.style.filter = "brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)";
+				}
+			} else {
+				this.checked = false;
+				if (fila) {
+					fila.style.filter = "none";
+				}
+			}
+		});
+	}
 
 	function mostrarActualizado(mensaje){
 		var texto = mensaje || 'ACTUALIZADO';
@@ -197,7 +216,7 @@ beforeSend: function(objeto){
 		var checkBox = document.getElementById("VYO"+pasara1_personalVYO_id);
 		var pasapersonalVYO_text = (checkBox && checkBox.checked) ? "si" : "no";
 		$.ajax({
-			url:'calendariodeeventos2/controladorAE.php',
+			url:'BONOS/controladorAE.php',
 			method:'POST',
 			data:{pasara1_personalVYO_id:pasara1_personalVYO_id,pasapersonalVYO_text:pasapersonalVYO_text},
 			success:function(){
@@ -210,7 +229,7 @@ beforeSend: function(objeto){
 		var checkBox = document.getElementById("DIRECCION"+pasara1_personalDIRECCION_id);
 		var pasapersonalDIRECCION_text = (checkBox && checkBox.checked) ? "si" : "no";
 		$.ajax({
-			url:'calendariodeeventos2/controladorAE.php',
+			url:'BONOS/controladorAE.php',
 			method:'POST',
 			data:{pasara1_personalDIRECCION_id:pasara1_personalDIRECCION_id,pasapersonalDIRECCION_text:pasapersonalDIRECCION_text},
 			success:function(){
@@ -223,7 +242,7 @@ beforeSend: function(objeto){
 		var checkBox = document.getElementById("admin"+pasara1_personalADMIN_id);
 		var pasapersonalADMIN_text = (checkBox && checkBox.checked) ? "si" : "no";
 		$.ajax({
-			url:'calendariodeeventos2/controladorAE.php',
+			url:'BONOS/controladorAE.php',
 			method:'POST',
 			data:{pasara1_personalADMIN_id:pasara1_personalADMIN_id,pasapersonalADMIN_text:pasapersonalADMIN_text},
 			success:function(){

@@ -601,19 +601,20 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 <?php  if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['CIUDAD_DEL_EVENTO'];?></td>
 <?php } ?>
 
+<?php $personalId = !empty($row["PERSONAL_ID"]) ? $row["PERSONAL_ID"] : $row["id"]; ?>
 <?php if($puedeVerVYO){ ?>
 <td style="text-align:center">
-    <input type="checkbox" style="width:40PX;" class="form-check-input" name="VYO[]" id="VYO<?php echo $row["PERSONAL_ID"]; ?>" value="<?php echo $row["PERSONAL_ID"]; ?>" onclick="pasara1_personalVYO_filtro(<?php echo $row["PERSONAL_ID"]; ?>)" <?php if(isset($row["VYO"]) && $row["VYO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarVYO || ((isset($row["VYO"]) && $row["VYO"]=='si') && !$puedeModificarVYO)) { echo "disabled"; } ?>/> </td>
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="VYO[]" id="VYO<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalVYO_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["VYO"]) && $row["VYO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarVYO || ((isset($row["VYO"]) && $row["VYO"]=='si') && !$puedeModificarVYO)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
 <?php if($puedeVerDIRECCION){ ?>
 <td style="text-align:center">
-    <input type="checkbox" style="width:40PX;" class="form-check-input" name="DIRECCION[]" id="DIRECCION<?php echo $row["PERSONAL_ID"]; ?>" value="<?php echo $row["PERSONAL_ID"]; ?>" onclick="pasara1_personalDIRECCION_filtro(<?php echo $row["PERSONAL_ID"]; ?>)" <?php if(isset($row["DIRECCION"]) && $row["DIRECCION"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarDIRECCION || ((isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') && !$puedeModificarDIRECCION)) { echo "disabled"; } ?>/> </td>
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="DIRECCION[]" id="DIRECCION<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalDIRECCION_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["DIRECCION"]) && $row["DIRECCION"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarDIRECCION || ((isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') && !$puedeModificarDIRECCION)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
 <?php if($puedeVerAdmin){ ?>
 <td style="text-align:center">
-    <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $row["PERSONAL_ID"]; ?>" value="<?php echo $row["PERSONAL_ID"]; ?>" onclick="pasara1_personalADMIN_filtro(<?php echo $row["PERSONAL_ID"]; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td>
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalADMIN_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
 
