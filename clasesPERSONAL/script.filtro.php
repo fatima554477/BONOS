@@ -34,9 +34,83 @@
 
 <script type="text/javascript">
 	
-	/*filtro */
+function pasara1_personalVYO(pasara1_personalVYO_id){
 
-/* iniciaB1*/
+	var checkBox = document.getElementById("VYO"+pasara1_personalVYO_id);
+	var pasapersonalVYO_text = "";
+	if (checkBox.checked == true){
+	pasapersonalVYO_text = "si";
+	}else{
+	pasapersonalVYO_text = "no";
+	}
+	  $.ajax({
+		url:'calendariodeeventos2/controladorAE.php',
+		method:'POST',
+		data:{pasara1_personalVYO_id:pasara1_personalVYO_id,pasapersonalVYO_text:pasapersonalVYO_text},
+		beforeSend:function(){
+		$('#mensajePERSONAL').html('cargando');
+	},
+		success:function(data){
+			
+		load(1);	
+			
+		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+	}
+	});
+
+}
+
+function pasara1_personalDIRECCION(pasara1_personalDIRECCION_id){
+
+	var checkBox = document.getElementById("DIRECCION"+pasara1_personalDIRECCION_id);
+	var pasapersonalDIRECCION_text = "";
+	if (checkBox.checked == true){
+	pasapersonalDIRECCION_text = "si";
+	}else{
+	pasapersonalDIRECCION_text = "no";
+	}
+	  $.ajax({
+		url:'calendariodeeventos2/controladorAE.php',
+		method:'POST',
+		data:{pasara1_personalDIRECCION_id:pasara1_personalDIRECCION_id,pasapersonalDIRECCION_text:pasapersonalDIRECCION_text},
+		beforeSend:function(){
+		$('#mensajePERSONAL').html('cargando');
+	},
+		success:function(data){
+			
+		load(1);	
+			
+		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+	}
+	});
+
+}
+
+function pasara1_personalADMIN(pasara1_personalADMIN_id){
+
+	var checkBox = document.getElementById("admin"+pasara1_personalADMIN_id);
+	var pasapersonalADMIN_text = "";
+	if (checkBox.checked == true){
+	pasapersonalADMIN_text = "si";
+	}else{
+	pasapersonalADMIN_text = "no";
+	}
+	  $.ajax({
+		url:'calendariodeeventos2/controladorAE.php',
+		method:'POST',
+		data:{pasara1_personalADMIN_id:pasara1_personalADMIN_id,pasapersonalADMIN_text:pasapersonalADMIN_text},
+		beforeSend:function(){
+		$('#mensajePERSONAL').html('cargando');
+	},
+		success:function(data){
+			
+			load(1);
+			
+		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+	}
+	});
+
+}
 
         $(function() {
                 const triggerSearch = () => load(1);
