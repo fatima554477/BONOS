@@ -203,7 +203,7 @@ if($database->plantilla_filtro($nombreTabla,"NOMBRE_EVENTO",$altaeventos,$DEPART
 
 
 <?php 
-if($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA DEL EVENTO </th>
+if($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA INICIO DEL EVENTO </th>
 <?php } ?>
 <?php 
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_COMERCIAL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE COMERCIAL CLIENTE </th>
@@ -223,7 +223,7 @@ if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DE
 <?php } ?>
 <?php if($puedeVerDIRECCION){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR DIRECCIÓN</th>
 <?php } ?>
-<?php if($puedeVerAdmin){ ?><th style="background:#c9e8e8;text-align:center">ADMIN</th>
+<?php if($puedeVerAdmin){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR AUDITORÍA</th>
 <?php } ?>
 
 
@@ -286,14 +286,12 @@ if($database->plantilla_filtro($nombreTabla,"NUMERO_CLABE_1",$altaeventos,$DEPAR
 if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FOTO ESTADO DE CUENTA</th>
 <?php } ?>
 
-<?php 
-if($database->plantilla_filtro($nombreTabla,"FECHA_PPAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA DE PROGRAMACIÓN<br> DE PAGO</th>
-<?php } ?>
+
 <?php 
 if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FORMA DE PAGO</th>
 <?php } ?>
 <?php 
-if($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FORMA EFECTIVA DE PAGO</th>
+if($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA EFECTIVA DE PAGO</th>
 <?php } ?>
 <?php 
 if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">COMPROBANTE DE PAGO</th>
@@ -448,15 +446,29 @@ if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$D
 echo $FOTO_ESTADO_PROVEE; ?>"></td>
 <?php } ?>
 
-<?php  
-if($database->plantilla_filtro($nombreTabla,"FECHA_PPAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="date" class="form-control" id="FECHA_PPAGO_1" value="<?php 
-echo $FECHA_PPAGO; ?>"></td>
-<?php } ?>
+
 
 <?php  
-if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="FORMA_PAGO_1" value="<?php 
-echo $FORMA_PAGO; ?>"></td>
+if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?>  
+<td style="background:#c9e8e8">
+    <select class="form-select mb-3" id="FORMA_PAGO_1" name="FORMA_PAGO" onchange="load(1);">
+        <option value="">TODOS</option>
+
+        <option value="03" <?php if($FORMA_PAGO=='03'){echo "selected";} ?>>03 TRANSFERENCIA ELECTRONICA</option>
+        <option value="04" <?php if($FORMA_PAGO=='04'){echo "selected";} ?>>04 TARJETA DE CRÉDITO</option>
+        <option value="28" <?php if($FORMA_PAGO=='28'){echo "selected";} ?>>28 TARJETA DE DÉBITO</option>
+        <option value="01" <?php if($FORMA_PAGO=='01'){echo "selected";} ?>>01 EFECTIVO</option>
+        <option value="02" <?php if($FORMA_PAGO=='02'){echo "selected";} ?>>02 CHEQUE NOMINATIVO</option>
+        <option value="05" <?php if($FORMA_PAGO=='05'){echo "selected";} ?>>05 MONEDERO ELECTRÓNICO</option>
+        <option value="06" <?php if($FORMA_PAGO=='06'){echo "selected";} ?>>06 DINERO ELECTRÓNICO</option>
+        <option value="08" <?php if($FORMA_PAGO=='08'){echo "selected";} ?>>08 VALES DE DESPENSA</option>
+        <option value="29" <?php if($FORMA_PAGO=='29'){echo "selected";} ?>>29 TARJETA DE SERVICIO</option>
+        <option value="99" <?php if($FORMA_PAGO=='99'){echo "selected";} ?>>99 OTROS</option>
+
+    </select>
+</td>
 <?php } ?>
+
 
 <?php  
 if($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="date" class="form-control" id="FECHA_EFECTIVA_1" value="<?php 
@@ -558,13 +570,13 @@ $colspanFields = array(
                    localStorage.removeItem('checkbox_' + id);
                }">
 </td>
-		
-<td style="text-align:center"><?php echo $key + 1; ?></td>
+<?php $personalIdos = !empty($row["IDPERSONAL"]) ? $row["IDPERSONAL"] : $row["id"]; ?>
+<td style="text-align:center"><?php echo $personalIdos; ?></td>
 
 <?php /*inicia copiar y pegar iniciaA5*/ ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center">
-<a href="calendarioDEeventos2.php?idevento=<?php echo $row['IDPERSONAL']; ?>"><?php echo $row['NUMERO_EVENTO'];?></a>
+<a href="calendarioDEeventos2.php?idevento=<?php echo isset($row['EVENTO_ID']) ? $row['EVENTO_ID'] : ''; ?>"><?php echo $row['NUMERO_EVENTO'];?></a>
 </td>
 <?php } ?>
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NOMBRE_EVENTO'];?></td>
@@ -603,17 +615,17 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 
 <?php $personalId = !empty($row["PERSONAL_ID"]) ? $row["PERSONAL_ID"] : $row["id"]; ?>
 <?php if($puedeVerVYO){ ?>
-<td style="text-align:center">
+<td class="autorizacion-cell<?php echo (isset($row["VYO"]) && $row["VYO"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="VYO[]" id="VYO<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalVYO_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["VYO"]) && $row["VYO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarVYO || ((isset($row["VYO"]) && $row["VYO"]=='si') && !$puedeModificarVYO)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
 <?php if($puedeVerDIRECCION){ ?>
-<td style="text-align:center">
+<td class="autorizacion-cell<?php echo (isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="DIRECCION[]" id="DIRECCION<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalDIRECCION_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["DIRECCION"]) && $row["DIRECCION"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarDIRECCION || ((isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') && !$puedeModificarDIRECCION)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
 <?php if($puedeVerAdmin){ ?>
-<td style="text-align:center">
+<td class="autorizacion-cell<?php echo (isset($row["admin"]) && $row["admin"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalADMIN_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
@@ -703,18 +715,7 @@ $TOTAL12 += floatval(str_replace(',', '', $row['TOTAL']));
 <?php  if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $urlFOTO_ESTADO_PROVEE; ?></td>
 <?php } ?>
 
-<?php  
-if ($database->plantilla_filtro($nombreTabla,"FECHA_PPAGO",$altaeventos,$DEPARTAMENTO)=="si") { 
-    $fechaPago = trim($row['FECHA_PPAGO']);
-?>
-<td style="text-align:center">
-    <?php 
-    echo ($fechaPago !== '' && $fechaPago !== '0000-00-00')
-        ? date('d/m/Y', strtotime($fechaPago))
-        : '';
-    ?>
-</td>
-<?php } ?>
+
 
 <?php  if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['FORMA_PAGO'];?></td>
 <?php } ?>

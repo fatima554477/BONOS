@@ -29,6 +29,14 @@
   align-items: center;
   box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
 }
+
+.autorizacion-cell {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.autorizacion-cell.autorizacion-checked {
+  background-color: #d7f5dc;
+}
 </style>
 
 
@@ -170,9 +178,10 @@ beforeSend: function(objeto){
     });
   }, 1000);
 },
-			success:function(data){
+	success:function(data){
 					$(".datos_ajax").html(data).fadeIn('slow');
 					restoreRowSelections();
+					syncAutorizacionCells();
 					$("#loader").html("");
 				}
 			})
@@ -194,6 +203,22 @@ beforeSend: function(objeto){
 					fila.style.filter = "none";
 				}
 			}
+});
+	}
+
+	function updateAutorizacionCell(checkBox){
+		if (!checkBox) {
+			return;
+		}
+		var cell = checkBox.closest("td");
+		if (cell) {
+			cell.classList.toggle("autorizacion-checked", checkBox.checked);
+		}
+	}
+
+	function syncAutorizacionCells(){
+		document.querySelectorAll(".autorizacion-cell input[type='checkbox']").forEach(function(checkBox){
+			updateAutorizacionCell(checkBox);
 		});
 	}
 
@@ -212,9 +237,10 @@ beforeSend: function(objeto){
 		}, 1200);
 	}
 
-	function pasara1_personalVYO_filtro(pasara1_personalVYO_id){
+function pasara1_personalVYO_filtro(pasara1_personalVYO_id){
 		var checkBox = document.getElementById("VYO"+pasara1_personalVYO_id);
 		var pasapersonalVYO_text = (checkBox && checkBox.checked) ? "si" : "no";
+		updateAutorizacionCell(checkBox);
 		$.ajax({
 			url:'BONOS/controladorAE.php',
 			method:'POST',
@@ -225,9 +251,10 @@ beforeSend: function(objeto){
 		});
 	}
 
-	function pasara1_personalDIRECCION_filtro(pasara1_personalDIRECCION_id){
+function pasara1_personalDIRECCION_filtro(pasara1_personalDIRECCION_id){
 		var checkBox = document.getElementById("DIRECCION"+pasara1_personalDIRECCION_id);
 		var pasapersonalDIRECCION_text = (checkBox && checkBox.checked) ? "si" : "no";
+		updateAutorizacionCell(checkBox);
 		$.ajax({
 			url:'BONOS/controladorAE.php',
 			method:'POST',
@@ -238,9 +265,10 @@ beforeSend: function(objeto){
 		});
 	}
 
-	function pasara1_personalADMIN_filtro(pasara1_personalADMIN_id){
+function pasara1_personalADMIN_filtro(pasara1_personalADMIN_id){
 		var checkBox = document.getElementById("admin"+pasara1_personalADMIN_id);
 		var pasapersonalADMIN_text = (checkBox && checkBox.checked) ? "si" : "no";
+		updateAutorizacionCell(checkBox);
 		$.ajax({
 			url:'BONOS/controladorAE.php',
 			method:'POST',
