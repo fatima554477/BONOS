@@ -44,7 +44,7 @@ function pasara1_personalVYO(pasara1_personalVYO_id){
 	pasapersonalVYO_text = "no";
 	}
 	  $.ajax({
-		url:'calendariodeeventos2/controladorAE.php',
+		url:'BONOS/controladorAE.php',
 		method:'POST',
 		data:{pasara1_personalVYO_id:pasara1_personalVYO_id,pasapersonalVYO_text:pasapersonalVYO_text},
 		beforeSend:function(){
@@ -70,7 +70,7 @@ function pasara1_personalDIRECCION(pasara1_personalDIRECCION_id){
 	pasapersonalDIRECCION_text = "no";
 	}
 	  $.ajax({
-		url:'calendariodeeventos2/controladorAE.php',
+		url:'BONOS/controladorAE.php',
 		method:'POST',
 		data:{pasara1_personalDIRECCION_id:pasara1_personalDIRECCION_id,pasapersonalDIRECCION_text:pasapersonalDIRECCION_text},
 		beforeSend:function(){
@@ -96,7 +96,7 @@ function pasara1_personalADMIN(pasara1_personalADMIN_id){
 	pasapersonalADMIN_text = "no";
 	}
 	  $.ajax({
-		url:'calendariodeeventos2/controladorAE.php',
+		url:'BONOS/controladorAE.php',
 		method:'POST',
 		data:{pasara1_personalADMIN_id:pasara1_personalADMIN_id,pasapersonalADMIN_text:pasapersonalADMIN_text},
 		beforeSend:function(){
