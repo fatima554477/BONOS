@@ -32,7 +32,8 @@ if($action == "ajax2"){
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
 
-	$DEPARTAMENTO = !EMPTY($_POST["DEPARTAMENTO2"])?$_POST["DEPARTAMENTO2"]:"DEFAULT";	
+$DEPARTAMENTO = !EMPTY($_POST["DEPARTAMENTO2"])?$_POST["DEPARTAMENTO2"]:"DEFAULT";	
+	$tables = "04personal2";
 	$nombreTabla = "SELECT * FROM `08altaeventosfiltroDes`, 08altaeventosfiltroPLA WHERE 08altaeventosfiltroDes.id = 08altaeventosfiltroPLA.idRelacion";
 	$altaeventos = "altaeventos";
 
@@ -73,7 +74,15 @@ $ADJUNTO_COMPROBANTE = isset($_POST["ADJUNTO_COMPROBANTE"])?trim($_POST["ADJUNTO
 $NOMBRE_RECIBIO1 = isset($_POST["NOMBRE_RECIBIO1"])?trim($_POST["NOMBRE_RECIBIO1"]):"";  
 $ULTIMA_CARGA_DATOBANCA = isset($_POST["ULTIMA_CARGA_DATOBANCA"])?trim($_POST["ULTIMA_CARGA_DATOBANCA"]):"";  
 $per_page=intval($_POST["per_page"]);
-	$campos="*";
+	$campos="04personal2.*, 01informacionpersonal.*, 01DATOSBANCARIOS.*, 04altaeventos.*";
+	//Variables de paginación
+
+	$page = (isset($_POST["page"]) && !empty($_POST["page"]))?$_POST["page"]:1;
+
+	$adjacents  = 4; //espacio entre páginas después del número de adyacentes
+
+	$offset = ($page - 1) * $per_page;
+
 	//Variables de paginación
 	$page = (isset($_POST["page"]) && !empty($_POST["page"]))?$_POST["page"]:1;
 	$adjacents  = 4; //espacio entre páginas después del número de adyacentes
@@ -305,10 +314,13 @@ echo $FECHA_INICIO_EVENTO; ?>"></td>
 <?php } ?><?php  
 if($database->plantilla_filtro($nombreTabla,"PAIS_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8;text-align:center"><input type="text" class="form-control" id="PAIS_DEL_EVENTO_2" value="<?php 
 echo $PAIS_DEL_EVENTO; ?>"></td>
-<?php } ?><?php  
+<?php } ?>
+<?php  
 if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8;text-align:center"><input type="text" class="form-control" id="CIUDAD_DEL_EVENTO_2" value="<?php 
 echo $CIUDAD_DEL_EVENTO; ?>"></td>
 <?php } ?>
+
+
 <?php if($puedeVerVYO2){ ?><td style="background:#c9e8e8"></td>
 <?php } ?>
 <?php if($puedeVerDIRECCION2){ ?><td style="background:#c9e8e8"></td>
@@ -534,19 +546,19 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 <?php  if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['CIUDAD_DEL_EVENTO'];?></td>
 <?php } ?>
 
-<?php $personal2Id = !empty($row["PERSONAL_ID"]) ? $row["PERSONAL_ID"] : $row["id"]; ?>
+<?php $personal2Id = !empty($row["PERSONAL2_ID"]) ? $row["PERSONAL2_ID"] : $row["id"]; ?>
 <?php if($puedeVerVYO2){ ?>
-<td class="autorizacion-cell<?php echo (isset($row["VYO"]) && $row["VYO"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
+<td class="autorizacion-cell2<?php echo (isset($row["VYO"]) && $row["VYO"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="VYO[]" id="VYO<?php echo $personal2Id; ?>" value="<?php echo $personal2Id; ?>" onclick="pasara1_personal2VYO_filtro(<?php echo $personal2Id; ?>)" <?php if(isset($row["VYO"]) && $row["VYO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarVYO2 || ((isset($row["VYO"]) && $row["VYO"]=='si') && !$puedeModificarVYO2)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
 <?php if($puedeVerDIRECCION2){ ?>
-<td class="autorizacion-cell<?php echo (isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
+<td class="autorizacion-cell2<?php echo (isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="DIRECCION[]" id="DIRECCION<?php echo $personal2Id; ?>" value="<?php echo $personal2Id; ?>" onclick="pasara1_personal2DIRECCION_filtro(<?php echo $personal2Id; ?>)" <?php if(isset($row["DIRECCION"]) && $row["DIRECCION"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarDIRECCION2 || ((isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') && !$puedeModificarDIRECCION2)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
 <?php if($puedeVerAdmin2){ ?>
-<td class="autorizacion-cell<?php echo (isset($row["admin"]) && $row["admin"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
+<td class="autorizacion-cell2<?php echo (isset($row["admin"]) && $row["admin"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personal2Id; ?>" value="<?php echo $personal2Id; ?>" onclick="pasara1_personal2ADMIN_filtro(<?php echo $personal2Id; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin2 || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin2)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
 
@@ -701,7 +713,7 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA1",$altaeventos,$DEP
 <?php  if($database->plantilla_filtro($nombreTabla,"PERSONAL2_FECHA_ULTIMA_CARGA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['PERSONAL2_FECHA_ULTIMA_CARGA'])); ?></td>
 <?php } ?>
 <td>
-    <?php $personal2Id = !empty($row["PERSONAL_ID"]) ? $row["PERSONAL_ID"] : $row["id"]; ?>
+    <?php $personal2Id = !empty($row["PERSONAL2_ID"]) ? $row["PERSONAL2_ID"] : $row["id"]; ?>
 
     <input 
         type="button" 

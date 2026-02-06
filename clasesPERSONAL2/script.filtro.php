@@ -1,7 +1,7 @@
 
 <style>
-/* Loader con animación */
-.loader {
+/* Loader2 con animación */
+.loader2 {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #6a0dad; /* Morado elegante */
   border-radius: 50%;
@@ -19,7 +19,7 @@
 }
 
 /* Texto estilizado */
-.msg-actualizando {
+.msg-actualizando2 {
   font-weight: bold;
   font-size: 20px;
   color: #6a0dad;
@@ -31,11 +31,11 @@
   box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
 }
 
-.autorizacion-cell {
+.autorizacion-cell2 {
   transition: background-color 0.2s ease-in-out;
 }
 
-.autorizacion-cell.autorizacion-checked {
+.autorizacion-cell2.autorizacion-checked {
   background-color: #d7f5dc;
 }
 </style>
@@ -150,7 +150,7 @@ var hDatosPERSONAL2=$("#hDatosPERSONAL2_2").val();
 				data: parametros,
 beforeSend: function(objeto){
   $("#loader2").html(
-    '<div class="msg-actualizando">' +
+    '<div class="msg-actualizando2">' +
       '<span class="loader2"></span> ⏳ ACTUALIZADO...' +
     '</div>'
   ).fadeIn();
@@ -163,17 +163,17 @@ beforeSend: function(objeto){
   }, 1000);
 },
 	success:function(data){
-					$(".datos_ajax22").html(data).fadeIn('slow');
-					restoreRowSelections();
-					syncAutorizacionCells();
+					$(".datos_ajax2").html(data).fadeIn('slow');
+					restoreRowSelections2();
+					syncAutorizacionCells2();
 					$("#loader2").html("");
 				}
 			})
 	}
 	/* terminaB1*/		
 
-	function restoreRowSelections(){
-		$(".datos_ajax22 input.checkbox[data-id]").each(function(){
+	function restoreRowSelections2(){
+		$(".datos_ajax2 input.checkbox[data-id]").each(function(){
 			var id = $(this).data("id");
 			var fila = this.closest("tr");
 			if (localStorage.getItem("checkbox_" + id) === "checked") {
@@ -190,7 +190,7 @@ beforeSend: function(objeto){
 });
 	}
 
-	function updateAutorizacionCell(checkBox){
+	function updateAutorizacionCell2(checkBox){
 		if (!checkBox) {
 			return;
 		}
@@ -200,16 +200,16 @@ beforeSend: function(objeto){
 		}
 	}
 
-	function syncAutorizacionCells(){
-		document.querySelectorAll(".autorizacion-cell input[type='checkbox']").forEach(function(checkBox){
-			updateAutorizacionCell(checkBox);
+	function syncAutorizacionCells2(){
+		document.querySelectorAll(".autorizacion-cell2 input[type='checkbox']").forEach(function(checkBox){
+			updateAutorizacionCell2(checkBox);
 		});
 	}
 
-	function mostrarActualizado(mensaje){
+	function mostrarActualizado2(mensaje){
 		var texto = mensaje || 'ACTUALIZADO';
 		$("#loader2").html(
-			'<div class="msg-actualizando">' +
+			'<div class="msg-actualizando2">' +
 			  '<span class="loader2"></span> ' + texto +
 			'</div>'
 		).fadeIn();
@@ -224,13 +224,13 @@ beforeSend: function(objeto){
 function pasara1_personal2VYO_filtro(pasara1_personal2VYO_id){
 		var checkBox = document.getElementById("VYO"+pasara1_personal2VYO_id);
 		var pasapersonal2VYO_text = (checkBox && checkBox.checked) ? "si" : "no";
-		updateAutorizacionCell(checkBox);
+		updateAutorizacionCell2(checkBox);
 		$.ajax({
 			url:'BONOS/controladorAE.php',
 			method:'POST',
 			data:{pasara1_personal2VYO_id:pasara1_personal2VYO_id,pasapersonal2VYO_text:pasapersonal2VYO_text},
 			success:function(){
-				mostrarActualizado('✅ ACTUALIZADO');
+				mostrarActualizado2('✅ ACTUALIZADO');
 			}
 		});
 	}
@@ -238,13 +238,13 @@ function pasara1_personal2VYO_filtro(pasara1_personal2VYO_id){
 function pasara1_personal2DIRECCION_filtro(pasara1_personal2DIRECCION_id){
 		var checkBox = document.getElementById("DIRECCION"+pasara1_personal2DIRECCION_id);
 		var pasapersonal2DIRECCION_text = (checkBox && checkBox.checked) ? "si" : "no";
-		updateAutorizacionCell(checkBox);
+		updateAutorizacionCell2(checkBox);
 		$.ajax({
 			url:'BONOS/controladorAE.php',
 			method:'POST',
 			data:{pasara1_personal2DIRECCION_id:pasara1_personal2DIRECCION_id,pasapersonal2DIRECCION_text:pasapersonal2DIRECCION_text},
 			success:function(){
-				mostrarActualizado('✅ ACTUALIZADO');
+				mostrarActualizado2('✅ ACTUALIZADO');
 			}
 		});
 	}
@@ -252,13 +252,13 @@ function pasara1_personal2DIRECCION_filtro(pasara1_personal2DIRECCION_id){
 function pasara1_personal2ADMIN_filtro(pasara1_personal2ADMIN_id){
 		var checkBox = document.getElementById("admin"+pasara1_personal2ADMIN_id);
 		var pasapersonal2ADMIN_text = (checkBox && checkBox.checked) ? "si" : "no";
-		updateAutorizacionCell(checkBox);
+		updateAutorizacionCell2(checkBox);
 		$.ajax({
 			url:'BONOS/controladorAE.php',
 			method:'POST',
 			data:{pasara1_personal2ADMIN_id:pasara1_personal2ADMIN_id,pasapersonal2ADMIN_text:pasapersonal2ADMIN_text},
 			success:function(){
-				mostrarActualizado('✅ ACTUALIZADO');
+				mostrarActualizado2('✅ ACTUALIZADO');
 			}
 		});
 	}
