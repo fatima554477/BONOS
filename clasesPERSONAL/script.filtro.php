@@ -175,8 +175,62 @@ beforeSend: function(objeto){
 					$("#loader").html("");
 				}
 			})
-		}
-/* terminaB1*/		
+	}
+	/* terminaB1*/		
+
+	function mostrarActualizado(mensaje){
+		var texto = mensaje || 'ACTUALIZADO';
+		$("#loader").html(
+			'<div class="msg-actualizando">' +
+			  '<span class="loader"></span> ' + texto +
+			'</div>'
+		).fadeIn();
+
+		setTimeout(function(){
+			$("#loader").fadeOut("slow", function(){
+				$(this).html("");
+			});
+		}, 1200);
+	}
+
+	function pasara1_personalVYO_filtro(pasara1_personalVYO_id){
+		var checkBox = document.getElementById("VYO"+pasara1_personalVYO_id);
+		var pasapersonalVYO_text = (checkBox && checkBox.checked) ? "si" : "no";
+		$.ajax({
+			url:'calendariodeeventos2/controladorAE.php',
+			method:'POST',
+			data:{pasara1_personalVYO_id:pasara1_personalVYO_id,pasapersonalVYO_text:pasapersonalVYO_text},
+			success:function(){
+				mostrarActualizado('✅ ACTUALIZADO');
+			}
+		});
+	}
+
+	function pasara1_personalDIRECCION_filtro(pasara1_personalDIRECCION_id){
+		var checkBox = document.getElementById("DIRECCION"+pasara1_personalDIRECCION_id);
+		var pasapersonalDIRECCION_text = (checkBox && checkBox.checked) ? "si" : "no";
+		$.ajax({
+			url:'calendariodeeventos2/controladorAE.php',
+			method:'POST',
+			data:{pasara1_personalDIRECCION_id:pasara1_personalDIRECCION_id,pasapersonalDIRECCION_text:pasapersonalDIRECCION_text},
+			success:function(){
+				mostrarActualizado('✅ ACTUALIZADO');
+			}
+		});
+	}
+
+	function pasara1_personalADMIN_filtro(pasara1_personalADMIN_id){
+		var checkBox = document.getElementById("admin"+pasara1_personalADMIN_id);
+		var pasapersonalADMIN_text = (checkBox && checkBox.checked) ? "si" : "no";
+		$.ajax({
+			url:'calendariodeeventos2/controladorAE.php',
+			method:'POST',
+			data:{pasara1_personalADMIN_id:pasara1_personalADMIN_id,pasapersonalADMIN_text:pasapersonalADMIN_text},
+			success:function(){
+				mostrarActualizado('✅ ACTUALIZADO');
+			}
+		});
+	}
 
 
 	</script>

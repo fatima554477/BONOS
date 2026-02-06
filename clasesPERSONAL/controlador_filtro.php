@@ -20,6 +20,15 @@ if($action == "ajax"){
 
 require(__ROOT6__."/class.filtro.php");
 	$database=new orders();	
+	$puedeVerAdmin = ($database->variablespermisos('', 'PERSO', 'ver') === 'si');
+	$puedeGuardarAdmin = ($database->variablespermisos('', 'PERSO', 'guardar') === 'si');
+	$puedeModificarAdmin = ($database->variablespermisos('', 'PERSO', 'modificar') === 'si');
+	$puedeVerVYO = ($database->variablespermisos('', 'PERSOvyo', 'ver') === 'si');
+	$puedeGuardarVYO = ($database->variablespermisos('', 'PERSOvyo', 'guardar') === 'si');
+	$puedeModificarVYO = ($database->variablespermisos('', 'PERSOvyo', 'modificar') === 'si');
+	$puedeVerDIRECCION = ($database->variablespermisos('', 'PERSOdire', 'ver') === 'si');
+	$puedeGuardarDIRECCION = ($database->variablespermisos('', 'PERSOdire', 'guardar') === 'si');
+	$puedeModificarDIRECCION = ($database->variablespermisos('', 'PERSOdire', 'modificar') === 'si');
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
 
@@ -210,6 +219,14 @@ if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DE
 <?php } ?>
 
 
+<?php if($puedeVerVYO){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR VYO</th>
+<?php } ?>
+<?php if($puedeVerDIRECCION){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR DIRECCIÓN</th>
+<?php } ?>
+<?php if($puedeVerAdmin){ ?><th style="background:#c9e8e8;text-align:center">ADMIN</th>
+<?php } ?>
+
+
 <?php
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE DEL PERSONAL</th>
 <?php } ?>
@@ -344,6 +361,12 @@ echo $CIUDAD_DEL_EVENTO; ?>"></td>
 
 
 
+<?php if($puedeVerVYO){ ?><td style="background:#c9e8e8"></td>
+<?php } ?>
+<?php if($puedeVerDIRECCION){ ?><td style="background:#c9e8e8"></td>
+<?php } ?>
+<?php if($puedeVerAdmin){ ?><td style="background:#c9e8e8"></td>
+<?php } ?>
 
 
 <?php  
@@ -507,6 +530,15 @@ $colspanFields = array(
 			$colspan++;
 		}
 	}
+	if ($puedeVerVYO) {
+		$colspan++;
+	}
+	if ($puedeVerDIRECCION) {
+		$colspan++;
+	}
+	if ($puedeVerAdmin) {
+		$colspan++;
+	}
 
 	foreach ($datos as $key=>$row){?>
 		 <tr style="background:#FFFFFF;">
@@ -569,7 +601,20 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 <?php  if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['CIUDAD_DEL_EVENTO'];?></td>
 <?php } ?>
 
+<?php if($puedeVerVYO){ ?>
+<td style="text-align:center">
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="VYO[]" id="VYO<?php echo $row["PERSONAL_ID"]; ?>" value="<?php echo $row["PERSONAL_ID"]; ?>" onclick="pasara1_personalVYO_filtro(<?php echo $row["PERSONAL_ID"]; ?>)" <?php if(isset($row["VYO"]) && $row["VYO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarVYO || ((isset($row["VYO"]) && $row["VYO"]=='si') && !$puedeModificarVYO)) { echo "disabled"; } ?>/> </td>
+<?php } ?>
 
+<?php if($puedeVerDIRECCION){ ?>
+<td style="text-align:center">
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="DIRECCION[]" id="DIRECCION<?php echo $row["PERSONAL_ID"]; ?>" value="<?php echo $row["PERSONAL_ID"]; ?>" onclick="pasara1_personalDIRECCION_filtro(<?php echo $row["PERSONAL_ID"]; ?>)" <?php if(isset($row["DIRECCION"]) && $row["DIRECCION"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarDIRECCION || ((isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') && !$puedeModificarDIRECCION)) { echo "disabled"; } ?>/> </td>
+<?php } ?>
+
+<?php if($puedeVerAdmin){ ?>
+<td style="text-align:center">
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $row["PERSONAL_ID"]; ?>" value="<?php echo $row["PERSONAL_ID"]; ?>" onclick="pasara1_personalADMIN_filtro(<?php echo $row["PERSONAL_ID"]; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td>
+<?php } ?>
 
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><a href="colaboradores.php?id=<?php echo $row["NOMBRE_PERSONAL"]; ?>"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1'); ?></a></td>
