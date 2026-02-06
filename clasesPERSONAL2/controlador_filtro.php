@@ -20,6 +20,15 @@ if($action == "ajax2"){
 
 	require(__ROOT6__."/class.filtroP2.php");
 	$database=new orders();	
+	$puedeVerAdmin2 = ($database->variablespermisos('', 'PERSO2', 'ver') === 'si');
+	$puedeGuardarAdmin2 = ($database->variablespermisos('', 'PERSO2', 'guardar') === 'si');
+	$puedeModificarAdmin2 = ($database->variablespermisos('', 'PERSO2', 'modificar') === 'si');
+	$puedeVerVYO2 = ($database->variablespermisos('', 'PERSOvyo2', 'ver') === 'si');
+	$puedeGuardarVYO2 = ($database->variablespermisos('', 'PERSOvyo2', 'guardar') === 'si');
+	$puedeModificarVYO2 = ($database->variablespermisos('', 'PERSOvyo2', 'modificar') === 'si');
+	$puedeVerDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2', 'ver') === 'si');
+	$puedeGuardarDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2', 'guardar') === 'si');
+	$puedeModificarDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2', 'modificar') === 'si');
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
 
@@ -184,9 +193,16 @@ if($database->plantilla_filtro($nombreTabla,"PAIS_DEL_EVENTO",$altaeventos,$DEPA
 <?php } ?><?php 
 if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">CIUDAD DEL EVENTO </th>
 <?php } ?>
-<th style="background:#c9e8e8">AUTORIZACIÓN <br>POR VYO</th>
-<th style="background:#c9e8e8">AUTORIZACIÓN <br>POR DIRECCIÓN</th>
-<th style="background:#c9e8e8">ADMIN</th>
+
+
+<?php if($puedeVerVYO2){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR VYO</th>
+<?php } ?>
+<?php if($puedeVerDIRECCION2){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR DIRECCIÓN</th>
+<?php } ?>
+<?php if($puedeVerAdmin2){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR AUDITORÍA</th>
+<?php } ?>
+
+
 <?php 
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE DEL PERSONAL</th>
 <?php } ?>
@@ -293,8 +309,12 @@ echo $PAIS_DEL_EVENTO; ?>"></td>
 if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8;text-align:center"><input type="text" class="form-control" id="CIUDAD_DEL_EVENTO_2" value="<?php 
 echo $CIUDAD_DEL_EVENTO; ?>"></td>
 <?php } ?>
-<td style="background:#c9e8e8"></td>
-<td style="background:#c9e8e8"></td>
+<?php if($puedeVerVYO2){ ?><td style="background:#c9e8e8"></td>
+<?php } ?>
+<?php if($puedeVerDIRECCION2){ ?><td style="background:#c9e8e8"></td>
+<?php } ?>
+<?php if($puedeVerAdmin2){ ?><td style="background:#c9e8e8"></td>
+<?php } ?>
 
 <?php  
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="NOMBRE_PERSONAL2_2" value="<?php 
@@ -454,6 +474,15 @@ $colspanFields = array(
 			$colspan++;
 		}
 	}
+	if ($puedeVerVYO2) {
+		$colspan++;
+	}
+	if ($puedeVerDIRECCION2) {
+		$colspan++;
+	}
+	if ($puedeVerAdmin2) {
+		$colspan++;
+	}
 
 			foreach ($datos as $key=>$row){?>
 		 <tr style="background:#FFFFFF;">
@@ -505,9 +534,21 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 <?php  if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['CIUDAD_DEL_EVENTO'];?></td>
 <?php } ?>
 
-<td></td>
-<td></td>
-<td></td>
+<?php $personal2Id = !empty($row["PERSONAL_ID"]) ? $row["PERSONAL_ID"] : $row["id"]; ?>
+<?php if($puedeVerVYO2){ ?>
+<td class="autorizacion-cell<?php echo (isset($row["VYO"]) && $row["VYO"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="VYO[]" id="VYO<?php echo $personal2Id; ?>" value="<?php echo $personal2Id; ?>" onclick="pasara1_personal2VYO_filtro(<?php echo $personal2Id; ?>)" <?php if(isset($row["VYO"]) && $row["VYO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarVYO2 || ((isset($row["VYO"]) && $row["VYO"]=='si') && !$puedeModificarVYO2)) { echo "disabled"; } ?>/> </td>
+<?php } ?>
+
+<?php if($puedeVerDIRECCION2){ ?>
+<td class="autorizacion-cell<?php echo (isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="DIRECCION[]" id="DIRECCION<?php echo $personal2Id; ?>" value="<?php echo $personal2Id; ?>" onclick="pasara1_personal2DIRECCION_filtro(<?php echo $personal2Id; ?>)" <?php if(isset($row["DIRECCION"]) && $row["DIRECCION"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarDIRECCION2 || ((isset($row["DIRECCION"]) && $row["DIRECCION"]=='si') && !$puedeModificarDIRECCION2)) { echo "disabled"; } ?>/> </td>
+<?php } ?>
+
+<?php if($puedeVerAdmin2){ ?>
+<td class="autorizacion-cell<?php echo (isset($row["admin"]) && $row["admin"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personal2Id; ?>" value="<?php echo $personal2Id; ?>" onclick="pasara1_personal2ADMIN_filtro(<?php echo $personal2Id; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin2 || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin2)) { echo "disabled"; } ?>/> </td>
+<?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><a href="colaboradores.php?id=<?php echo $row["NOMBRE_PERSONAL2"]; ?>"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL2"],'01informacionpersonal','NOMBRE_1'); ?></a></td>
 <?php } ?>
@@ -659,7 +700,19 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA1",$altaeventos,$DEP
 
 <?php  if($database->plantilla_filtro($nombreTabla,"PERSONAL2_FECHA_ULTIMA_CARGA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo date('d/m/Y', strtotime($row['PERSONAL2_FECHA_ULTIMA_CARGA'])); ?></td>
 <?php } ?>
+<td>
+    <?php $personal2Id = !empty($row["PERSONAL_ID"]) ? $row["PERSONAL_ID"] : $row["id"]; ?>
 
+    <input 
+        type="button" 
+        name="view" 
+        value="MODIFICAR" 
+        id="<?php echo $personal2Id; ?>" 
+        class="btn btn-info btn-xs view_dataDATOSpersonal2modificaBONOS" 
+    />
+
+
+</td>
 
 		
 		</tr>
