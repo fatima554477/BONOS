@@ -43,47 +43,47 @@ $queryVISTAPREV = $conexion->listado_personal33($identioficador);
 	
 
 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>NOMBRE</label></td>
+			 <td width="30%"><label>NOMBRE</label></td>
 			 <td width="70%">
 			 '.$altaeventos->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL2"],'01informacionpersonal','NOMBRE_1').'
 			 </td>
 			 </tr>
 					 			 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>FECHA INICIO DE A CORDINACIÓN</label></td>
+			 <td width="30%"><label>FECHA_INICIO DE A CORDINACIÓN</label></td>
 			 <td width="70%"><input type="date" name="FECHA_INICIO1" value="'.$row["FECHA_INICIO1"].'"></td>
 
 			 </tr>
 	
 			 
 			 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>FECHA FINAL DE LA CORDINACIÓN</label></td>
+			 <td width="30%"><label>FECHA FINAL DE LA CORDINACIÓN</label></td>
 			 <td width="70%"><input type="date" name="FECHA_FINAL1" value="'.$row["FECHA_FINAL1"].'"></td>
 
 			 </tr>
 			 
 			 
 			 			 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>NÚMERO DE DIAS</label></td>
+			 <td width="30%"><label>NÚMERO DE DIAS</label></td>
 			 <td width="70%"><input type="text" name="NUMERO_DIAS1" value="'.$row["NUMERO_DIAS1"].'"></td>
 
 			 </tr>
 			 
 			 
 			 			 			 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>MONTO DEL BONO</label></td>
+			 <td width="30%"><label>MONTO DEL BONO</label></td>
 			 <td width="70%"><input type="text" name="MONTO_BONO1" value="'.$row["MONTO_BONO1"].'"></td>
 
 			 </tr>
 			 
 			 			 			 			 			 			 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>TOTAL DEL BONO</label></td>
+			 <td width="30%"><label>TOTAL DEL BONO</label></td>
 			 <td width="70%"><input type="text" name="MONTO_BONO_TOTAL1" value="'.$row["MONTO_BONO_TOTAL1"].'"></td>
 
 			 </tr>
 			 
 				 
 			 		 <tr>
-			 <td width="30%" style="font-weight:bold;"><label> VIATICOS</label></td>
+			 <td width="30%"><label> VIATICOS</label></td>
 			 <td width="70%"><input type="text" name="VIATICOS_PERSONAL2" value="'.$row["VIATICOS_PERSONAL2"].'"></td>
 			 </tr>
 			 
@@ -92,57 +92,43 @@ $queryVISTAPREV = $conexion->listado_personal33($identioficador);
 			 
 			 
 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>TOTAL BONO Y VIATICOS</label></td>
+			 <td width="30%"><label>TOTAL BONO Y VIATICOS</label></td>
 			 <td width="70%"><input type="text" name="TOTAL1" value="'.$row["TOTAL1"].'"></td>
 			 </tr>
 			 
 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>ÚLTIMO DÍA PARA COMPRAR VIATICOS</label></td>
+			 <td width="30%"><label>ÚLTIMO DÍA PARA COMPRAR VIATICOS</label></td>
 			 <td width="70%"><input type="date" name="ULTIMO_DIA1" value="'.$row["ULTIMO_DIA1"].'"></td>
 			 </tr>
 			 
 			 
 			 
 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>MOTIVO DEL BONO</label></td>
+			 <td width="30%"><label>MOTIVO DEL BONO</label></td>
 			 <td width="70%"><input type="text" name="OBSERVACIONES_PERSONAL2" value="'.$row["OBSERVACIONES_PERSONAL2"].'"></td>
 
 			 </tr> 
 
 			 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>FECHA DE PROGRAMACIÓN DE PAGO</label></td>
+			 <td width="30%"><label>FECHA DE PROGRAMACIÓN DE PAGO</label></td>
 			 <td width="70%"><input type="date" name="FECHA_PPAGO1" value="'.$row["FECHA_PPAGO1"].'"></td>
 			 </tr>
 			 
-	<tr>
-    <td width="30%" style="font-weight:bold;" ><label>FORMA DE PAGO</label></td>
-    <td width="70%" class="form-control">
-        <select name="FORMA_PAGO1" style="background:#daddf5">
-            <option style="background:#f2b4f5" value="">SELECCIONA UNA OPCIÓN</option>  
-            <option style="background:#f2b4f5" value="03" '.($row["FORMA_PAGO1"] == "03" ? "selected" : "").'>03 TRANSFERENCIA ELECTRÓNICA</option>
-            <option style="background:#ddf5da" value="01" '.($row["FORMA_PAGO1"] == "01" ? "selected" : "").'>01 EFECTIVO</option>
-            <option style="background:#fceade" value="02" '.($row["FORMA_PAGO1"] == "02" ? "selected" : "").'>02 CHEQUE NOMINATIVO</option>
-            <option style="background:#dee6fc" value="04" '.($row["FORMA_PAGO1"] == "04" ? "selected" : "").'>04 TARJETA DE CRÉDITO</option>
-            <option style="background:#f6fcde" value="05" '.($row["FORMA_PAGO1"] == "05" ? "selected" : "").'>05 MONEDERO ELECTRÓNICO</option>
-            <option style="background:#dee2fc" value="06" '.($row["FORMA_PAGO1"] == "06" ? "selected" : "").'>06 DINERO ELECTRÓNICO</option>
-            <option style="background:#f9e5fa" value="08" '.($row["FORMA_PAGO1"] == "08" ? "selected" : "").'>08 VALES DE DESPENSA</option>
-            <option style="background:#eefcde" value="28" '.($row["FORMA_PAGO1"] == "28" ? "selected" : "").'>28 TARJETA DE DÉBITO</option>
-            <option style="background:#fcfbde" value="29" '.($row["FORMA_PAGO1"] == "29" ? "selected" : "").'>29 TARJETA DE SERVICIO</option>
-            <option style="background:#f9e5fa" value="99" '.($row["FORMA_PAGO1"] == "99" ? "selected" : "").'>99 OTRO</option>
-        </select>
-    </td>
-</tr>
+			 			 <tr>
+			 <td width="30%"><label>FORMA DE PAGO</label></td>
+			 <td width="70%"><input type="text" name="FORMA_PAGO1" value="'.$row["FORMA_PAGO1"].'"></td>
+			 </tr>
 			 
 			 			 <tr>
-			 <td width="30%" style="background:#f48a81;font-weight:bold;"><label>FECHA EFECTIVA DE PAGO</label></td>
-			 <td width="70%" style="background:#f48a81"><input type="date" name="FECHA_EFECTIVA1" value="'.$row["FECHA_EFECTIVA1"].'"></td>
+			 <td width="30%"><label>FECHA EFECTIVA DE PAGO</label></td>
+			 <td width="70%"><input type="date" name="FECHA_EFECTIVA1" value="'.$row["FECHA_EFECTIVA1"].'"></td>
 			 </tr>
 			 
 
 			 
             <tr>
-                 <td width="30%" style="background:#f48a81;font-weight:bold;"><label>DOCUMENTO:</label></td>
-             <td width="70%" style="background:#f48a81"><div class="col-md-6"> 
+                 <td width="30%"><label>DOCUMENTO:</label></td>
+             <td width="70%"><div class="col-md-6"> 
 
 <div id="drop_file_zone" ondrop="upload_file(event, \'ADJUNTO_COMPROBANTE\');" ondragover="return false" style="width:300px;"> <p>Suelta aquí o busca tu archivo</p> <p> <input class="form-control form-control-sm" id="ADJUNTO_COMPROBANTE" type="text" onkeydown="return false" onclick="file_explorer(\'ADJUNTO_COMPROBANTE\');" style="width:250px;" value="'.$valorADJUNTO_COMPROBANTE.'" required /> </p> <input type="file" name="ADJUNTO_COMPROBANTE" id="nono" multiple/> <div id="2ADJUNTO_COMPROBANTE"> "'.$urlADJUNTO_COMPROBANTE.'" </div> </div> 
 
@@ -150,8 +136,8 @@ $queryVISTAPREV = $conexion->listado_personal33($identioficador);
 </td>
 </tr>
 			 			 <tr>
-			 <td width="30%"  style="background:#f48a81;font-weight:bold;"><label>PAX QUE COBRO</label></td>
-			 <td width="70%" style="background:#f48a81"><input type="text" name="NOMBRE_RECIBIO" value="'.$row["NOMBRE_RECIBIO"].'"></td>
+			 <td width="30%"><label>PAX QUE COBRO</label></td>
+			 <td width="70%"><input type="text" name="NOMBRE_RECIBIO" value="'.$row["NOMBRE_RECIBIO"].'"></td>
 			 </tr> 			 
 			 
 			 
@@ -166,7 +152,7 @@ $queryVISTAPREV = $conexion->listado_personal33($identioficador);
 
 
 	 $output .= '<tr>  
-            <td width="30%"><label></label></td>  
+            <td width="30%"><label>GUARDAR</label></td>  
             <td width="70%">
 			
 			<input type="hidden" value="'.$row["id"].'"  name="IPpersonal2"  id="IPpersonal2"/>

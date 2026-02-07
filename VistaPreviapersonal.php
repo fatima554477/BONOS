@@ -112,10 +112,24 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 			 <td width="70%"><input type="date" name="FECHA_PPAGO" value="'.$row["FECHA_PPAGO"].'"></td>
 			 </tr>
 			 
-			 			 <tr>
-			 <td width="30%"><label>FORMA DE PAGO</label></td>
-			 <td width="70%"><input type="text" name="FORMA_PAGO" value="'.$row["FORMA_PAGO"].'"></td>
-			 </tr>
+<tr>
+    <td width="30%" style="font-weight:bold;" ><label>FORMA DE PAGO:</label></td>
+    <td width="70%" class="form-control">
+        <select name="FORMA_PAGO" style="background:#daddf5">
+            <option style="background:#f2b4f5" value="">SELECCIONA UNA OPCIÓN</option>
+            <option style="background:#f2b4f5" value="03" '.($row["FORMA_PAGO"] == "03" ? "selected" : "").'>03 TRANSFERENCIA ELECTRÓNICA</option>
+            <option style="background:#ddf5da" value="01" '.($row["FORMA_PAGO"] == "01" ? "selected" : "").'>01 EFECTIVO</option>
+            <option style="background:#fceade" value="02" '.($row["FORMA_PAGO"] == "02" ? "selected" : "").'>02 CHEQUE NOMINATIVO</option>
+            <option style="background:#dee6fc" value="04" '.($row["FORMA_PAGO"] == "04" ? "selected" : "").'>04 TARJETA DE CRÉDITO</option>
+            <option style="background:#f6fcde" value="05" '.($row["FORMA_PAGO"] == "05" ? "selected" : "").'>05 MONEDERO ELECTRÓNICO</option>
+            <option style="background:#dee2fc" value="06" '.($row["FORMA_PAGO"] == "06" ? "selected" : "").'>06 DINERO ELECTRÓNICO</option>
+            <option style="background:#f9e5fa" value="08" '.($row["FORMA_PAGO"] == "08" ? "selected" : "").'>08 VALES DE DESPENSA</option>
+            <option style="background:#eefcde" value="28" '.($row["FORMA_PAGO"] == "28" ? "selected" : "").'>28 TARJETA DE DÉBITO</option>
+            <option style="background:#fcfbde" value="29" '.($row["FORMA_PAGO"] == "29" ? "selected" : "").'>29 TARJETA DE SERVICIO</option>
+            <option style="background:#f9e5fa" value="99" '.($row["FORMA_PAGO"] == "99" ? "selected" : "").'>99 OTRO</option>
+        </select>
+    </td>
+</tr>
 			 
 			 			 <tr>
 			 <td width="30%"><label>FECHA EFECTIVA DE PAGO</label></td>
