@@ -43,41 +43,41 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 	
 
 			 <tr>
-			 <td width="30%"><label>NOMBRE</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>NOMBRE</label></td>
 			 <td width="70%">
 			 '.$altaeventos->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1').'
 			 </td>
 			 </tr>
 			 
 			 			 			 <tr>
-			 <td width="30%"><label>FECHA_INICIO DE LA CORDINACIÓN</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>FECHA INICIO DE LA CORDINACIÓN</label></td>
 			 <td width="70%"><input type="date" name="FECHA_INICIO" value="'.$row["FECHA_INICIO"].'"></td>
 
 			 </tr>
 	
 			 
 			 			 <tr>
-			 <td width="30%"><label>FECHA FINAL DE LA CORDINACIÓN</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>FECHA FINAL DE LA CORDINACIÓN</label></td>
 			 <td width="70%"><input type="date" name="FECHA_FINAL" value="'.$row["FECHA_FINAL"].'"></td>
 
 			 </tr>
 			 
 			 
 			 			 			 <tr>
-			 <td width="30%"><label>NÚMERO DE DIAS</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>NÚMERO DE DIAS</label></td>
 			 <td width="70%"><input type="text" name="NUMERO_DIAS" value="'.$row["NUMERO_DIAS"].'"></td>
 
 			 </tr>
 			 
 			 
 			 			 			 			 <tr>
-			 <td width="30%"><label>MONTO DEL BONO</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>MONTO DEL BONO</label></td>
 			 <td width="70%"><input type="text" name="MONTO_BONO" value="'.$row["MONTO_BONO"].'"></td>
 
 			 </tr>
 			 
 			 			 			 			 			 			 			 <tr>
-			 <td width="30%"><label>TOTAL DEL BONO</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>TOTAL DEL BONO</label></td>
 			 <td width="70%"><input type="text" name="MONTO_BONO_TOTAL" value="'.$row["MONTO_BONO_TOTAL"].'"></td>
 
 			 </tr>
@@ -86,29 +86,29 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 			 
 			 
 			 		 <tr>
-			 <td width="30%"><label> VIATICOS</label></td>
+			 <td width="30%" style="font-weight:bold;"><label> VIATICOS</label></td>
 			 <td width="70%"><input type="text" name="VIATICOS_PERSONAL" value="'.$row["VIATICOS_PERSONAL"].'"></td>
 			 </tr>
 			 
 			 
 			 <tr>
-			 <td width="30%"><label>TOTAL BONO Y VIATICOS</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>TOTAL BONO Y VIATICOS</label></td>
 			 <td width="70%"><input type="text" name="TOTAL" value="'.$row["TOTAL"].'"></td>
 			 </tr>
 			 
 			 <tr>
-			 <td width="30%"><label>ÚLTIMO DÍA PARA COMPRAR VIATICOS</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>ÚLTIMO DÍA PARA COMPRAR VIATICOS</label></td>
 			 <td width="70%"><input type="date" name="ULTIMO_DIA" value="'.$row["ULTIMO_DIA"].'"></td>
 			 </tr>
 			 
 			 
 			 			 <tr>
-			 <td width="30%"><label>MOTIVO DEL BONO</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>MOTIVO DEL BONO</label></td>
 			 <td width="70%"><input type="text" name="OBSERVACIONES_PERSONAL" value="'.$row["OBSERVACIONES_PERSONAL"].'"></td></tr>
 			 
 			 
 			 			 <tr>
-			 <td width="30%"><label>FECHA DE PROGRAMACIÓN DE PAGO</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>FECHA DE PROGRAMACIÓN DE PAGO</label></td>
 			 <td width="70%"><input type="date" name="FECHA_PPAGO" value="'.$row["FECHA_PPAGO"].'"></td>
 			 </tr>
 			 
@@ -132,15 +132,15 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 </tr>
 			 
 			 			 <tr>
-			 <td width="30%"><label>FECHA EFECTIVA DE PAGO</label></td>
-			 <td width="70%"><input type="date" name="FECHA_EFECTIVA" value="'.$row["FECHA_EFECTIVA"].'"></td>
+			 <td width="30%" style="background:#f48a81;font-weight:bold;"><label>FECHA EFECTIVA DE PAGO</label></td>
+			 <td width="70%" style="background:#f48a81"><input type="date" name="FECHA_EFECTIVA" value="'.$row["FECHA_EFECTIVA"].'"></td>
 			 </tr>
 			 
 
 			 
 <tr>
-<td width="30%"><label>COMPROBANTE DE PAGO</label></td>
-<td width="70%"><div class="col-md-6"> 
+<td width="30%" style="background:#f48a81;font-weight:bold;"><label>COMPROBANTE DE PAGO</label></td>
+<td width="70%" style="background:#f48a81"><div class="col-md-6"> 
 
 <div id="drop_file_zone" ondrop="upload_file(event, \'ADJUNTO_COMPROBANTEP\');" ondragover="return false" style="width:300px;"> <p>Suelta aquí o busca tu archivo</p> <p> <input class="form-control form-control-sm" id="ADJUNTO_COMPROBANTEP" type="text" onkeydown="return false" onclick="file_explorer(\'ADJUNTO_COMPROBANTEP\');" style="width:250px;" value="'.$valorADJUNTO_COMPROBANTEP.'" required /> </p> <input type="file" name="ADJUNTO_COMPROBANTEP" id="nono" multiple/> <div id="2ADJUNTO_COMPROBANTEP"> "'.$urlADJUNTO_COMPROBANTEP.'" </div> </div> 
 
@@ -148,8 +148,8 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 </td>
 </tr>
 			 			 <tr>
-			 <td width="30%"><label>PAX QUE COBRO</label></td>
-			 <td width="70%"><input type="text" name="NOMBRE_RECIBIO" value="'.$row["NOMBRE_RECIBIO"].'"></td>
+			 <td width="30%" style="background:#f48a81;font-weight:bold;"><label>PAX QUE COBRO</label></td>
+			 <td width="70%" style="background:#f48a81"><input type="text" name="NOMBRE_RECIBIO" value="'.$row["NOMBRE_RECIBIO"].'"></td>
 			 </tr> 
 			 
 
@@ -245,7 +245,7 @@ var fileobj;
 	        form_data.append("IPpersonal",  $("#IPpersonal").val());
 	        $.ajax({
 	            type: 'POST',
-	            url: 'BONOS/controladorAE.php',
+	            url: 'calendariodeeventos2/controladorAE.php',
 				  dataType: "html",
 	            contentType: false,
 	            processData: false,
@@ -273,29 +273,41 @@ actualizarAdjuntos(nombre, nuevoAdjunto);
 
     $(document).ready(function(){
 
-$("#clickpersonal").click(function(){
+	$("#clickpersonal").off('click').on('click', function(){
+	var datosFormulario = $('#listado_personalform').serialize();
+	if (datosFormulario.indexOf('ENVIARpersonal=') === -1) {
+		datosFormulario += (datosFormulario ? '&' : '') + 'ENVIARpersonal=ENVIARpersonal';
+	}
+	if (datosFormulario.indexOf('IPpersonal=') === -1) {
+		datosFormulario += (datosFormulario ? '&' : '') + 'IPpersonal=' + encodeURIComponent($('#IPpersonal').val());
+	}
 	
    $.ajax({  
-  url:"BONOS/controladorAE.php",
+  url:"calendariodeeventos2/controladorAE.php",
     method:"POST",  
-    data:$('#listado_personalform').serialize(),
+    data: datosFormulario,
+    timeout: 20000,
 
     beforeSend:function(){  
     $('#mensajePERSONAL').html('cargando'); 
     }, 	
 	
     success:function(data){
-		
-	
-		load(1);
+		if(typeof load === 'function') { load(1); }
     $('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>");
             setTimeout(function () {
                 $('#mensajePERSONAL').html('');
             }, 2000);	
-
 			$('#dataModal').modal('hide');
-
-    }  
+    },
+    error:function(xhr, status){
+		$('#mensajePERSONAL').html("<span style='color:red;'>Error al guardar ("+status+").</span>");
+    },
+    complete:function(){
+		setTimeout(function () {
+			$('#mensajePERSONAL').html('');
+		}, 2500);
+    }
    });
    
 });
