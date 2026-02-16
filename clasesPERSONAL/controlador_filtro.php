@@ -20,15 +20,15 @@ if($action == "ajax"){
 
 require(__ROOT6__."/class.filtro.php");
 	$database=new orders();	
-	$puedeVerAdmin = ($database->variablespermisos('', 'PERSO', 'ver') === 'si');
-	$puedeGuardarAdmin = ($database->variablespermisos('', 'PERSO', 'guardar') === 'si');
-	$puedeModificarAdmin = ($database->variablespermisos('', 'PERSO', 'modificar') === 'si');
-	$puedeVerVYO = ($database->variablespermisos('', 'PERSOvyo', 'ver') === 'si');
-	$puedeGuardarVYO = ($database->variablespermisos('', 'PERSOvyo', 'guardar') === 'si');
-	$puedeModificarVYO = ($database->variablespermisos('', 'PERSOvyo', 'modificar') === 'si');
-	$puedeVerDIRECCION = ($database->variablespermisos('', 'PERSOdire', 'ver') === 'si');
-	$puedeGuardarDIRECCION = ($database->variablespermisos('', 'PERSOdire', 'guardar') === 'si');
-	$puedeModificarDIRECCION = ($database->variablespermisos('', 'PERSOdire', 'modificar') === 'si');
+	$puedeVerAdmin = ($database->variablespermisos('', 'PERSOBONO', 'ver') === 'si');
+	$puedeGuardarAdmin = ($database->variablespermisos('', 'PERSOBONO', 'guardar') === 'si');
+	$puedeModificarAdmin = ($database->variablespermisos('', 'PERSOBONO', 'modificar') === 'si');
+	$puedeVerVYO = ($database->variablespermisos('', 'PERSOvyoBONO', 'ver') === 'si');
+	$puedeGuardarVYO = ($database->variablespermisos('', 'PERSOvyoBONO', 'guardar') === 'si');
+	$puedeModificarVYO = ($database->variablespermisos('', 'PERSOvyoBONO', 'modificar') === 'si');
+	$puedeVerDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'ver') === 'si');
+	$puedeGuardarDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'guardar') === 'si');
+	$puedeModificarDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'modificar') === 'si');
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
 
@@ -244,9 +244,9 @@ if($database->plantilla_filtro($nombreTabla,"EMAIL_PERSONAL2",$altaeventos,$DEPA
 <?php } ?>
 
 <?php 
-if($database->plantilla_filtro($nombreTabla,"FECHA_INICIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA INICIO DE CORDINACIÓN</th>
+if($database->plantilla_filtro($nombreTabla,"FECHA_INICIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA INICIO DE COORDINACIÓN</th>
 <?php } ?><?php 
-if($database->plantilla_filtro($nombreTabla,"FECHA_FINAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA FINAL DE CORDINACIÓN</th>
+if($database->plantilla_filtro($nombreTabla,"FECHA_FINAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA FINAL DE COORDINACIÓN</th>
 <?php } ?><?php 
 if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NÚMERO DÍAS</th>
 <?php } ?>
@@ -291,13 +291,13 @@ if($database->plantilla_filtro($nombreTabla,"FOTO_ESTADO_PROVEE",$altaeventos,$D
 if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FORMA DE PAGO</th>
 <?php } ?>
 <?php 
-if($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">FECHA EFECTIVA DE PAGO</th>
+if($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#f48a81;text-align:center">FECHA EFECTIVA DE PAGO</th>
 <?php } ?>
 <?php 
-if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">COMPROBANTE DE PAGO</th>
+if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#f48a81;text-align:center">COMPROBANTE DE PAGO</th>
 <?php } ?>
 <?php 
-if($database->plantilla_filtro($nombreTabla,"NOMBRE_RECIBIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">PAX QUE COBRO</th>
+if($database->plantilla_filtro($nombreTabla,"NOMBRE_RECIBIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#f48a81;text-align:center">PAX QUE COBRO</th>
 <?php } ?>
 
 
@@ -471,17 +471,17 @@ if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAME
 
 
 <?php  
-if($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="date" class="form-control" id="FECHA_EFECTIVA_1" value="<?php 
+if($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#f48a81"><input type="date" class="form-control" id="FECHA_EFECTIVA_1" value="<?php 
 echo $FECHA_EFECTIVA; ?>"></td>
 <?php } ?>
 
 <?php  
-if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="ADJUNTO_COMPROBANTEP_1" value="<?php 
+if($database->plantilla_filtro($nombreTabla,"ADJUNTO_COMPROBANTEP",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#f48a81"><input type="text" class="form-control" id="ADJUNTO_COMPROBANTEP_1" value="<?php 
 echo $ADJUNTO_COMPROBANTEP; ?>"></td>
 <?php } ?>
 
 <?php  
-if($database->plantilla_filtro($nombreTabla,"NOMBRE_RECIBIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="NOMBRE_RECIBIO_1" value="<?php 
+if($database->plantilla_filtro($nombreTabla,"NOMBRE_RECIBIO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#f48a81"><input type="text" class="form-control" id="NOMBRE_RECIBIO_1" value="<?php 
 echo $NOMBRE_RECIBIO; ?>"></td>
 <?php } ?>
 
@@ -570,8 +570,7 @@ $colspanFields = array(
                    localStorage.removeItem('checkbox_' + id);
                }">
 </td>
-<?php $personalIdos = !empty($row["IDPERSONAL"]) ? $row["IDPERSONAL"] : $row["id"]; ?>
-<td style="text-align:center"><?php echo $personalIdos; ?></td>
+<td style="text-align:center"><?php echo $row['id']; ?></td>
 
 <?php /*inicia copiar y pegar iniciaA5*/ ?>
 
@@ -626,11 +625,11 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 
 <?php if($puedeVerAdmin){ ?>
 <td class="autorizacion-cell<?php echo (isset($row["admin"]) && $row["admin"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
-    <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalADMIN_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td>
+    <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalADMIN_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td>  
 <?php } ?>
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><a href="colaboradores.php?id=<?php echo $row["NOMBRE_PERSONAL"]; ?>"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1'); ?></a></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1'); ?></td>
 <?php } ?>
 
 
