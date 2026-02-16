@@ -80,6 +80,9 @@ $FORMA_PAGO = isset($_POST["FORMA_PAGO"])?trim($_POST["FORMA_PAGO"]):"";
 $FECHA_EFECTIVA = isset($_POST["FECHA_EFECTIVA"])?trim($_POST["FECHA_EFECTIVA"]):"";  
 $ADJUNTO_COMPROBANTEP = isset($_POST["ADJUNTO_COMPROBANTEP"])?trim($_POST["ADJUNTO_COMPROBANTEP"]):"";  
 $NOMBRE_RECIBIO = isset($_POST["NOMBRE_RECIBIO"])?trim($_POST["NOMBRE_RECIBIO"]):"";  
+$VYO = isset($_POST["VYO"])?trim($_POST["VYO"]):"";
+$DIRECCION = isset($_POST["DIRECCION"])?trim($_POST["DIRECCION"]):"";
+$admin = isset($_POST["admin"])?trim($_POST["admin"]):""; 
 
 $per_page=intval($_POST["per_page"]);
 
@@ -128,6 +131,9 @@ $campos="04personal.*, 01informacionpersonal.*, 01DATOSBANCARIOS.*, 04altaevento
 "FECHA_EFECTIVA"=>$FECHA_EFECTIVA,
 "ADJUNTO_COMPROBANTEP"=>$ADJUNTO_COMPROBANTEP,
 "NOMBRE_RECIBIO"=>$NOMBRE_RECIBIO,
+"VYO"=>$VYO,
+"DIRECCION"=>$DIRECCION,
+"admin"=>$admin,
 
  "per_page"=>$per_page,
 	"query"=>$query,
@@ -359,11 +365,29 @@ echo $CIUDAD_DEL_EVENTO; ?>"></td>
 
 
 
-<?php if($puedeVerVYO){ ?><td style="background:#c9e8e8"></td>
+<?php if($puedeVerVYO){ ?><td style="background:#c9e8e8">
+    <select class="form-select" id="VYO_1" onchange="load(1)">
+        <option value="" <?php if($VYO==""){ echo "selected"; } ?>>Todos</option>
+        <option value="si" <?php if($VYO=="si"){ echo "selected"; } ?>>Si</option>
+        <option value="no" <?php if($VYO=="no"){ echo "selected"; } ?>>No</option>
+    </select>
+</td>
 <?php } ?>
-<?php if($puedeVerDIRECCION){ ?><td style="background:#c9e8e8"></td>
+<?php if($puedeVerDIRECCION){ ?><td style="background:#c9e8e8">
+    <select class="form-select" id="DIRECCION_1" onchange="load(1)">
+        <option value="" <?php if($DIRECCION==""){ echo "selected"; } ?>>Todos</option>
+        <option value="si" <?php if($DIRECCION=="si"){ echo "selected"; } ?>>Si</option>
+        <option value="no" <?php if($DIRECCION=="no"){ echo "selected"; } ?>>No</option>
+    </select>
+</td>
 <?php } ?>
-<?php if($puedeVerAdmin){ ?><td style="background:#c9e8e8"></td>
+<?php if($puedeVerAdmin){ ?><td style="background:#c9e8e8">
+    <select class="form-select" id="admin_1" onchange="load(1)">
+        <option value="" <?php if($admin==""){ echo "selected"; } ?>>Todos</option>
+        <option value="si" <?php if($admin=="si"){ echo "selected"; } ?>>Si</option>
+        <option value="no" <?php if($admin=="no"){ echo "selected"; } ?>>No</option>
+    </select>
+</td>
 <?php } ?>
 
 
