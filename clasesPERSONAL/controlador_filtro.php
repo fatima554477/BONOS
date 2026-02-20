@@ -556,9 +556,8 @@ $colspanFields = array(
 		"NOMBRE_PERSONAL",
 		"PUESTO_PERSONAL2",
 		"WHAT_PERSONAL",
-		"EMAIL_PERSONAL2",
-		"FECHA_INICIO",
-		"FECHA_FINAL",
+
+		
 		
 	);
 	foreach ($colspanFields as $colspanField) {
@@ -707,8 +706,8 @@ $MONTO_BONO12 += floatval(str_replace(',', '', $row['MONTO_BONO']));
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:right; padding-right:10px;"><?php echo $row['TOTAL'];
-$TOTAL12 += floatval(str_replace(',', '', $row['TOTAL']));
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:right; padding-right:10px;"><?php echo $row['MONTO_BONO_TOTAL'];
+$TOTAL12 += floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL']));
 ?></td>
 <?php } ?>
 

@@ -37,7 +37,9 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 
                 $tables1 = '04altaeventos';
                 $tables = '04personal';
-		$baseConditions = " ( ($tables.NOMBRE_PERSONAL is not null or $tables.NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
+          $baseConditions = " ( ($tables.NOMBRE_PERSONAL is not null or $tables.NOMBRE_PERSONAL <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") )"
+			." and ($tables.NOMBRE_RECIBIO is null or $tables.NOMBRE_RECIBIO = \"\")"
+			." and ($tables.ADJUNTO_COMPROBANTEP is null or $tables.ADJUNTO_COMPROBANTEP = \"\") ";
 		$sWhere2="";$sWhere3="";
 		$autorizacionWhere = "";
 
