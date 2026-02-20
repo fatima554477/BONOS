@@ -50,56 +50,54 @@ $queryVISTAPREV = $altaeventos->listado_personal2($identioficador);
 			 </tr>
 			 
 			 			 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>FECHA INICIO DE LA CORDINACIÓN</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>FECHA INICIO DE LA COORDINACIÓN</label></td>
 			 <td width="70%"><input type="date" name="FECHA_INICIO" value="'.$row["FECHA_INICIO"].'"></td>
 
 			 </tr>
 	
 			 
 			 			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>FECHA FINAL DE LA CORDINACIÓN</label></td>
+			 <td width="30%" style="font-weight:bold;"><label>FECHA FINAL DE LA COORDINACIÓN</label></td>
 			 <td width="70%"><input type="date" name="FECHA_FINAL" value="'.$row["FECHA_FINAL"].'"></td>
 
 			 </tr>
 			 
 			 
-			 			 			 <tr>
+ 	 	 	 <tr>
 			 <td width="30%" style="font-weight:bold;"><label>NÚMERO DE DIAS</label></td>
-			 <td width="70%"><input type="text" name="NUMERO_DIAS" value="'.$row["NUMERO_DIAS"].'"></td>
+			 <td width="70%"><input type="text" id="NUMERO_DIAS" name="NUMERO_DIAS" value="'.$row["NUMERO_DIAS"].'"></td>
+
 
 			 </tr>
+
 			 
 			 
-			 			 			 			 <tr>
+ 	  	 	 	 	 	 	 <tr>
 			 <td width="30%" style="font-weight:bold;"><label>MONTO DEL BONO</label></td>
-			 <td width="70%"><input type="text" name="MONTO_BONO" value="'.$row["MONTO_BONO"].'"></td>
+			 <td width="70%"><input type="text" id="MONTO_BONO" name="MONTO_BONO" value="'.$row["MONTO_BONO"].'"></td>
+
 
 			 </tr>
+
+
 			 
-			 			 			 			 			 			 			 <tr>
+	 	 	 	 	 	 	 	 	 	 	 	 <tr>
 			 <td width="30%" style="font-weight:bold;"><label>TOTAL DEL BONO</label></td>
-			 <td width="70%"><input type="text" name="MONTO_BONO_TOTAL" value="'.$row["MONTO_BONO_TOTAL"].'"></td>
+<td width="70%"><input type="text" id="MONTO_BONO_TOTAL" name="MONTO_BONO_TOTAL" value="'.$row["MONTO_BONO_TOTAL"].'" readonly></td>
+
 
 			 </tr>
+
 			 
 		
 			 
 			 
-			 		 <tr>
-			 <td width="30%" style="font-weight:bold;"><label> VIATICOS</label></td>
-			 <td width="70%"><input type="text" name="VIATICOS_PERSONAL" value="'.$row["VIATICOS_PERSONAL"].'"></td>
-			 </tr>
+
 			 
 			 
-			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>TOTAL BONO Y VIATICOS</label></td>
-			 <td width="70%"><input type="text" name="TOTAL" value="'.$row["TOTAL"].'"></td>
-			 </tr>
+
 			 
-			 <tr>
-			 <td width="30%" style="font-weight:bold;"><label>ÚLTIMO DÍA PARA COMPRAR VIATICOS</label></td>
-			 <td width="70%"><input type="date" name="ULTIMO_DIA" value="'.$row["ULTIMO_DIA"].'"></td>
-			 </tr>
+
 			 
 			 
 			 			 <tr>
@@ -245,7 +243,7 @@ var fileobj;
 	        form_data.append("IPpersonal",  $("#IPpersonal").val());
 	        $.ajax({
 	            type: 'POST',
-	            url: 'calendariodeeventos2/controladorAE.php',
+	            url: 'BONOS/controladorAE.php',
 				  dataType: "html",
 	            contentType: false,
 	            processData: false,
@@ -267,11 +265,44 @@ actualizarAdjuntos(nombre, nuevoAdjunto);
 	            }
 	        });
 	    }
+}
+
+	function valorMoneda(numero) {
+		if(numero === undefined || numero === null) {
+			return 0;
+		}
+		var limpio = numero.toString().replace(/,/g, '').trim();
+		if(limpio === '') {
+			return 0;
+		}
+		var convertido = parseFloat(limpio);
+		return isNaN(convertido) ? 0 : convertido;
+	}
+
+	function calcularTotalesBonoPersonal() {
+		var numeroDias = valorMoneda($('#NUMERO_DIAS').val());
+		var montoBono = valorMoneda($('#MONTO_BONO').val());
+		var viaticos = valorMoneda($('#VIATICOS_PERSONAL').val());
+
+		var totalBono = numeroDias * montoBono;
+		var totalBonoViaticos = totalBono + viaticos;
+
+		$('#MONTO_BONO_TOTAL').val(totalBono.toFixed(2));
+		$('#TOTAL').val(totalBonoViaticos.toFixed(2));
 	}
 
 
 
-    $(document).ready(function(){
+
+
+
+	$(document).ready(function(){
+
+	$('#NUMERO_DIAS, #MONTO_BONO, #VIATICOS_PERSONAL').off('input').on('input', function(){
+		calcularTotalesBonoPersonal();
+	});
+
+	calcularTotalesBonoPersonal();
 
 	$("#clickpersonal").off('click').on('click', function(){
 	var datosFormulario = $('#listado_personalform').serialize();
@@ -283,7 +314,7 @@ actualizarAdjuntos(nombre, nuevoAdjunto);
 	}
 	
    $.ajax({  
-  url:"calendariodeeventos2/controladorAE.php",
+  url:"BONOS/controladorAE.php",
     method:"POST",  
     data: datosFormulario,
     timeout: 20000,
