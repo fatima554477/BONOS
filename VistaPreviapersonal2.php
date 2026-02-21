@@ -64,7 +64,7 @@ $queryVISTAPREV = $conexion->listado_personal33($identioficador);
 			 
 			 			 			 <tr>
 			 <td width="30%" style="font-weight:bold;"><label>NÚMERO DE DIAS</label></td>
-			 <td width="70%"><input type="text" name="NUMERO_DIAS1" value="'.$row["NUMERO_DIAS1"].'"></td>
+			 <td width="70%"><input type="text" readonly=»readonly»  style="background:#d7bde2" name="NUMERO_DIAS1" value="'.$row["NUMERO_DIAS1"].'"></td>
 
 			 </tr>
 			 
@@ -77,7 +77,7 @@ $queryVISTAPREV = $conexion->listado_personal33($identioficador);
 			 
 			 			 			 			 			 			 			 <tr>
 			 <td width="30%" style="font-weight:bold;"><label>TOTAL DEL BONO</label></td>
-			 <td width="70%"><input type="text" name="MONTO_BONO_TOTAL1" value="'.$row["MONTO_BONO_TOTAL1"].'"></td>
+			 <td width="70%"><input type="text" readonly=»readonly»  style="background:#d7bde2" name="MONTO_BONO_TOTAL1" value="'.$row["MONTO_BONO_TOTAL1"].'"></td>
 
 			 </tr>
 			 
@@ -275,7 +275,7 @@ actualizarAdjuntos(nombre, nuevoAdjunto);
 	    return (Math.round(valor * 100) / 100).toFixed(2);
 	}
 
-	function calcularTotalesPersonal2() {
+function calcularTotalesPersonal2() {
 	    var numeroDias = convertirANumero($('input[name="NUMERO_DIAS1"]').val());
 	    var montoBono = convertirANumero($('input[name="MONTO_BONO1"]').val());
 	    var viaticos = convertirANumero($('input[name="VIATICOS_PERSONAL2"]').val());
@@ -283,18 +283,51 @@ actualizarAdjuntos(nombre, nuevoAdjunto);
 	    var totalBono = numeroDias * montoBono;
 	    var totalBonoYViaticos = totalBono + viaticos;
 
-	    $('input[name="MONTO_BONO_TOTAL1"]').val(formatearMonto(totalBono));
+    $('input[name="MONTO_BONO_TOTAL1"]').val(formatearMonto(totalBono));
 	    $('input[name="TOTAL1"]').val(formatearMonto(totalBonoYViaticos));
+	}
+
+	function calcularNumeroDiasPorFechasPersonal2() {
+	    var fechaInicio = $('input[name="FECHA_INICIO1"]').val();
+	    var fechaFinal = $('input[name="FECHA_FINAL1"]').val();
+
+	    if(!fechaInicio || !fechaFinal) {
+	        return;
+	    }
+
+	    var inicio = new Date(fechaInicio + 'T00:00:00');
+	    var fin = new Date(fechaFinal + 'T00:00:00');
+
+	    if(isNaN(inicio.getTime()) || isNaN(fin.getTime())) {
+	        return;
+	    }
+
+	    var diferenciaMs = fin.getTime() - inicio.getTime();
+	    var diferenciaDias = Math.floor(diferenciaMs / (1000 * 60 * 60 * 24)) + 1;
+
+	    if(diferenciaDias < 0) {
+	        diferenciaDias = 0;
+	    }
+
+	    $('input[name="NUMERO_DIAS1"]').val(diferenciaDias);
+	    calcularTotalesPersonal2();
 	}
 
 
 
-    $(document).ready(function(){
 
-	$('input[name="NUMERO_DIAS1"], input[name="MONTO_BONO1"], input[name="VIATICOS_PERSONAL2"]').on('input', function(){
+
+
+    $(document).ready(function(){
+	$('input[name="FECHA_INICIO1"], input[name="FECHA_FINAL1"]').off('change').on('change', function(){
+	    calcularNumeroDiasPorFechasPersonal2();
+	});
+
+	$('input[name="NUMERO_DIAS1"], input[name="MONTO_BONO1"], input[name="VIATICOS_PERSONAL2"]').off('input').on('input', function(){
 	    calcularTotalesPersonal2();
 	});
 
+	calcularNumeroDiasPorFechasPersonal2();
 	calcularTotalesPersonal2();
 
 $("#clickpersonal2").click(function(){
