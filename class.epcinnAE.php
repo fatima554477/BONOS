@@ -2149,6 +2149,31 @@ public function actualizapersonalAUT($pasara1_personalAUT_id, $pasapersonalAUT_t
 
 
 /////////////////////////////////////////PARA RECHAZAR BONO/////////////////////////////////////
+public function actualizaSTATUS_BONORECHAZO($STATUS_BONORECHAZO_id, $STATUS_BONORECHAZO_text){
+
+	$conn = $this->db();
+	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
+	if($session != ''){
+		$idPersonal = (int)$STATUS_BONORECHAZO_id;
+		$valor = ($STATUS_BONORECHAZO_text === 'si') ? 'si' : 'no';
+
+		$var1 = "
+			UPDATE 04personal2
+			SET STATUS_BONORECHAZ = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+
+	}
+}
+
+
+
+
+
+/////////////////////////////////////////PARA ADMIN/////////////////////////////////////
 public function actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id, $STATUS_RECHAZOBONO_text){
 
 	$conn = $this->db();
@@ -2172,7 +2197,7 @@ public function actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id, $STATUS_RECH
 
 
 /////////////////////////////////////////PARA ADMIN/////////////////////////////////////
-public function actualizapersonalADMIN($pasara1_personalADMIN_id, $pasapersonalADMIN_text){
+public function actualizapersonal2ADMIN($pasara1_personal2ADMIN_id, $pasapersonal2ADMIN_text){
 
 	$conn = $this->db();
 	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';

@@ -266,7 +266,8 @@ $puedeModificarDIRECCION2 = ($conexion->variablespermisos('', 'PERSOdire2', 'mod
  <?php } ?>			   
 		   <?php if($puedeVerAdmin2){ ?>
                <th width="15%"style="background:#c9e8e8">AUTORIZACIÓN <br>POR AUDITORÍA<br>PAGO BONO</th>
-			   <?php } ?> 			   
+			   <?php } ?> 
+  <th width="15%"style="background:#c9e8e8">RECHAZAR<br>PAGO BONO</th>			   
                <th width="15%"style="background:#c9e8e8">ENVIAR <br>POR EMAIL</th>
                <th width="20%"style="background:#c9e8e8">NOMBRE</th>
                <th width="20%"style="background:#c9e8e8">PUESTO</th>
@@ -339,6 +340,13 @@ while($row = mysqli_fetch_array($querycontras))
           <td style="text-align:center" >
                <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="pasara1_personal2ADMIN(<?php echo $row["id"]; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin2 || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin2)) { echo "disabled"; } ?>/> </td>
 		  <?php } ?>
+		  
+		  
+		           <td style="text-align:center" >
+               <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_BONORECHAZO<?php echo $row["id"]; ?>" name="STATUS_BONORECHAZO<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="STATUS_BONORECHAZO(<?php echo $row["id"]; ?>)" <?php if((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si')){ echo "checked"; } ?>/>
+          </td>
+		  
+		  
           <td style="text-align:center" >
           <input type="checkbox" style="width:40PX;" class="form-check-input" name="personal2[]" id="personal2" value="<?php echo $row["id"]; ?>"/> </td> 
 		  
@@ -391,7 +399,7 @@ while($row = mysqli_fetch_array($querycontras))
           }
           ?>
 		                  	<?php if($conexion->variablespermisos('','TOTALES_PERSOASISTE','ver')=='si' ){
-			$columnasPreviasTotalesPersonal2 = 8
+			$columnasPreviasTotalesPersonal2 = 9
 				+ ($puedeVerVYO2 ? 1 : 0)
 				+ ($puedeVerDIRECCION2 ? 1 : 0)
 				+ ($puedeVerAdmin2 ? 1 : 0);

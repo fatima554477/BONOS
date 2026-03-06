@@ -1288,6 +1288,15 @@ echo $altaeventos->actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id , $STATUS_
 }
 
 
+///////////////////////////////RECHAZO BONO PERSONAL2////////////////////////
+$STATUS_BONORECHAZO_id= isset($_POST["STATUS_BONORECHAZO_id"])?$_POST["STATUS_BONORECHAZO_id"]:"";
+$STATUS_BONORECHAZO_text= isset($_POST["STATUS_BONORECHAZO_text"])?$_POST["STATUS_BONORECHAZO_text"]:"";
+
+if($STATUS_BONORECHAZO_id!='' and ($STATUS_BONORECHAZO_text=='si' or $STATUS_BONORECHAZO_text=='no') ){
+echo $altaeventos->actualizaSTATUS_BONORECHAZO($STATUS_BONORECHAZO_id , $STATUS_BONORECHAZO_text);
+}
+
+
 
 ///////////////////////////////VYO2////////////////////////
 $pasara1_personal2VYO_id= isset($_POST["pasara1_personal2VYO_id"])?$_POST["pasara1_personal2VYO_id"]:"";
