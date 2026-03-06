@@ -1277,6 +1277,18 @@ if($pasara1_personal2ADMIN_id!='' and ($pasapersonal2ADMIN_text=='si' or $pasape
 echo $altaeventos->actualizapersonal2ADMIN ($pasara1_personal2ADMIN_id , $pasapersonal2ADMIN_text  );
 }
 
+
+
+///////////////////////////////RECHAZO BONO////////////////////////
+$STATUS_RECHAZOBONO_id= isset($_POST["STATUS_RECHAZOBONO_id"])?$_POST["STATUS_RECHAZOBONO_id"]:"";
+$STATUS_RECHAZOBONO_text= isset($_POST["STATUS_RECHAZOBONO_text"])?$_POST["STATUS_RECHAZOBONO_text"]:"";
+
+if($STATUS_RECHAZOBONO_id!='' and ($STATUS_RECHAZOBONO_text=='si' or $STATUS_RECHAZOBONO_text=='no') ){
+echo $altaeventos->actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id , $STATUS_RECHAZOBONO_text);
+}
+
+
+
 ///////////////////////////////VYO2////////////////////////
 $pasara1_personal2VYO_id= isset($_POST["pasara1_personal2VYO_id"])?$_POST["pasara1_personal2VYO_id"]:"";
 $pasapersonal2VYO_text= isset($_POST["pasapersonal2VYO_text"])?$_POST["pasapersonal2VYO_text"]:"";

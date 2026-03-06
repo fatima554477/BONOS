@@ -292,8 +292,9 @@ echo $encabezadoA.$option21.'</select>';
 			   <?php if($puedeVerVYO){ ?>
                <th width="15%"style="background:#c9e8e8">AUTORIZACIÓN <br>POR V Y O<br>PAGO BONO</th>
                <?php } ?>			   
-               <th width="15%"style="background:#c9e8e8">AUTORIZA<br>P y CG</th> 
-			    <?php if($puedeVerDIRECCION){ ?>
+            <th width="15%"style="background:#c9e8e8">AUTORIZA<br>P y CG</th> 
+			   <th width="15%"style="background:#c9e8e8">RECHAZAR<br>PAGO BONO</th>
+			 <?php if($puedeVerDIRECCION){ ?>
                <th width="15%"style="background:#c9e8e8">AUTORIZA<br>DIRECCIÓN<br>PAGO BONO</th> 
 			   <?php } ?>
                   <?php if($puedeVerAdmin){ ?>
@@ -380,6 +381,10 @@ while($row = mysqli_fetch_array($querycontras))
      <input type="checkbox" style="width:40PX;" class="form-check-input" id="pasarapersonalAUT<?php echo $row["id"]; ?>" name="pasarapersonalAUT<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>"  onclick="pasara1_personalAUT(<?php echo $row["id"]; ?>)"  	<?php if($row["autorizaAUT"]=='si'){ echo "checked"; } ?> <?php if(!$puedeAutorizar) echo 'disabled'; ?>/>		  
      
            </td>
+
+			   <td style="text-align:center" >
+           <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_RECHAZOBONO<?php echo $row["id"]; ?>" name="STATUS_RECHAZOBONO<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="STATUS_RECHAZOBONO(<?php echo $row["id"]; ?>)" <?php if(isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeAutorizar) echo 'disabled'; ?>/>
+           </td>
            
       
 
@@ -456,7 +461,8 @@ while($row = mysqli_fetch_array($querycontras))
           }
           ?>
 <?php if($conexion->variablespermisos('','TOTALES_PERSOADMIN','ver')=='si' ){
-    $columnasPreviasTotalesPersonal = 9
+$columnasPreviasTotalesPersonal = 9
+        + 1
         + ($puedeVerVYO ? 1 : 0)
         + ($puedeVerDIRECCION ? 1 : 0)
         + ($puedeVerAdmin ? 1 : 0);
