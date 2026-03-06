@@ -14,7 +14,7 @@ FECHA fatima: 01 JUNIO  2025
 
 define('__ROOT1__', dirname(dirname(__FILE__)));
 include_once (__ROOT1__."/includes/error_reporting.php");
-include_once (__ROOT1__."/BONOS/class.epcinnAE.php");
+include_once (__ROOT1__."/calendariodeeventos2/class.epcinnAE.php");
 
 $altaeventos  = NEW accesoclase();
 $conexion = NEW colaboradores();
@@ -1003,11 +1003,21 @@ $PERSONAL2_FECHA_ULTIMA_CARGA = isset($_POST["PERSONAL2_FECHA_ULTIMA_CARGA"])?$_
 $hDatosPERSONAL2 = isset($_POST["hDatosPERSONAL2"])?$_POST["hDatosPERSONAL2"]:"";
 $IPpersonal2 = isset($_POST["IPpersonal2"])?$_POST["IPpersonal2"]:"";
 
+
+	
 	if($IPpersonal2 != "" && $ADJUNTO_COMPROBANTE1 == ""){
-		$adjuntoActual = $altaeventos->listado_personal33($IPpersonal2);
-		$rowAdjunto = mysqli_fetch_array($adjuntoActual, MYSQLI_ASSOC);
-		if($rowAdjunto && isset($rowAdjunto["ADJUNTO_COMPROBANTE"])){
-			$ADJUNTO_COMPROBANTE1 = $rowAdjunto["ADJUNTO_COMPROBANTE"];
+		$adjuntoActual2 = $altaeventos->listado_personal33($IPpersonal2);
+		$rowAdjunto2 = mysqli_fetch_array($adjuntoActual2, MYSQLI_ASSOC);
+		if($rowAdjunto2 && isset($rowAdjunto2["ADJUNTO_COMPROBANTE"])){
+			$ADJUNTO_COMPROBANTE1 = $rowAdjunto2["ADJUNTO_COMPROBANTE"];
+		}
+	}
+
+	if($IPpersonal2 != "" && (!isset($_SESSION['idevento']) || $_SESSION['idevento'] == '')){
+		$datosPersonal2 = $altaeventos->listado_personal33($IPpersonal2);
+		$rowPersonal2 = mysqli_fetch_array($datosPersonal2, MYSQLI_ASSOC);
+		if($rowPersonal2 && isset($rowPersonal2['idRelacion']) && $rowPersonal2['idRelacion'] != ''){
+			$_SESSION['idevento'] = $rowPersonal2['idRelacion'];
 		}
 	}
 	
@@ -1128,11 +1138,19 @@ $ADJUNTO_COMPROBANTEP = $conexion->solocargar("ADJUNTO_COMPROBANTEP");
     $hDatosPERSONAL = isset($_POST["hDatosPERSONAL"]) ? $_POST["hDatosPERSONAL"] : "";
     $IPpersonal = isset($_POST["IPpersonal"]) ? $_POST["IPpersonal"] : "";
 
-	if($IPpersonal != "" && $ADJUNTO_COMPROBANTEP1 == ""){
+if($IPpersonal != "" && $ADJUNTO_COMPROBANTEP1 == ""){
 		$adjuntoActual = $altaeventos->listado_personal2($IPpersonal);
 		$rowAdjunto = mysqli_fetch_array($adjuntoActual, MYSQLI_ASSOC);
 		if($rowAdjunto && isset($rowAdjunto["ADJUNTO_COMPROBANTEP"])){
 			$ADJUNTO_COMPROBANTEP1 = $rowAdjunto["ADJUNTO_COMPROBANTEP"];
+		}
+	}
+
+	if($IPpersonal != "" && (!isset($_SESSION['idevento']) || $_SESSION['idevento'] == '')){
+		$datosPersonal = $altaeventos->listado_personal2($IPpersonal);
+		$rowPersonal = mysqli_fetch_array($datosPersonal, MYSQLI_ASSOC);
+		if($rowPersonal && isset($rowPersonal['idRelacion']) && $rowPersonal['idRelacion'] != ''){
+			$_SESSION['idevento'] = $rowPersonal['idRelacion'];
 		}
 	}
 

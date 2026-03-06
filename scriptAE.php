@@ -550,7 +550,7 @@ function pasara1_personal2ADMIN(pasara1_personal2ADMIN_id){
 	},
 		success:function(data){
 			
-	$("#reset_personal").load(location.href + " #reset_personal");			
+	$("#reset_personal2").load(location.href + " #reset_personal2");			
 			
 		$('#mensajePERSONAL2').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
 	}
@@ -1299,48 +1299,68 @@ function OBTENER_fotoBOTI(){
         
 /*funcion para obtener fecha */
         function totalfechas7(){
-        var FECHA_FINAL = document.getElementsByName("FECHA_FINAL")[0].value;
-        var FECHA_INICIO = document.getElementsByName("FECHA_INICIO")[0].value;     
-        var cuenta_fechas7 = "cuenta_fechas7";
-        $.ajax({
-        url:'calendariodeeventos2/controladorAE.php',                        
-        method:'POST',
-        data:{FECHA_FINAL:FECHA_FINAL,FECHA_INICIO:FECHA_INICIO,cuenta_fechas7:cuenta_fechas7},
-        beforeSend:function(){
-        },
-        success:function(data){
-                          //$('#BOTIQUIN_DIAS').val(data);                                            
-                document.getElementsByName('NUMERO_DIAS')[0].value = data;		  
-                          $.getScript(total_cantidad_x_precio7());    
+        var fechaFinalInput = document.getElementsByName("FECHA_FINAL")[0];
+        var fechaInicioInput = document.getElementsByName("FECHA_INICIO")[0];
+        var numeroDiasInput = document.getElementsByName("NUMERO_DIAS")[0];
+
+        if(!fechaFinalInput || !fechaInicioInput || !numeroDiasInput){
+            return;
         }
+
+        var FECHA_FINAL = fechaFinalInput.value;
+        var FECHA_INICIO = fechaInicioInput.value;
+
+        if(FECHA_FINAL === '' || FECHA_INICIO === ''){
+            numeroDiasInput.value = '';
+            total_cantidad_x_precio7();
+            return;
+        }
+
+        var fechaInicio = new Date(FECHA_INICIO + 'T00:00:00');
+        var fechaFinal = new Date(FECHA_FINAL + 'T00:00:00');
+
+        if(isNaN(fechaInicio.getTime()) || isNaN(fechaFinal.getTime()) || fechaFinal < fechaInicio){
+            numeroDiasInput.value = 0;
+            total_cantidad_x_precio7();
+            return;
+        }
+
+        var msPorDia = 1000 * 60 * 60 * 24;
+        var numeroDias = Math.floor((fechaFinal - fechaInicio) / msPorDia) + 1;
+
+        numeroDiasInput.value = numeroDias;
+        total_cantidad_x_precio7();
+        }
+            function total_cantidad_x_precio7(){
+        var numeroDiasInput = document.getElementsByName("NUMERO_DIAS")[0];
+        var montoBonoInput = document.getElementsByName("MONTO_BONO")[0];
+        var montoTotalInput = document.getElementsByName("MONTO_BONO_TOTAL")[0];
+
+        if(!numeroDiasInput || !montoBonoInput || !montoTotalInput){
+            return;
+        }
+
+        var NUMERO_DIAS = parseFloat((numeroDiasInput.value || '0').toString().replace(/,/g, ''));
+        var MONTO_BONO = parseFloat((montoBonoInput.value || '0').toString().replace(/,/g, '').replace(/\$/g, ''));
+
+        if(isNaN(NUMERO_DIAS)){ NUMERO_DIAS = 0; }
+        if(isNaN(MONTO_BONO)){ MONTO_BONO = 0; }
+
+        var montoBonoTotal = NUMERO_DIAS * MONTO_BONO;
+        montoTotalInput.value = montoBonoTotal.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
         });
         }
-            function total_cantidad_x_precio7(){                                      
-        var NUMERO_DIAS = document.getElementsByName("NUMERO_DIAS")[0].value;
-        var MONTO_BONO = document.getElementsByName("MONTO_BONO")[0].value;
-        var VIATICOS_PERSONAL = document.getElementsByName("VIATICOS_PERSONAL")[0].value;
-        var FECHA_FINAL = document.getElementsByName("FECHA_FINAL")[0].value;
-		
-        var cantidad_precioBONO = "cantidad_precioBONO";
-        $.ajax({
-        url:'calendariodeeventos2/controladorAE.php',
-        method:'POST',
-        data:{NUMERO_DIAS:NUMERO_DIAS,MONTO_BONO:MONTO_BONO,cantidad_precioBONO:cantidad_precioBONO,VIATICOS_PERSONAL:VIATICOS_PERSONAL,FECHA_FINAL:FECHA_FINAL},
-        beforeSend:function(){
-        },
-        success:function(data){
-                var result = data.split('^');
-                document.getElementsByName('TOTAL')[0].value = result[1];
-                document.getElementsByName('MONTO_BONO_TOTAL')[0].value = result[2];
-                document.getElementsByName('ULTIMO_DIA')[0].value = result[3];				
-        }
+
+
+              $("#actualizabonos").on('change', 'input[name="FECHA_INICIO"], input[name="FECHA_FINAL"]', function() {
+                                   totalfechas7();
         });
-        }                                               
 
-
-              $("#actualizabonos").click(function() {   
-                                   $.getScript(totalfechas7());                     
-        });                             
+              $("#actualizabonos").on('keyup change', 'input[name="MONTO_BONO"], input[name="NUMERO_DIAS"]', function() {
+                                   total_cantidad_x_precio7();
+        });                           
 
 
 
@@ -1360,51 +1380,69 @@ function OBTENER_fotoBOTI(){
         
 /*funcion para obtener fecha */
         function totalfechas8(){
-        var FECHA_FINAL1 = document.getElementsByName("FECHA_FINAL1")[0].value;
-        var FECHA_INICIO1 = document.getElementsByName("FECHA_INICIO1")[0].value;     
-        var cuenta_fechas8 = "cuenta_fechas8";
-        $.ajax({
-        url:'calendariodeeventos2/controladorAE.php',                        
-        method:'POST',
-        data:{FECHA_FINAL1:FECHA_FINAL1,FECHA_INICIO1:FECHA_INICIO1,cuenta_fechas8:cuenta_fechas8},
-        beforeSend:function(){
-        },
-        success:function(data){
-                          //$('#BOTIQUIN_DIAS').val(data);                                            
-                document.getElementsByName('NUMERO_DIAS1')[0].value = data;		  
-                          $.getScript(total_cantidad_x_precio8());    
+        var fechaFinalInput = document.getElementsByName("FECHA_FINAL1")[0];
+        var fechaInicioInput = document.getElementsByName("FECHA_INICIO1")[0];
+        var numeroDiasInput = document.getElementsByName("NUMERO_DIAS1")[0];
+
+        if(!fechaFinalInput || !fechaInicioInput || !numeroDiasInput){
+            return;
         }
-        });
+
+        var FECHA_FINAL1 = fechaFinalInput.value;
+        var FECHA_INICIO1 = fechaInicioInput.value;
+
+        if(FECHA_FINAL1 === '' || FECHA_INICIO1 === ''){
+            numeroDiasInput.value = '';
+            total_cantidad_x_precio8();
+            return;
         }
-		
+
+        var fechaInicio = new Date(FECHA_INICIO1 + 'T00:00:00');
+        var fechaFinal = new Date(FECHA_FINAL1 + 'T00:00:00');
+
+        if(isNaN(fechaInicio.getTime()) || isNaN(fechaFinal.getTime()) || fechaFinal < fechaInicio){
+            numeroDiasInput.value = 0;
+            total_cantidad_x_precio8();
+            return;
+        }
+
+        var msPorDia = 1000 * 60 * 60 * 24;
+        var numeroDias = Math.floor((fechaFinal - fechaInicio) / msPorDia) + 1;
+
+        numeroDiasInput.value = numeroDias;
+        total_cantidad_x_precio8();
+        }
+			
 	function total_cantidad_x_precio8(){
-        var NUMERO_DIAS1 = document.getElementsByName("NUMERO_DIAS1")[0].value;
-        var MONTO_BONO1 = document.getElementsByName("MONTO_BONO1")[0].value;
-        var VIATICOS_PERSONAL2 = document.getElementsByName("VIATICOS_PERSONAL2")[0].value;
-        var FECHA_FINAL1 = document.getElementsByName("FECHA_FINAL1")[0].value;
-        var cantidad_precioBONO1 = "cantidad_precioBONO1";
-        $.ajax({
-			url:'calendariodeeventos2/controladorAE.php',
-			method:'POST',
-			data:{
-				NUMERO_DIAS1:NUMERO_DIAS1,MONTO_BONO1:MONTO_BONO1,cantidad_precioBONO1:cantidad_precioBONO1,VIATICOS_PERSONAL2:VIATICOS_PERSONAL2,FECHA_FINAL1:FECHA_FINAL1
-				},
-			beforeSend:function(){
-			},
-			success:function(data){
-				var result = data.split('^');
-				document.getElementsByName('TOTAL1')[0].value = result[1];
-				document.getElementsByName('MONTO_BONO_TOTAL1')[0].value = result[2];
-				document.getElementsByName('ULTIMO_DIA1')[0].value = result[3];				
-			}
-        });
-	}                                               
+		var numeroDiasInput = document.getElementsByName("NUMERO_DIAS1")[0];
+		var montoBonoInput = document.getElementsByName("MONTO_BONO1")[0];
+		var montoTotalInput = document.getElementsByName("MONTO_BONO_TOTAL1")[0];
+
+		if(!numeroDiasInput || !montoBonoInput || !montoTotalInput){
+			return;
+		}
+
+		var NUMERO_DIAS1 = parseFloat((numeroDiasInput.value || '0').toString().replace(/,/g, ''));
+		var MONTO_BONO1 = parseFloat((montoBonoInput.value || '0').toString().replace(/,/g, '').replace(/\$/g, ''));
+
+		if(isNaN(NUMERO_DIAS1)){ NUMERO_DIAS1 = 0; }
+		if(isNaN(MONTO_BONO1)){ MONTO_BONO1 = 0; }
+
+		var montoBonoTotal1 = NUMERO_DIAS1 * MONTO_BONO1;
+		montoTotalInput.value = montoBonoTotal1.toLocaleString('en-US', {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2
+		});
+		}                                               
 
 
-              $("#actualizabonos2").click(function() {   
-                                   $.getScript(totalfechas8());                     
-        });  
-		
+		$("#actualizabonos2").on('change', 'input[name="FECHA_INICIO1"], input[name="FECHA_FINAL1"]', function() {
+			totalfechas8();
+		});
+
+		$("#actualizabonos2").on('keyup change', 'input[name="MONTO_BONO1"], input[name="NUMERO_DIAS1"]', function() {
+			total_cantidad_x_precio8();
+		});
 
 
 
@@ -3850,25 +3888,7 @@ $(document).on('click', '.view_dataDATOSpersonalmodifica', function(){
   });
 });
 
-$(document).on('click', '.view_dataDATOSpersonalmodificaBONOS', function(){
-  var personal_id = $(this).attr("id");
-  $.ajax({
-    url: "BONOS/VistaPreviapersonalBONOS.php",
-    method: "POST",
-    data: { personal_id: personal_id },
-    beforeSend: function(){  
-      $('#mensajePERSONAL').html('CARGANDO');
 
-      setTimeout(function(){
-        $('#mensajePERSONAL').html('');
-      }, 2000);
-    },    
-    success: function(data){
-      $('#personal_detalles').html(data);
-      $('#dataModal').modal('show');
-    }
-  });
-});
 
 
 $(document).on('click', '.view_dataDATOSpersonalborrar', function(){
@@ -3884,7 +3904,7 @@ $(document).on('click', '.view_dataDATOSpersonalborrar', function(){
 
   
   $.ajax({
-   url: 'calendariodeeventos2/controladorAE.php',
+   url:'calendariodeeventos2/controladorAE.php',
    method:"POST",
    data:{borra_bole_perso:borra_bole_perso,borra_PERSONAL:borra_PERSONAL},
    
@@ -3916,7 +3936,7 @@ $(document).on('click', '.view_dataPERSONALadjuntoBorrar', function(){
   $('#dataModal3').modal('show');
   $('#btnYes').click(function() {
     $.ajax({
-     url: 'calendariodeeventos2/controladorAE.php',
+     url:'calendariodeeventos2/controladorAE.php',
      method:"POST",
      data:{IPpersonal:personal_id, archivo:archivo, borra_ADJUNTO_PERSONAL:borra_ADJUNTO_PERSONAL},
      
@@ -3959,7 +3979,7 @@ var PERSONAL_ENVIAR_IMAIL = $('#PERSONAL_ENVIAR_IMAIL').val();
 var dataString = $("#form_emai_personal").serialize();
 
 $.ajax({
-    url: 'calendariodeeventos2/controladorAE.php',
+    url:'calendariodeeventos2/controladorAE.php',
 method:'POST',
 dataType: 'html',
 
@@ -3982,7 +4002,7 @@ $("#guardaPERSONAL2").click(function () {
     const formData = new FormData($('#PERSONAL2form')[0]);
 
     $.ajax({
-        url: 'calendariodeeventos2/controladorAE.php',
+        url:'calendariodeeventos2/controladorAE.php',
         type: 'POST',
         dataType: 'html',
         data: formData,
@@ -3994,10 +4014,13 @@ $("#guardaPERSONAL2").click(function () {
             $('#mensajePERSONAL2').html('cargando');
         },
 
-        success: function (data) {
+  success: function (data) {
 
             // 🔹 BORRAR FORMULARIO PERSONAL2
             document.getElementById('PERSONAL2form').reset();
+            $("input[name='NUMERO_DIAS1']").val('');
+            $('#MONTO_BONO1').val('');
+            $('#MONTO_BONO_TOTAL1').val('');
 
             // 🔹 Recargas existentes
             $("#reset_personal2").load(location.href + " #reset_personal2");
@@ -4006,7 +4029,7 @@ $("#guardaPERSONAL2").click(function () {
             $("#obtener_puesto2").load(location.href + " #obtener_puesto2");
             $("#obtener_cel2").load(location.href + " #obtener_cel2");
             $("#obtener_email2").load(location.href + " #obtener_email2");
-            $("#NUMERO_DIAS1").load(location.href + " #NUMERO_DIAS1");
+  
 
             $("#reset_personal_resumen").load(location.href + " #reset_personal_resumen");
             $("#reset_totales").load(location.href + " #reset_totales");
@@ -4040,23 +4063,7 @@ $(document).on('click', '.view_dataDATOSpersonal2modifica', function(){
   });
  })
 
-$(document).on('click', '.view_dataDATOSpersonal2modificaBONOS', function(){
-  //$('#dataModal').modal();
-  var personal_id = $(this).attr("id");
-  $.ajax({
-   url:"BONOS/VistaPreviapersonal2.php",
-   method:"POST",
-   data:{personal_id:personal_id},
-    beforeSend:function(){  
-    $('#mensajePERSONAL2').html('CARGANDO'); 
-    },    
-   success:function(data){
-    $('#personal_detalles').html(data);
-    $('#personal_detalles').html(data);
-    $('#dataModal').modal('show');
-   }
-  });
- })
+
 
 $(document).on('click', '.view_dataDATOSpersonal2borrar', function(){
 
@@ -4071,7 +4078,7 @@ $(document).on('click', '.view_dataDATOSpersonal2borrar', function(){
 
   
   $.ajax({
-   url: 'calendariodeeventos2/controladorAE.php',
+   url:'calendariodeeventos2/controladorAE.php',
    method:"POST",
    data:{borra_perso2:borra_perso2,borra_PERSONAL2:borra_PERSONAL2},
    
@@ -4105,7 +4112,7 @@ var PERSONAL2_ENVIAR_IMAIL = $('#PERSONAL2_ENVIAR_IMAIL').val();
 var dataString = $("#form_emai_personal2").serialize();
 
 $.ajax({
-    url: 'calendariodeeventos2/controladorAE.php',
+    url:'calendariodeeventos2/controladorAE.php',
 method:'POST',
 dataType: 'html',
 
