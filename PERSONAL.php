@@ -293,13 +293,14 @@ echo $encabezadoA.$option21.'</select>';
                <th width="15%"style="background:#c9e8e8">AUTORIZACIÓN <br>POR V Y O<br>PAGO BONO</th>
                <?php } ?>			   
             <th width="15%"style="background:#c9e8e8">AUTORIZA<br>P y CG</th> 
-			   <th width="15%"style="background:#c9e8e8">RECHAZAR<br>PAGO BONO</th>
+			  
 			 <?php if($puedeVerDIRECCION){ ?>
                <th width="15%"style="background:#c9e8e8">AUTORIZA<br>DIRECCIÓN<br>PAGO BONO</th> 
 			   <?php } ?>
                   <?php if($puedeVerAdmin){ ?>
                <th width="15%"style="background:#c9e8e8">AUTORIZA <br>AUDITORÍA<br>PAGO BONO</th> 
 			   <?php } ?> 
+			    <th width="15%"style="background:#c9e8e8">RECHAZAR<br>PAGO BONO</th>
                <th width="15%"style="background:#c9e8e8">ENVIAR <br>POR EMAIL</th>
                <th width="20%"style="background:#c9e8e8">NOMBRE</th>
                <th width="20%"style="background:#c9e8e8">PUESTO</th>
@@ -382,9 +383,7 @@ while($row = mysqli_fetch_array($querycontras))
      
            </td>
 
-			   <td style="text-align:center" >
-           <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_RECHAZOBONO<?php echo $row["id"]; ?>" name="STATUS_RECHAZOBONO<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="STATUS_RECHAZOBONO(<?php echo $row["id"]; ?>)" <?php if(isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeAutorizar) echo 'disabled'; ?>/>
-           </td>
+
            
       
 
@@ -400,7 +399,9 @@ while($row = mysqli_fetch_array($querycontras))
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="pasara1_personalADMIN(<?php echo $row["id"]; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td> 
 			  <?php } ?>
 	
-	
+				   <td style="text-align:center" >
+           <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_RECHAZOBONO<?php echo $row["id"]; ?>" name="STATUS_RECHAZOBONO<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="STATUS_RECHAZOBONO(<?php echo $row["id"]; ?>)" <?php if(isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeAutorizar) echo 'disabled'; ?>/>
+           </td>
 	
 	
 	

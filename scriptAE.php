@@ -532,26 +532,31 @@ function pasara1_personalDIRECCION(pasara1_personalDIRECCION_id){
 }
 
 
+////////////////////////////////////////PARA RECHAZAR BONO/////////////////////////////////////
+function STATUS_RECHAZOBONO(STATUS_RECHAZOBONO_id){
 
-/////////////////////////////////////////PARA RECHAZAR BONO/////////////////////////////////////
-public function actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id, $STATUS_RECHAZOBONO_text){
-
-	$conn = $this->db();
-	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
-	if($session != ''){
-		$idPersonal = (int)$STATUS_RECHAZOBONO_id;
-		$valor = ($STATUS_RECHAZOBONO_text === 'si') ? 'si' : 'no';
-
-		$var1 = "
-			UPDATE 04personal
-			SET STATUS_RECHAZOBONO = '".$conn->real_escape_string($valor)."'
-			WHERE id = ".$idPersonal."
-			LIMIT 1
-		";
-		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
-		return "Actualizado";
-
+	var checkBox = document.getElementById("STATUS_RECHAZOBONO"+STATUS_RECHAZOBONO_id);
+	var STATUS_RECHAZOBONO_text = "";
+	if (checkBox.checked == true){
+	STATUS_RECHAZOBONO_text = "si";
+	}else{
+	STATUS_RECHAZOBONO_text = "no";
 	}
+	  $.ajax({
+		url:'calendariodeeventos2/controladorAE.php',
+		method:'POST',
+		data:{STATUS_RECHAZOBONO_id:STATUS_RECHAZOBONO_id,STATUS_RECHAZOBONO_text:STATUS_RECHAZOBONO_text},
+		beforeSend:function(){
+		$('#mensajePERSONAL').html('cargando');
+	},
+		success:function(data){
+			
+	$("#reset_personal").load(location.href + " #reset_personal");			
+			
+		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+	}
+	});
+
 }
 
 ///////////////////////////////////////PARA DAR DE ALTA ADMIN2//////////////////////////////////
