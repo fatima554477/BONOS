@@ -564,24 +564,33 @@ function STATUS_RECHAZOBONO(STATUS_RECHAZOBONO_id){
 function STATUS_BONORECHAZO(STATUS_BONORECHAZO_id){
 
 	var checkBox = document.getElementById("STATUS_BONORECHAZO"+STATUS_BONORECHAZO_id);
+	if(!checkBox){
+		return;
+	}
 	var STATUS_BONORECHAZO_text = "";
 	if (checkBox.checked == true){
 	STATUS_BONORECHAZO_text = "si";
 	}else{
 	STATUS_BONORECHAZO_text = "no";
 	}
+	var esPersonal2 = document.getElementById("reset_personal2") !== null;
+	var targetTabla = esPersonal2 ? "#reset_personal2" : "#reset_personal";
+	var targetMensaje = esPersonal2 ? "#mensajePERSONAL2" : "#mensajePERSONAL";
+	var dataPost = esPersonal2
+		? {STATUS_BONORECHAZO_id:STATUS_BONORECHAZO_id,STATUS_BONORECHAZO_text:STATUS_BONORECHAZO_text}
+		: {STATUS_RECHAZOBONO_id:STATUS_BONORECHAZO_id,STATUS_RECHAZOBONO_text:STATUS_BONORECHAZO_text};
 	  $.ajax({
 		url:'calendariodeeventos2/controladorAE.php',
 		method:'POST',
-		data:{STATUS_RECHAZOBONO_id:STATUS_BONORECHAZO_id,STATUS_RECHAZOBONO_text:STATUS_BONORECHAZO_text},
+		data:dataPost,
 		beforeSend:function(){
-		$('#mensajePERSONAL2').html('cargando');
+		$(targetMensaje).html('cargando');
 	},
 		success:function(data){
 			
-	$("#reset_personal2").load(location.href + " #reset_personal2");			
+	$(targetTabla).load(location.href + " " + targetTabla);			
 			
-		$('#mensajePERSONAL2').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
+		$(targetMensaje).html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
 	}
 	});
 

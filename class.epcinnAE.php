@@ -2158,8 +2158,8 @@ public function actualizaSTATUS_BONORECHAZO($STATUS_BONORECHAZO_id, $STATUS_BONO
 		$valor = ($STATUS_BONORECHAZO_text === 'si') ? 'si' : 'no';
 
 		$var1 = "
-			UPDATE 04personal2
-			SET STATUS_BONORECHAZ = '".$conn->real_escape_string($valor)."'
+			UPDATE 04personal
+			SET STATUS_BONORECHAZO = '".$conn->real_escape_string($valor)."'
 			WHERE id = ".$idPersonal."
 			LIMIT 1
 		";
@@ -2183,7 +2183,7 @@ public function actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id, $STATUS_RECH
 		$valor = ($STATUS_RECHAZOBONO_text === 'si') ? 'si' : 'no';
 
 		$var1 = "
-			UPDATE 04personal
+			UPDATE 04personal2
 			SET STATUS_RECHAZOBONO = '".$conn->real_escape_string($valor)."'
 			WHERE id = ".$idPersonal."
 			LIMIT 1
@@ -2196,15 +2196,14 @@ public function actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id, $STATUS_RECH
 
 
 
-/////////////////////////////////////////PARA ADMIN/////////////////////////////////////
-public function actualizapersonal2ADMIN($pasara1_personal2ADMIN_id, $pasapersonal2ADMIN_text){
+/////////////////////////////////////////PARA ADMIN/////////////////////////////////////␊
+public function actualizapersonalADMIN($pasara1_personalADMIN_id, $pasapersonalADMIN_text){
 
 	$conn = $this->db();
 	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
 	if($session != ''){
-		$idPersonal = (int)$pasara1_personalADMIN_id;
+$idPersonal = (int)$pasara1_personalADMIN_id;
 		$valor = ($pasapersonalADMIN_text === 'si') ? 'si' : 'no';
-
 		$var1 = "
 			UPDATE 04personal
 			SET admin = '".$conn->real_escape_string($valor)."'
@@ -2258,7 +2257,7 @@ public function actualizapersonalDIRECCION($pasara1_personalDIRECCION_id, $pasap
 }
 
 /////////////////////////////////////////PARA ADMIN/////////////////////////////////////
-public function actualizapersonal2ADMIN($pasara1_personal2ADMIN_id, $pasapersonal2ADMIN_text){
+     public function actualizapersonal2ADMIN($pasara1_personal2ADMIN_id, $pasapersonal2ADMIN_text){
 
 	$conn = $this->db();
 	$session = isset($_SESSION['idevento'])?$_SESSION['idevento']:'';
