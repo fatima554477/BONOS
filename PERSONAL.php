@@ -330,7 +330,9 @@ echo $encabezadoA.$option21.'</select>';
 $urlADJUNTO_COMPROBANTEP ='';
 while($row = mysqli_fetch_array($querycontras))
 {	
+	$filaRechazoBono = (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si');
 	$adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTEP"])));
+
 	if($row["ADJUNTO_COMPROBANTEP"]=="" or $row["ADJUNTO_COMPROBANTEP"]=='2' or empty($adjuntosComprobante)){
 		$urlADJUNTO_COMPROBANTEP = '';
 	}else{
@@ -351,7 +353,7 @@ while($row = mysqli_fetch_array($querycontras))
 
 ?>
 
-               <tr style="background:#f5f9fc;text-align:center">
+    <tr style="background:<?php echo $filaRechazoBono ? '#f8d7da' : '#f5f9fc'; ?>;text-align:center">         
            
 <td style="text-align:center">
 

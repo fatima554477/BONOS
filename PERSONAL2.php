@@ -295,6 +295,8 @@ $puedeModificarDIRECCION2 = ($conexion->variablespermisos('', 'PERSOdire2', 'mod
 $urlADJUNTO_COMPROBANTE ='';
 while($row = mysqli_fetch_array($querycontras))
 {	
+$filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'));
+
 	$adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTE"])));
 	if($row["ADJUNTO_COMPROBANTE"]=="" or $row["ADJUNTO_COMPROBANTE"]=='2' or empty($adjuntosComprobante)){
 		$urlADJUNTO_COMPROBANTE = '';
@@ -315,7 +317,8 @@ while($row = mysqli_fetch_array($querycontras))
 	}
 
 ?>
-          <tr style="background:#f5f9fc;text-align:center">
+              <tr style="background:<?php echo $filaRechazoBono2 ? '#f8d7da' : '#f5f9fc'; ?>;text-align:center">
+
 		  
           <td style="text-align:center" >
 		  

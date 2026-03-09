@@ -2158,7 +2158,7 @@ public function actualizaSTATUS_BONORECHAZO($STATUS_BONORECHAZO_id, $STATUS_BONO
 		$valor = ($STATUS_BONORECHAZO_text === 'si') ? 'si' : 'no';
 
 		$var1 = "
-			UPDATE 04personal
+			UPDATE 04personal2
 			SET STATUS_BONORECHAZO = '".$conn->real_escape_string($valor)."'
 			WHERE id = ".$idPersonal."
 			LIMIT 1
@@ -2183,7 +2183,7 @@ public function actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id, $STATUS_RECH
 		$valor = ($STATUS_RECHAZOBONO_text === 'si') ? 'si' : 'no';
 
 		$var1 = "
-			UPDATE 04personal2
+			UPDATE 04personal
 			SET STATUS_RECHAZOBONO = '".$conn->real_escape_string($valor)."'
 			WHERE id = ".$idPersonal."
 			LIMIT 1
