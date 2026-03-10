@@ -331,6 +331,9 @@ $urlADJUNTO_COMPROBANTEP ='';
 while($row = mysqli_fetch_array($querycontras))
 {	
 	$filaRechazoBono = (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si');
+	$motivoRechazoPersonal = $altaeventos->obtener_motivo_rechazo_personal($row["id"], 'personal');
+	$mostrarAgregarRechazoPersonal = ($filaRechazoBono && $motivoRechazoPersonal == '');
+	$mostrarVerRechazoPersonal = ($filaRechazoBono && $motivoRechazoPersonal != '');
 	$adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTEP"])));
 
 	if($row["ADJUNTO_COMPROBANTEP"]=="" or $row["ADJUNTO_COMPROBANTEP"]=='2' or empty($adjuntosComprobante)){
@@ -353,7 +356,7 @@ while($row = mysqli_fetch_array($querycontras))
 
 ?>
 
-    <tr style="background:<?php echo $filaRechazoBono ? '#f8d7da' : '#f5f9fc'; ?>;text-align:center">         
+    <tr style="background:<?php echo $filaRechazoBono ? '#ff3c22' : '#f5f9fc'; ?>;text-align:center">         
            
 <td style="text-align:center">
 
@@ -401,8 +404,11 @@ while($row = mysqli_fetch_array($querycontras))
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="pasara1_personalADMIN(<?php echo $row["id"]; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td> 
 			  <?php } ?>
 	
-				   <td style="text-align:center" >
+		   <td style="text-align:center" >
            <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_RECHAZOBONO<?php echo $row["id"]; ?>" name="STATUS_RECHAZOBONO<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="STATUS_RECHAZOBONO(<?php echo $row["id"]; ?>)" <?php if(isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'){ echo "checked"; } ?> <?php if(!$puedeAutorizar) echo 'disabled'; ?>/>
+		   <input type="hidden" id="motivo_rechazo_personal_<?php echo $row["id"]; ?>" value="<?php echo htmlspecialchars($motivoRechazoPersonal, ENT_QUOTES, 'UTF-8'); ?>" />
+		   <button type="button" title="Agregar motivo" id="agregar_rechazo_personal_<?php echo $row['id']; ?>" style="border:none;background:transparent;cursor:pointer;color:#007bff;font-size:13px;<?php echo $mostrarAgregarRechazoPersonal ? '' : 'display:none;'; ?>" onclick="abrirFormularioRechazoPersonal(<?php echo $row['id']; ?>, 'personal')">agregar<br>motivo</button>
+		   <button type="button" title="Ver motivo" id="ver_rechazo_personal_<?php echo $row['id']; ?>" style="border:none;background:transparent;cursor:pointer;color:#28a745;font-size:13px;<?php echo $mostrarVerRechazoPersonal ? '' : 'display:none;'; ?>" onclick="verMotivoRechazoPersonal(<?php echo $row['id']; ?>, 'personal')">ver</button>
            </td>
 	
 	

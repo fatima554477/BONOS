@@ -296,6 +296,9 @@ $urlADJUNTO_COMPROBANTE ='';
 while($row = mysqli_fetch_array($querycontras))
 {	
 $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'));
+	$motivoRechazoPersonal2 = $altaeventos->obtener_motivo_rechazo_personal($row["id"], 'personal2');
+	$mostrarAgregarRechazoPersonal2 = ($filaRechazoBono2 && $motivoRechazoPersonal2 == '');
+	$mostrarVerRechazoPersonal2 = ($filaRechazoBono2 && $motivoRechazoPersonal2 != '');
 
 	$adjuntosComprobante = array_filter(array_map('trim', explode(',', $row["ADJUNTO_COMPROBANTE"])));
 	if($row["ADJUNTO_COMPROBANTE"]=="" or $row["ADJUNTO_COMPROBANTE"]=='2' or empty($adjuntosComprobante)){
@@ -317,7 +320,7 @@ $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECH
 	}
 
 ?>
-              <tr style="background:<?php echo $filaRechazoBono2 ? '#f8d7da' : '#f5f9fc'; ?>;text-align:center">
+              <tr style="background:<?php echo $filaRechazoBono2 ? '#ff3c22' : '#f5f9fc'; ?>;text-align:center">
 
 		  
           <td style="text-align:center" >
@@ -345,8 +348,11 @@ $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECH
 		  <?php } ?>
 		  
 		  
-		   <td style="text-align:center" >
+	   <td style="text-align:center" >
            <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_BONORECHAZO<?php echo $row["id"]; ?>" name="STATUS_BONORECHAZO<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="STATUS_BONORECHAZO(<?php echo $row["id"]; ?>)" <?php if((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si')){ echo "checked"; } ?> <?php if(!$puedeAutorizar) echo 'disabled'; ?>/>
+		   <input type="hidden" id="motivo_rechazo_personal2_<?php echo $row["id"]; ?>" value="<?php echo htmlspecialchars($motivoRechazoPersonal2, ENT_QUOTES, 'UTF-8'); ?>" />
+		   <button type="button" title="Agregar motivo" id="agregar_rechazo_personal2_<?php echo $row['id']; ?>" style="border:none;background:transparent;cursor:pointer;color:#007bff;font-size:13px;<?php echo $mostrarAgregarRechazoPersonal2 ? '' : 'display:none;'; ?>" onclick="abrirFormularioRechazoPersonal(<?php echo $row['id']; ?>, 'personal2')">agregar<br>motivo</button>
+		   <button type="button" title="Ver motivo" id="ver_rechazo_personal2_<?php echo $row['id']; ?>" style="border:none;background:transparent;cursor:pointer;color:#28a745;font-size:13px;<?php echo $mostrarVerRechazoPersonal2 ? '' : 'display:none;'; ?>" onclick="verMotivoRechazoPersonal(<?php echo $row['id']; ?>, 'personal2')">ver</button>
            </td>
 		  
           <td style="text-align:center" >
