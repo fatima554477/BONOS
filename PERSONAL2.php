@@ -8,6 +8,12 @@ $puedeModificarVYO2 = ($conexion->variablespermisos('', 'PERSOvyo2', 'modificar'
 $puedeVerDIRECCION2 = ($conexion->variablespermisos('', 'PERSOdire2', 'ver') === 'si');
 $puedeGuardarDIRECCION2 = ($conexion->variablespermisos('', 'PERSOdire2', 'guardar') === 'si');
 $puedeModificarDIRECCION2 = ($conexion->variablespermisos('', 'PERSOdire2', 'modificar') === 'si');
+$puedeVerRechazoBono2 = ($conexion->variablespermisos('', 'rechazobono2', 'ver') === 'si');
+
+$puedeGuardarRechazoBono2 = ($conexion->variablespermisos('', 'rechazobono2', 'guardar') === 'si');
+
+$puedeModificarRechazoBono2 = ($conexion->variablespermisos('', 'rechazobono2', 'modificar') === 'si');
+
 ?>
 
 <div id="content">   
@@ -267,7 +273,11 @@ $puedeModificarDIRECCION2 = ($conexion->variablespermisos('', 'PERSOdire2', 'mod
 		   <?php if($puedeVerAdmin2){ ?>
                <th width="15%"style="background:#c9e8e8">AUTORIZACIÓN <br>POR AUDITORÍA<br>PAGO BONO</th>
 			   <?php } ?> 
-  <th width="15%"style="background:#c9e8e8">RECHAZAR<br>PAGO BONO</th>			   
+  <?php if($puedeVerRechazoBono2){ ?>
+
+  <th width="15%"style="background:#c9e8e8">RECHAZAR<br>PAGO BONO</th>
+
+  <?php } ?>			   
                <th width="15%"style="background:#c9e8e8">ENVIAR <br>POR EMAIL</th>
                <th width="20%"style="background:#c9e8e8">NOMBRE</th>
                <th width="20%"style="background:#c9e8e8">PUESTO</th>
@@ -347,9 +357,10 @@ $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECH
                <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="pasara1_personal2ADMIN(<?php echo $row["id"]; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin2 || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin2)) { echo "disabled"; } ?>/> </td>
 		  <?php } ?>
 		  
-		  
+		  <?php if($puedeVerRechazoBono2){ ?>
 	   <td style="text-align:center" >
-           <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_BONORECHAZO<?php echo $row["id"]; ?>" name="STATUS_BONORECHAZO<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="STATUS_BONORECHAZO(<?php echo $row["id"]; ?>)" <?php if((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si')){ echo "checked"; } ?> <?php if(!$puedeAutorizar) echo 'disabled'; ?>/>
+            <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_BONORECHAZO<?php echo $row["id"]; ?>" name="STATUS_BONORECHAZO<?php echo $row["id"]; ?>" value="<?php echo $row["id"]; ?>" onclick="STATUS_BONORECHAZO(<?php echo $row["id"]; ?>)" <?php if((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si')){ echo "checked"; } ?> <?php if(!$puedeGuardarRechazoBono2 || (((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si')) && !$puedeModificarRechazoBono2)) { echo "disabled"; } ?>/>
+
 		   <input type="hidden" id="motivo_rechazo_personal2_<?php echo $row["id"]; ?>" value="<?php echo htmlspecialchars($motivoRechazoPersonal2, ENT_QUOTES, 'UTF-8'); ?>" />
 		   <button type="button" title="Agregar motivo" id="agregar_rechazo_personal2_<?php echo $row['id']; ?>" style="border:none;background:transparent;cursor:pointer;color:#007bff;font-size:13px;<?php echo $mostrarAgregarRechazoPersonal2 ? '' : 'display:none;'; ?>" onclick="abrirFormularioRechazoPersonal(<?php echo $row['id']; ?>, 'personal2')">agregar<br>motivo</button>
 		   <button type="button" title="Ver motivo" id="ver_rechazo_personal2_<?php echo $row['id']; ?>" style="border:none;background:transparent;cursor:pointer;color:#28a745;font-size:13px;<?php echo $mostrarVerRechazoPersonal2 ? '' : 'display:none;'; ?>" onclick="verMotivoRechazoPersonal(<?php echo $row['id']; ?>, 'personal2')">ver</button>
