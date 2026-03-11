@@ -196,23 +196,24 @@ beforeSend: function(objeto){
 	}
 	/* terminaB1*/		
 
-	function restoreRowSelections(){
-		$(".datos_ajax input.checkbox[data-id]").each(function(){
-			var id = $(this).data("id");
-			var fila = this.closest("tr");
-			if (localStorage.getItem("checkbox_" + id) === "checked") {
-				this.checked = true;
-				if (fila) {
-					fila.style.filter = "brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)";
-				}
-			} else {
-				this.checked = false;
-				if (fila) {
-					fila.style.filter = "none";
-				}
-			}
-});
-	}
+function restoreRowSelections(){
+    $(".datos_ajax input.checkbox[data-id]").each(function(){
+        var id = $(this).data("id");
+        var fila = this.closest("tr");
+        if (localStorage.getItem("checkbox_" + id) === "checked") {
+            this.checked = true;
+            if (fila) fila.style.filter = "brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)";
+        } else {
+            this.checked = false;
+            if (fila) fila.style.filter = "none";
+        }
+    });
+
+    $("[id^='STATUS_RECHAZOBONO']").each(function(){
+        var id = this.id.replace('STATUS_RECHAZOBONO','');
+        actualizarBotonesRechazoPersonal(id, 'personal');
+    });
+}
 
 	function updateAutorizacionCell(checkBox){
 		if (!checkBox) {
@@ -294,7 +295,7 @@ function STATUS_RECHAZOBONO_filtro(STATUS_RECHAZOBONO_id){
 	if(!checkBox){ return; }
 	var STATUS_RECHAZOBONO_text = checkBox.checked ? "si" : "no";
 	$.ajax({
-		url:'BONOS/controladorAE.php',
+		url:'BONOS/clasesPERSONAL/controlador_filtro.php', 
 		method:'POST',
 		data:{STATUS_RECHAZOBONO_id:STATUS_RECHAZOBONO_id,STATUS_RECHAZOBONO_text:STATUS_RECHAZOBONO_text},
 		success:function(){
@@ -329,7 +330,7 @@ function guardarMotivoRechazoPersonalModal(){
 		return;
 	}
 	$.ajax({
-		url:'BONOS/controladorAE.php',
+		url:'BONOS/clasesPERSONAL/controlador_filtro.php', 
 		method:'POST',
 		data:{RECHAZO_MOTIVO_PERSONAL_id:idPersonal,RECHAZO_MOTIVO_PERSONAL_tipo:tipoPersonal,RECHAZO_MOTIVO_PERSONAL_text:motivo},
 		success:function(resp){
@@ -355,7 +356,7 @@ function verMotivoRechazoPersonal(idPersonal, tipoPersonal){
 		return;
 	}
 	$.ajax({
-		url:'BONOS/controladorAE.php',
+		url:'BONOS/clasesPERSONAL/controlador_filtro.php', 
 		method:'POST',
 		data:{RECHAZO_MOTIVO_PERSONAL_VER_id:idPersonal,RECHAZO_MOTIVO_PERSONAL_VER_tipo:tipoPersonal},
 		success:function(resp){

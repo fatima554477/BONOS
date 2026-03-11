@@ -21,6 +21,87 @@ function __construct(){
 		$this->mysqli = $this->db();
     }
 
+	public function actualizaSTATUS_RECHAZOBONO($STATUS_RECHAZOBONO_id, $STATUS_RECHAZOBONO_text){
+		$conn = $this->db();
+		$idPersonal = (int)$STATUS_RECHAZOBONO_id;
+		$valor = ($STATUS_RECHAZOBONO_text === 'si') ? 'si' : 'no';
+
+		if($idPersonal <= 0){
+			return "Datos_invalidos";
+		}
+
+		$var1 = "
+			UPDATE 04personal
+			SET STATUS_RECHAZOBONO = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn, $var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+	}
+
+	private function crear_tabla_rechazos_personal_si_no_existe($conn){
+		$crearTabla = "CREATE TABLE IF NOT EXISTS `04PERSONAL_RECHAZOS` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`tipo_personal` varchar(20) NOT NULL,
+			`id_personal` int(11) NOT NULL,
+			`motivo_rechazo` text,
+			`usuario_registro` varchar(255) DEFAULT NULL,
+			`fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`),
+			UNIQUE KEY `uniq_tipo_personal` (`tipo_personal`,`id_personal`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+		mysqli_query($conn, $crearTabla);
+	}
+
+	public function guardar_motivo_rechazo_personal($idPersonal, $tipoPersonal, $motivoRechazo){
+		$conn = $this->db();
+		$session = isset($_SESSION['idem']) ? $_SESSION['idem'] : '';
+
+		$idPersonal = intval($idPersonal);
+		$tipoPersonal = trim($tipoPersonal);
+		$motivoRechazo = trim($motivoRechazo);
+
+		if($idPersonal <= 0 || $motivoRechazo == ''){ return "Datos_invalidos"; }
+		if($tipoPersonal != 'personal' && $tipoPersonal != 'personal2'){ return "Tipo_invalido"; }
+
+		$this->crear_tabla_rechazos_personal_si_no_existe($conn);
+		$idEscapado = mysqli_real_escape_string($conn, $idPersonal);
+		$tipoEscapado = mysqli_real_escape_string($conn, $tipoPersonal);
+		$motivoEscapado = mysqli_real_escape_string($conn, $motivoRechazo);
+		$usuarioEscapado = mysqli_real_escape_string($conn, ($session != '' ? $session : 'sistema'));
+
+		$insert = "INSERT INTO 04PERSONAL_RECHAZOS (tipo_personal, id_personal, motivo_rechazo, usuario_registro, fecha_registro)
+		VALUES ('".$tipoEscapado."', '".$idEscapado."', '".$motivoEscapado."', '".$usuarioEscapado."', NOW())
+		ON DUPLICATE KEY UPDATE motivo_rechazo = VALUES(motivo_rechazo), usuario_registro = VALUES(usuario_registro), fecha_registro = NOW()";
+
+		mysqli_query($conn, $insert) or die('P156'.mysqli_error($conn));
+		return "ok";
+	}
+
+	public function obtener_motivo_rechazo_personal($idPersonal, $tipoPersonal){
+		$conn = $this->db();
+		$idPersonal = intval($idPersonal);
+		$tipoPersonal = trim($tipoPersonal);
+
+		if($idPersonal <= 0){ return ''; }
+		if($tipoPersonal != 'personal' && $tipoPersonal != 'personal2'){ return ''; }
+
+		$this->crear_tabla_rechazos_personal_si_no_existe($conn);
+		$idEscapado = mysqli_real_escape_string($conn, $idPersonal);
+		$tipoEscapado = mysqli_real_escape_string($conn, $tipoPersonal);
+
+		$query = mysqli_query($conn, "SELECT motivo_rechazo FROM 04PERSONAL_RECHAZOS WHERE tipo_personal = '".$tipoEscapado."' AND id_personal = '".$idEscapado."' LIMIT 1");
+		if($query){
+			$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+			if($row && isset($row['motivo_rechazo'])){
+				return $row['motivo_rechazo'];
+			}
+		}
+
+		return '';
+	}
+
 	
 	
 	
