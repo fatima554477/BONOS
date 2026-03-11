@@ -99,7 +99,6 @@ var hDatosPERSONAL2=$("#hDatosPERSONAL2_2").val();
 var VYO=$("#VYO_2").val();
 var DIRECCION=$("#DIRECCION_2").val();
 var admin=$("#admin_2").val();
-var STATUS_BONORECHAZO=$("#STATUS_BONORECHAZO_2").val();
 
 /*termina copiar y pegar*/
 			
@@ -143,7 +142,6 @@ var STATUS_BONORECHAZO=$("#STATUS_BONORECHAZO_2").val();
 'VYO':VYO,
 'DIRECCION':DIRECCION,
 'admin':admin,
-'STATUS_BONORECHAZO':STATUS_BONORECHAZO,
 'hDatosPERSONAL2':hDatosPERSONAL2,
 /*termina copiar y pegar*/
 /*termina copiar y pegar*/
@@ -179,25 +177,23 @@ beforeSend: function(objeto){
 	}
 	/* terminaB1*/		
 
-function restoreRowSelections2(){
-    $(".datos_ajax2 input.checkbox[data-id]").each(function(){
-        var id = $(this).data("id");
-        var fila = this.closest("tr");
-        if (localStorage.getItem("checkbox_" + id) === "checked") {
-            this.checked = true;
-            if (fila) fila.style.filter = "brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)";
-        } else {
-            this.checked = false;
-            if (fila) fila.style.filter = "none";
-        }
-    });
-    $("[id^='STATUS_BONORECHAZO']").each(function(){
-        var id = this.id.replace('STATUS_BONORECHAZO','');
-        actualizarBotonesRechazoPersonal2(id, 'personal2');
-    });
-} 
-
-	
+	function restoreRowSelections2(){
+		$(".datos_ajax2 input.checkbox[data-id]").each(function(){
+			var id = $(this).data("id");
+			var fila = this.closest("tr");
+			if (localStorage.getItem("checkbox_" + id) === "checked") {
+				this.checked = true;
+				if (fila) {
+					fila.style.filter = "brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)";
+				}
+			} else {
+				this.checked = false;
+				if (fila) {
+					fila.style.filter = "none";
+				}
+			}
+});
+	}
 
 	function updateAutorizacionCell2(checkBox){
 		if (!checkBox) {
@@ -271,117 +267,6 @@ function pasara1_personal2ADMIN_filtro(pasara1_personal2ADMIN_id){
 			}
 		});
 	}
-	
-	function STATUS_BONORECHAZO_filtro(STATUS_BONORECHAZO_id){
-	var checkBox = document.getElementById("STATUS_BONORECHAZO"+STATUS_BONORECHAZO_id);
-	if(!checkBox){ return; }
-	var STATUS_BONORECHAZO_text = checkBox.checked ? "si" : "no";
-	$.ajax({
-		url:'BONOS/clasesPERSONAL2/controlador_filtro.php', 
-		method:'POST',
-		data:{STATUS_BONORECHAZO_id:STATUS_BONORECHAZO_id,STATUS_BONORECHAZO_text:STATUS_BONORECHAZO_text},
-		success:function(){
-			actualizarBotonesRechazoPersonal2(STATUS_BONORECHAZO_id, 'personal', STATUS_BONORECHAZO_text);
-			mostrarActualizado2('✅ ACTUALIZADO');
-		}
-	});
-}
-
-function asegurarModalRechazoPersonal2(){
-	if($('#modalRechazoPersonal2').length){ return; }
-	$('body').append('<div id="modalRechazoPersonal2" class="modal" tabindex="-1" role="dialog" style="display:none;background:rgba(0,0,0,0.45);"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="modalRechazoPersonal2Label">Motivo del rechazo</h5><button type="button" class="close" onclick="cerrarModalRechazoPersonal2()" style="border:none;background:transparent;font-size:25px;line-height:1;">&times;</button></div><div class="modal-body"><input type="hidden" id="modal_rechazo_personal_id" /><input type="hidden" id="modal_rechazo_personal_tipo" /><textarea id="modal_rechazo_personal_texto" class="form-control" rows="4"></textarea><div id="modal_rechazo_personal_mensaje" style="margin-top:8px;color:#666;"></div></div><div class="modal-footer"><button type="button" id="btn_guardar_rechazo_personal_modal" class="btn btn-primary">Guardar</button><button type="button" class="btn btn-secondary" onclick="cerrarModalRechazoPersonal2()">Cerrar</button></div></div></div></div>');
-}
-
-function abrirFormularioRechazoPersonal2(idPersonal, tipoPersonal2){
-	asegurarModalRechazoPersonal2();
-	var motivoActual = $('#motivo_rechazo_'+tipoPersonal2+'_'+idPersonal).val() || '';
-	$('#modal_rechazo_personal_id').val(idPersonal);
-	$('#modal_rechazo_personal_tipo').val(tipoPersonal2);
-	configurarModalRechazoPersonal2('editar', motivoActual, 'Captura el motivo y presiona Guardar.');
-	$('#btn_guardar_rechazo_personal_modal').off('click').on('click', function(){
-		guardarMotivoRechazoPersonal2Modal();
-	});
-}
-
-function guardarMotivoRechazoPersonal2Modal(){
-	var idPersonal = $('#modal_rechazo_personal_id').val();
-	var tipoPersonal2 = $('#modal_rechazo_personal_tipo').val();
-	var motivo = ($('#modal_rechazo_personal_texto').val() || '').trim();
-	if(motivo === ''){
-		$('#modal_rechazo_personal_mensaje').text('Debes capturar un motivo de rechazo.').css('color', '#b22222');
-		return;
-	}
-	$.ajax({
-		url:'BONOS/clasesPERSONAL2/controlador_filtro.php', 
-		method:'POST',
-		data:{RECHAZO_MOTIVO_PERSONAL2_id:idPersonal,RECHAZO_MOTIVO_PERSONAL2_tipo:tipoPersonal2,RECHAZO_MOTIVO_PERSONAL2_text:motivo},
-		success:function(resp){
-			if((resp || '').indexOf('ok') !== -1){
-				$('#motivo_rechazo_'+tipoPersonal2+'_'+idPersonal).val(motivo);
-				actualizarBotonesRechazoPersonal2(idPersonal, tipoPersonal2);
-				$('#modal_rechazo_personal_mensaje').text('Motivo guardado correctamente.').css('color', '#228b22');
-				setTimeout(function(){ cerrarModalRechazoPersonal2(); }, 400);
-			}else{
-				$('#modal_rechazo_personal_mensaje').text('No fue posible guardar el motivo.').css('color', '#b22222');
-			}
-		}
-	});
-}
-
-function verMotivoRechazoPersonal2(idPersonal, tipoPersonal2){
-	asegurarModalRechazoPersonal2();
-	var motivoLocal = $('#motivo_rechazo_'+tipoPersonal2+'_'+idPersonal).val() || '';
-	$('#modal_rechazo_personal_id').val(idPersonal);
-	$('#modal_rechazo_personal_tipo').val(tipoPersonal2);
-	if(motivoLocal !== ''){
-		configurarModalRechazoPersonal2('ver', motivoLocal, 'Consulta del motivo registrado.');
-		return;
-	}
-	$.ajax({
-		url:'BONOS/clasesPERSONAL2/controlador_filtro.php', 
-		method:'POST',
-		data:{RECHAZO_MOTIVO_PERSONAL2_VER_id:idPersonal,RECHAZO_MOTIVO_PERSONAL2_VER_tipo:tipoPersonal2},
-		success:function(resp){
-			var motivo = (resp || '').trim();
-			if(motivo !== ''){
-				$('#motivo_rechazo_'+tipoPersonal2+'_'+idPersonal).val(motivo);
-				configurarModalRechazoPersonal2('ver', motivo, 'Consulta del motivo registrado.');
-			}else{
-				configurarModalRechazoPersonal2('ver', 'No hay motivo de rechazo registrado.', 'Consulta del motivo registrado.');
-			}
-		}
-	});
-}
-
-function configurarModalRechazoPersonal2(modo, texto, mensaje){
-	var esVer = (modo === 'ver');
-	$('#modalRechazoPersonal2Label').text(esVer ? 'Ver motivo del rechazo' : 'Agregar motivo del rechazo');
-	$('#modal_rechazo_personal_texto').val(texto || '').prop('readonly', esVer);
-	$('#modal_rechazo_personal_mensaje').text(mensaje || '').css('color', '#666');
-	$('#btn_guardar_rechazo_personal_modal').toggle(!esVer);
-	mostrarModalRechazoPersonal2();
-}
-
-function actualizarBotonesRechazoPersonal2(idPersonal, tipoPersonal2, statusRechazo){
-	var statusActual = typeof statusRechazo === 'undefined'
-		? ($('#STATUS_BONORECHAZO'+idPersonal).is(':checked') ? 'si' : 'no')
-		: statusRechazo;
-	var motivo = ($('#motivo_rechazo_'+tipoPersonal2+'_'+idPersonal).val() || '').trim();
-	$('#agregar_rechazo_'+tipoPersonal2+'_'+idPersonal).toggle(statusActual === 'si' && motivo === '');
-	$('#ver_rechazo_'+tipoPersonal2+'_'+idPersonal).toggle(statusActual === 'si' && motivo !== '');
-}
-
-function mostrarModalRechazoPersonal2(){
-	if(typeof $('#modalRechazoPersonal2').modal === 'function'){
-		$('#modalRechazoPersonal2').modal('show');
-	}else{ $('#modalRechazoPersonal2').show(); }
-}
-
-function cerrarModalRechazoPersonal2(){
-	if(typeof $('#modalRechazoPersonal2').modal === 'function'){
-		$('#modalRechazoPersonal2').modal('hide');
-	}else{ $('#modalRechazoPersonal2').hide(); }
-}
 
 
 	</script>

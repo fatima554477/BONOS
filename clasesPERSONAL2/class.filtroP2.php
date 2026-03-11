@@ -21,25 +21,6 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 		$this->mysqli = $this->db();
     }
 	
-		public function actualizaSTATUS_BONORECHAZO($STATUS_BONORECHAZO_id, $STATUS_BONORECHAZO_text){
-		$conn = $this->db();
-		$idPersonal = (int)$STATUS_BONORECHAZO_id;
-		$valor = ($STATUS_BONORECHAZO_text === 'si') ? 'si' : 'no';
-
-		if($idPersonal <= 0){
-			return "Datos_invalidos";
-		}
-
-		$var1 = "
-			UPDATE 04personal2
-			SET STATUS_BONORECHAZO = '".$conn->real_escape_string($valor)."'
-			WHERE id = ".$idPersonal."
-			LIMIT 1
-		";
-		mysqli_query($conn, $var1) or die('P156'.mysqli_error($conn));
-		return "Actualizado";
-	}
-	
 	public function countAll($sql){
 		$query=$this->mysqli->query($sql);
 		$count=$query->num_rows;
@@ -54,9 +35,7 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 
 $tables1 = '04altaeventos';
 		$tables = '04personal2';
-	$baseConditions = " ( ($tables.NOMBRE_PERSONAL2 is not null or $tables.NOMBRE_PERSONAL2 <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") )"
-			." and ($tables.NOMBRE_RECIBIO1 is null or $tables.NOMBRE_RECIBIO1 = \"\")"
-			." and ($tables.ADJUNTO_COMPROBANTE is null or $tables.ADJUNTO_COMPROBANTE = \"\") ";
+		$baseConditions = " ( ($tables.NOMBRE_PERSONAL2 is not null or $tables.NOMBRE_PERSONAL2 <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
 $sWhere2="";$sWhere3="";
 		$autorizacionWhere = "";
 
@@ -68,12 +47,8 @@ $sWhere2="";$sWhere3="";
 			$autorizacionWhere .= " and $tables.DIRECCION = '".$search['DIRECCION']."'";
 		}
 
-if(isset($search['admin']) && $search['admin'] !== ""){
+		if(isset($search['admin']) && $search['admin'] !== ""){
 			$autorizacionWhere .= " and $tables.admin = '".$search['admin']."'";
-		}
-
-		if(isset($search['STATUS_BONORECHAZO']) && $search['STATUS_BONORECHAZO'] !== ""){
-			$autorizacionWhere .= " and $tables.STATUS_BONORECHAZO = '".$search['STATUS_BONORECHAZO']."'";
 		}
 
 		
