@@ -35,8 +35,23 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 
 $tables1 = '04altaeventos';
 		$tables = '04personal2';
-		$baseConditions = " ( ($tables.NOMBRE_PERSONAL2 is not null or $tables.NOMBRE_PERSONAL2 <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") ) ";
+	$baseConditions = " ( ($tables.NOMBRE_PERSONAL2 is not null or $tables.NOMBRE_PERSONAL2 <> \"\" ) and ($tables1.NUMERO_EVENTO is not null AND $tables1.NUMERO_EVENTO <> \"\") )"
+			." and ($tables.NOMBRE_RECIBIO1 is null or $tables.NOMBRE_RECIBIO1 = \"\")"
+			." and ($tables.ADJUNTO_COMPROBANTE is null or $tables.ADJUNTO_COMPROBANTE = \"\") ";
 $sWhere2="";$sWhere3="";
+		$autorizacionWhere = "";
+
+		if(isset($search['VYO']) && $search['VYO'] !== ""){
+			$autorizacionWhere .= " and $tables.VYO = '".$search['VYO']."'";
+		}
+
+		if(isset($search['DIRECCION']) && $search['DIRECCION'] !== ""){
+			$autorizacionWhere .= " and $tables.DIRECCION = '".$search['DIRECCION']."'";
+		}
+
+		if(isset($search['admin']) && $search['admin'] !== ""){
+			$autorizacionWhere .= " and $tables.admin = '".$search['admin']."'";
+		}
 
 		
 if($search['NUMERO_EVENTO']!=""){
@@ -126,12 +141,12 @@ IF($sWhere2!=""){
                         $sWhere3  = ' 04altaeventos left join 04personal2 ON 04altaeventos.id = 04personal2.idRelacion'
                         .' left join 01informacionpersonal ON 04personal2.NOMBRE_PERSONAL2 = 01informacionpersonal.idRelacion'
                         .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion'
-                        .' where '.$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\' and ('.$sWhere22.') ';
+                         .' where '.$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\''.$autorizacionWhere.' and ('.$sWhere22.') ';
                 }ELSE{
                 $sWhere3  = ' 04altaeventos left join 04personal2 ON 04altaeventos.id = 04personal2.idRelacion'
                         .' left join 01informacionpersonal ON 04personal2.NOMBRE_PERSONAL2 = 01informacionpersonal.idRelacion'
                         .' left join 01DATOSBANCARIOS ON 01DATOSBANCARIOS.idRelacion = 01informacionpersonal.idRelacion where '
-                        .$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\'';
+                        .$baseConditions.' and 01DATOSBANCARIOS.checkbox = \'si\''.$autorizacionWhere;
 		}
 
 		

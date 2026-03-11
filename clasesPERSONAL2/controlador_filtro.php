@@ -73,7 +73,36 @@ $FECHA_EFECTIVA1 = isset($_POST["FECHA_EFECTIVA1"])?trim($_POST["FECHA_EFECTIVA1
 $ADJUNTO_COMPROBANTE = isset($_POST["ADJUNTO_COMPROBANTE"])?trim($_POST["ADJUNTO_COMPROBANTE"]):"";  
 $NOMBRE_RECIBIO1 = isset($_POST["NOMBRE_RECIBIO1"])?trim($_POST["NOMBRE_RECIBIO1"]):"";  
 $ULTIMA_CARGA_DATOBANCA = isset($_POST["ULTIMA_CARGA_DATOBANCA"])?trim($_POST["ULTIMA_CARGA_DATOBANCA"]):"";  
+$VYO = isset($_POST["VYO"])?trim($_POST["VYO"]):"";
+$DIRECCION = isset($_POST["DIRECCION"])?trim($_POST["DIRECCION"]):"";
+$admin = isset($_POST["admin"])?trim($_POST["admin"]):"";
 $per_page=intval($_POST["per_page"]);
+$formasPago = array(
+
+"03" => "TRANSFERENCIA ELECTRONICA",
+
+"04" => "TARJETA DE CRÉDITO",
+
+"28" => "TARJETA DE DÉBITO",
+
+"01" => "EFECTIVO",
+
+"02" => "CHEQUE NOMINATIVO",
+
+"05" => "MONEDERO ELECTRÓNICO",
+
+"06" => "DINERO ELECTRÓNICO",
+
+"08" => "VALES DE DESPENSA",
+
+"29" => "TARJETA DE SERVICIO",
+
+"99" => "OTROS"
+
+);
+
+
+
 	$campos="04personal2.*, 01informacionpersonal.*, 01DATOSBANCARIOS.*, 04altaeventos.*";
 	//Variables de paginación
 
@@ -121,6 +150,9 @@ $per_page=intval($_POST["per_page"]);
 "ADJUNTO_COMPROBANTE"=>$ADJUNTO_COMPROBANTE,
 "NOMBRE_RECIBIO1"=>$NOMBRE_RECIBIO1,
 "ULTIMA_CARGA_DATOBANCA"=>$ULTIMA_CARGA_DATOBANCA,
+"VYO"=>$VYO,
+"DIRECCION"=>$DIRECCION,
+"admin"=>$admin,
 "hDatosPERSONAL2"=>$hDatosPERSONAL2,
 
  "per_page"=>$per_page,
@@ -319,11 +351,29 @@ echo $CIUDAD_DEL_EVENTO; ?>"></td>
 <?php } ?>
 
 
-<?php if($puedeVerVYO2){ ?><td style="background:#c9e8e8"></td>
+<?php if($puedeVerVYO2){ ?><td style="background:#c9e8e8">
+    <select class="form-select" id="VYO_2" onchange="load2(1)">
+        <option value="" <?php if($VYO==""){ echo "selected"; } ?>>Todos</option>
+        <option value="si" <?php if($VYO=="si"){ echo "selected"; } ?>>Si</option>
+        <option value="no" <?php if($VYO=="no"){ echo "selected"; } ?>>No</option>
+    </select>
+</td>
 <?php } ?>
-<?php if($puedeVerDIRECCION2){ ?><td style="background:#c9e8e8"></td>
+<?php if($puedeVerDIRECCION2){ ?><td style="background:#c9e8e8">
+    <select class="form-select" id="DIRECCION_2" onchange="load2(1)">
+        <option value="" <?php if($DIRECCION==""){ echo "selected"; } ?>>Todos</option>
+        <option value="si" <?php if($DIRECCION=="si"){ echo "selected"; } ?>>Si</option>
+        <option value="no" <?php if($DIRECCION=="no"){ echo "selected"; } ?>>No</option>
+    </select>
+</td>
 <?php } ?>
-<?php if($puedeVerAdmin2){ ?><td style="background:#c9e8e8"></td>
+<?php if($puedeVerAdmin2){ ?><td style="background:#c9e8e8">
+    <select class="form-select" id="admin_2" onchange="load2(1)">
+        <option value="" <?php if($admin==""){ echo "selected"; } ?>>Todos</option>
+        <option value="si" <?php if($admin=="si"){ echo "selected"; } ?>>Si</option>
+        <option value="no" <?php if($admin=="no"){ echo "selected"; } ?>>No</option>
+    </select>
+</td>
 <?php } ?>
 
 <?php  
@@ -488,8 +538,7 @@ $colspanFields = array(
 		"NOMBRE_PERSONAL2",
 		"PUESTO_PERSONAL2",
 		"WHAT_PERSONAL2",
-		"EMAIL_PERSONAL2",
-		"FECHA_INICIO1",
+	
 	
 		
 	);
@@ -629,8 +678,8 @@ $MONTO_BONO12 += floatval(str_replace(',', '', $row['MONTO_BONO1']));
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['TOTAL1'];
-$TOTAL12 += floatval(str_replace(',', '', $row['TOTAL1']));
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['MONTO_BONO_TOTAL1'];
+$TOTAL12 += floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL1']));
 ?></td>
 <?php } ?>
 
@@ -676,7 +725,8 @@ if (!empty($adjuntosComprobante)) {
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['FORMA_PAGO1'];?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo isset($formasPago[$row['FORMA_PAGO1']]) ? $formasPago[$row['FORMA_PAGO1']] : $row['FORMA_PAGO1'];?></td>
+
 <?php } ?>
 
 <?php  

@@ -1,4 +1,3 @@
-
 <style>
 /* Loader2 con animación */
 .loader2 {
@@ -49,7 +48,7 @@
         $(function() {
                 const triggerSearch = () => load2(1);
 
-                $('#target4').on('keydown', 'thead input, thead select', function(event) {
+                $('#target3').on('keydown', 'thead input, thead select', function(event) {
                         if (event.key === 'Enter' || event.which === 13) {
                                 event.preventDefault();
                                 triggerSearch();
@@ -97,6 +96,9 @@ var NUMERO_DIAS=$("#NUMERO_DIAS_1").val();
 var MONTO_BONO=$("#MONTO_BONO_1").val();
 var FOTO_ESTADO_PROVEE=$("#FOTO_ESTADO_PROVEE_1").val();
 var hDatosPERSONAL2=$("#hDatosPERSONAL2_2").val();
+var VYO=$("#VYO_2").val();
+var DIRECCION=$("#DIRECCION_2").val();
+var admin=$("#admin_2").val();
 
 /*termina copiar y pegar*/
 			
@@ -137,6 +139,9 @@ var hDatosPERSONAL2=$("#hDatosPERSONAL2_2").val();
 'FECHA_EFECTIVA1':FECHA_EFECTIVA1,
 'ADJUNTO_COMPROBANTE':ADJUNTO_COMPROBANTE,
 'NOMBRE_RECIBIO1':NOMBRE_RECIBIO1,
+'VYO':VYO,
+'DIRECCION':DIRECCION,
+'admin':admin,
 'hDatosPERSONAL2':hDatosPERSONAL2,
 /*termina copiar y pegar*/
 /*termina copiar y pegar*/
