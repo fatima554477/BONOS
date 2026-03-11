@@ -1,5 +1,3 @@
-
-
 <style>
 /* Loader con animación */
 .loader {
@@ -31,25 +29,588 @@
   align-items: center;
   box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
 }
-
-.autorizacion-cell {
-  transition: background-color 0.2s ease-in-out;
-}
-
-.autorizacion-cell.autorizacion-checked {
-  background-color: #d7f5dc;
-}
 </style>
 
-
 <script type="text/javascript">
+
+	function pasarpagado2(pasarpagado_id){
+
+
+	var checkBox = document.getElementById("pasarpagado1a"+pasarpagado_id);
+	var pasarpagado_text = "";
+	if (checkBox.checked == true){
+	pasarpagado_text = "si";
+	}else{
+	pasarpagado_text = "no";
+	}
+	  $.ajax({
+		url:'comprobaciones/controladorPP.php',
+		method:'POST',
+		data:{pasarpagado_id:pasarpagado_id,pasarpagado_text:pasarpagado_text},
+		beforeSend:function(){
+		$('#pasarpagado2').html('cargando');
+	},
+		success:function(data){
+		var result = data.split('^');			
+		$('#pasarpagado2').html("<span 'ACTUALIZADO'</span>").fadeIn().delay(500).fadeOut();
+		load(1);
+		
+		if(pasarpagado_text=='si'){
+		$('#color_pagado1a'+pasarpagado_id).css('background-color', '#ceffcc');
+		}
+		if(pasarpagado_text=='no'){
+		$('#color_pagado1a'+pasarpagado_id).css('background-color', '#e9d8ee');
+		}		
+		
+	}
+	});
+}
+
+
+	function STATUS_RESPONSABLE_EVENTO(RESPONSABLE_EVENTO_id){
+
+
+	var checkBox = document.getElementById("STATUS_RESPONSABLE_EVENTO"+RESPONSABLE_EVENTO_id);
+	var RESPONSABLE_text = "";
+	if (checkBox.checked == true){
+	RESPONSABLE_text = "si";
+	}else{
+	RESPONSABLE_text = "no";
+	}
+	  $.ajax({
+		url:'comprobaciones/controladorPP.php',
+		method:'POST',
+		data:{RESPONSABLE_EVENTO_id:RESPONSABLE_EVENTO_id,RESPONSABLE_text:RESPONSABLE_text},
+		beforeSend:function(){
+		$('#pasarpagado2').html('cargando');
+	},
+		success:function(data){
+		var result = data.split('^');				
+		$('#pasarpagado2').html("<span id='ACTUALIZADO' >"+result[0]+"</span>");
+		
+		if(result[1]=='si'){
+		$('#color_RESPONSABLE_EVENTO'+RESPONSABLE_EVENTO_id).css('background-color', '#ceffcc');
+		}
+		if(result[1]=='no'){
+		$('#color_RESPONSABLE_EVENTO'+RESPONSABLE_EVENTO_id).css('background-color', '#e9d8ee');
+		}
+		
+	}
+	});
+}
+
+
+
+
+
+
+	function STATUS_AUDITORIA1(AUDITORIA1_id){
+
+
+	var checkBox = document.getElementById("STATUS_AUDITORIA1"+AUDITORIA1_id);
+	var AUDITORIA1_text = "";
+	if (checkBox.checked == true){
+	AUDITORIA1_text = "si";
+	}else{
+	AUDITORIA1_text = "no";
+	}
+
+	  $.ajax({
+		url:'comprobaciones/controladorPP.php',
+		method:'POST',
+		data:{AUDITORIA1_id:AUDITORIA1_id,AUDITORIA1_text:AUDITORIA1_text},
+		beforeSend:function(){
+		$('#STATUS_AUDITORIA1').html('cargando');
+	},
+		success:function(data){
+		var result = data.split('^');				
+		$('#STATUS_AUDITORIA1').html("ACTUALIZADO").fadeIn().delay(1000).fadeOut();
+		 load(1);
+
+		if(result[1]=='si'){
+		$('#color_AUDITORIA1'+AUDITORIA1_id).css('background-color', '#ceffcc');
+		}
+		if(result[1]=='no'){
+		$('#color_AUDITORIA1'+AUDITORIA1_id).css('background-color', '#e9d8ee');
+		}
+	   	
+		
+	}
+	});
+}
+
+
+function STATUS_CHECKBOX(CHECKBOX_id, permisoModificar) {
+    var checkBox = document.getElementById("STATUS_CHECKBOX" + CHECKBOX_id);
+    var CHECKBOX_text = checkBox.checked ? "si" : "no";
+
+    // Cambiar color visual inmediato (optimista)
+    var newColor = checkBox.checked ? '#ceffcc' : '#e9d8ee';
+    $('#color_CHECKBOX' + CHECKBOX_id).css('background-color', newColor);
+
+    let monto = $('#montoOriginal_' + CHECKBOX_id).text().replace(/,/g, '');
+    
+    // Bloqueo inmediato si se activa sin permiso
+    if (checkBox.checked && !permisoModificar) {
+        setTimeout(() => {
+            checkBox.disabled = true;
+        }, 100);
+    }
+
+    // Actualizar el valor calculado en la interfaz inmediatamente
+    if (checkBox.checked) {
+        $('#valorCalculado_' + CHECKBOX_id).text('');
+    } else {
+        if (!isNaN(monto)) {
+            let resultado = monto * 1.46;
+            let resultadoFormateado = resultado.toLocaleString('es-MX', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            $('#valorCalculado_' + CHECKBOX_id).text('$' + resultadoFormateado);
+        } else {
+            $('#valorCalculado_' + CHECKBOX_id).text('NaN');
+        }
+    }
+
+    // Enviar actualización al servidor
+    $.ajax({
+        url: 'comprobaciones/controladorPP.php',
+        method: 'POST',
+        data: { 
+            CHECKBOX_id: CHECKBOX_id,
+            CHECKBOX_text: CHECKBOX_text 
+        },
+        beforeSend: function() {
+            $('#ajax-notification')
+                .html('<div class="loader"></div> ⏳ ACTUALIZANDO...')
+                .fadeIn();
+        },
+        success: function(data) {
+            var result = data.split('^'); // ejemplo de retorno: "ok^si" o "ok^no"
+
+            // Mostrar notificación de éxito
+            $('#ajax-notification')
+                .html("✅ ACTUALIZADO")
+                .delay(1000)
+                .fadeOut();
+
+            // Validar respuesta del servidor
+            if (result[1] === 'si') {
+                $('#color_CHECKBOX' + CHECKBOX_id).css('background-color', '#ceffcc');
+                $('#valorCalculado_' + CHECKBOX_id).text('');
+                
+                // Bloquear después de confirmación si no hay permiso
+                if (!permisoModificar) {
+                    checkBox.disabled = true;
+                }
+            } else if (result[1] === 'no') {
+                $('#color_CHECKBOX' + CHECKBOX_id).css('background-color', '#e9d8ee');
+                
+                if (!isNaN(monto)) {
+                    let resultado = monto * 1.46;
+                    let resultadoFormateado = resultado.toLocaleString('es-MX', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                    $('#valorCalculado_' + CHECKBOX_id).text('$' + resultadoFormateado);
+                } else {
+                    $('#valorCalculado_' + CHECKBOX_id).text('NaN');
+                }
+                
+                // Re-habilitar si falló el guardado
+                checkBox.disabled = false;
+            }
+        },
+        error: function() {
+            // Revertir el cambio si ocurre un error
+            checkBox.checked = !checkBox.checked;
+            let originalColor = checkBox.checked ? '#ceffcc' : '#e9d8ee';
+            $('#color_CHECKBOX' + CHECKBOX_id).css('background-color', originalColor);
+            
+            // Re-habilitar en caso de error
+            checkBox.disabled = false;
+
+            $('#ajax-notification')
+                .html("❌ Error al actualizar")
+                .delay(2000)
+                .fadeOut();
+        }
+    });
+    recalcularTotal();
+}
+
+
+function recalcularTotal() {
+    let total = 0;
+
+    $('[id^=valorCalculado_]').each(function() {
+        let texto = $(this).text().replace(/[$,]/g, ''); // quitar $ y ,
+        let valor = parseFloat(texto);
+        if (!isNaN(valor)) {
+            total += valor;
+        }
+    });
+
+    let totalFormateado = total.toLocaleString('es-MX', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+    $('#totalCalculado').text('$' + totalFormateado);
+}
+
+
+
+
+
+
+
+
+
+
+
+	function STATUS_AUDITORIA2(AUDITORIA2_id){
 	
 
+	var checkBox = document.getElementById("STATUS_AUDITORIA2"+AUDITORIA2_id);
+	var AUDITORIA2_text = "";
+	if (checkBox.checked == true){
+	AUDITORIA2_text = "si";
+	}else{
+	AUDITORIA2_text = "no";
+	}
+	  $.ajax({
+		url:'comprobaciones/controladorPP.php',
+		method:'POST',
+		data:{AUDITORIA2_id:AUDITORIA2_id,AUDITORIA2_text:AUDITORIA2_text},
+		beforeSend:function(){
+		$('#pasarpagado2').html('cargando');
+	},
+		success:function(data){
+		var result = data.split('^');				
+		$('#pasarpagado2').html("Cargando...").fadeIn().delay(500).fadeOut();
+        load(1);
+		if(result[1]=='si'){
+		$('#color_AUDITORIA2'+AUDITORIA2_id).css('background-color', '#ceffcc');
+		}
+		if(result[1]=='no'){
+		$('#color_AUDITORIA2'+AUDITORIA2_id).css('background-color', '#e9d8ee');
+		}		
+		
+	}
+	});
+}
+
+	function STATUS_AUDITORIA3(AUDITORIA3_id){
+	
+
+	var checkBox = document.getElementById("STATUS_AUDITORIA3"+AUDITORIA3_id);
+	var AUDITORIA3_text = "";
+	if (checkBox.checked == true){
+	AUDITORIA3_text = "si";
+	}else{
+	AUDITORIA3_text = "no";
+	}
+	  $.ajax({
+		url:'comprobaciones/controladorPP.php',
+		method:'POST',
+		data:{AUDITORIA3_id:AUDITORIA3_id,AUDITORIA3_text:AUDITORIA3_text},
+		beforeSend:function(){
+		$('#pasarpagado2').html('cargando');
+	},
+		success:function(data){
+		var result = data.split('^');				
+		$('#pasarpagado2').html("Cargando...").fadeIn().delay(500).fadeOut();
+        load(1);
+		if(result[1]=='si'){
+		$('#color_AUDITORIA3'+AUDITORIA3_id).css('background-color', '#ceffcc');
+		}
+		if(result[1]=='no'){
+		$('#color_AUDITORIA3'+AUDITORIA3_id).css('background-color', '#e9d8ee');
+		}		
+		
+	}
+	});
+}
+
+	function STATUS_FINANZAS(FINANZAS_id){
+
+
+	var checkBox = document.getElementById("STATUS_FINANZAS"+FINANZAS_id);
+	var FINANZAS_text = "";
+	if (checkBox.checked == true){
+	FINANZAS_text = "si";
+	}else{
+	FINANZAS_text = "no";
+	}
+	  $.ajax({
+		url:'comprobaciones/controladorPP.php',
+		method:'POST',
+		data:{FINANZAS_id:FINANZAS_id,FINANZAS_text:FINANZAS_text},
+		beforeSend:function(){
+		$('#pasarpagado2').html('cargando');
+	},
+		success:function(data){
+		var result = data.split('^');				
+		$('#pasarpagado2').html("Cargando...").fadeIn().delay(500).fadeOut();
+		load(1);
+		if(result[1]=='si'){
+		$('#color_FINANZAS'+FINANZAS_id).css('background-color', '#ceffcc');
+		}
+		if(result[1]=='no'){
+		$('#color_FINANZAS'+FINANZAS_id).css('background-color', '#e9d8ee');
+		}		
+		
+	}
+	});
+}
+
+
+function STATUS_RECHAZADO(RECHAZADO_id){
+
+	var $checkBox = $("#STATUS_RECHAZADO"+RECHAZADO_id);
+	if($checkBox.length === 0){
+		return;
+	}
+
+	var checkBox = $checkBox.get(0);
+	var estadoAnterior = $checkBox.data('estadoAnterior') || (checkBox.checked ? 'si' : 'no');
+
+	var RECHAZADO_text = checkBox.checked ? "si" : "no";
+
+	if(RECHAZADO_text === 'no'){
+		$checkBox.data('forzarAgregarMotivo', 'si');
+	} else if(RECHAZADO_text === 'si' && $checkBox.data('forzarAgregarMotivo') !== 'si'){
+		$checkBox.removeData('forzarAgregarMotivo');
+	}
+
+actualizarBotonesRechazo(RECHAZADO_id, RECHAZADO_text);
+
+
+	$.ajax({
+
+		url:'comprobaciones/controladorPP.php',
+
+	method:'POST',
+
+			data:{RECHAZADO_id:RECHAZADO_id,RECHAZADO_text:RECHAZADO_text},
+
+		beforeSend:function(){
+
+			$('#pasarpagado2').html('cargando');
+
+		},
+
+	success:function(data){
+
+				var result = (data || '').trim().split('^');
+
+				$('#pasarpagado2').html("Cargando...").fadeIn().delay(500).fadeOut();
+                  load(1);
+			
+	        if(result[1] == 'si' || result[1] == 'no'){
+					$checkBox.data('estadoAnterior', result[1]);
+					if(result[1] == 'si' && $checkBox.data('forzarAgregarMotivo') !== 'si'){
+						$checkBox.removeData('forzarAgregarMotivo');
+					}
+					actualizarBotonesRechazo(RECHAZADO_id, result[1]);
+				}else{
+					checkBox.checked = (estadoAnterior === 'si');
+					actualizarBotonesRechazo(RECHAZADO_id, estadoAnterior);
+				}
+
+			},
+
+			error:function(){
+				checkBox.checked = (estadoAnterior === 'si');
+				actualizarBotonesRechazo(RECHAZADO_id, estadoAnterior);
+			}
+
+		});
+
+}
+
+
+
+function abrirFormularioRechazo(RECHAZADO_id){
+	var motivoActual = $('#motivo_rechazo_'+RECHAZADO_id).val() || '';
+	$('#modal_rechazo_id').val(RECHAZADO_id);
+	configurarModalRechazo('editar', motivoActual, 'Captura el motivo y presiona Guardar.');
+
+	$('#btn_guardar_rechazo_modal').off('click').on('click', function(){
+		guardarMotivoRechazoModal();
+	});
+
+}
+
+
+function guardarMotivoRechazoModal(){
+	var RECHAZADO_id = $('#modal_rechazo_id').val();
+	var motivo = ($('#modal_rechazo_texto').val() || '').trim();
+
+	if(motivo === ''){
+		$('#modal_rechazo_mensaje').text('Debes capturar un motivo de rechazo.').css('color', '#b22222');
+		return;
+	}
+
+$.ajax({
+		url:'comprobaciones/controladorPP.php',
+		method:'POST',
+		data:{RECHAZO_MOTIVO_id:RECHAZADO_id,RECHAZO_MOTIVO_text:motivo},
+		success:function(resp){
+	if(resp.indexOf('ok') !== -1){
+				$('#motivo_rechazo_'+RECHAZADO_id).val(motivo);
+				$('#STATUS_RECHAZADO'+RECHAZADO_id).removeData('forzarAgregarMotivo');
+				actualizarBotonesRechazo(RECHAZADO_id);
+				$('#modal_rechazo_mensaje').text('Motivo guardado correctamente.').css('color', '#228b22');
+				setTimeout(function(){ cerrarModalRechazoPago(); }, 400);
+			}else{
+				$('#modal_rechazo_mensaje').text('No fue posible guardar el motivo.').css('color', '#b22222');
+			}
+		}
+	});
+}
+
+
+
+function verMotivoRechazo(RECHAZADO_id){
+
+	var motivoLocal = $('#motivo_rechazo_'+RECHAZADO_id).val() || '';
+	$('#modal_rechazo_id').val(RECHAZADO_id);
+
+	if(motivoLocal !== ''){
+		configurarModalRechazo('ver', motivoLocal, 'Consulta del motivo registrado.');
+
+		return;
+
+	}
+
+	$.ajax({
+
+		url:'comprobaciones/controladorPP.php',
+
+		method:'POST',
+
+		data:{RECHAZO_MOTIVO_VER_id:RECHAZADO_id},
+
+
+
+		success:function(resp){
+
+			var motivo = (resp || '').trim();
+
+			if(motivo !== ''){
+
+				$('#motivo_rechazo_'+RECHAZADO_id).val(motivo);
+				configurarModalRechazo('ver', motivo, 'Consulta del motivo registrado.');
+
+			}else{
+				configurarModalRechazo('ver', 'No hay motivo de rechazo registrado.', 'Consulta del motivo registrado.');
+
+			}
+
+		}
+
+
+	});
+
+}
+
+function configurarModalRechazo(modo, texto, mensaje){
+	var esVer = (modo === 'ver');
+	$('#modalRechazoPagoLabel').text(esVer ? 'Ver motivo del rechazo' : 'Agregar motivo del rechazo');
+	$('#modal_rechazo_texto').val(texto || '').prop('readonly', esVer);
+	$('#modal_rechazo_mensaje').text(mensaje || '').css('color', '#666');
+	$('#btn_guardar_rechazo_modal').toggle(!esVer);
+	mostrarModalRechazoPago();
+}
+
+function actualizarBotonesRechazo(RECHAZADO_id, statusRechazado){
+	var statusActual = statusRechazado;
+	if(typeof statusActual === 'undefined'){
+		statusActual = $('#STATUS_RECHAZADO'+RECHAZADO_id).is(':checked') ? 'si' : 'no';
+	}
+    var motivo = ($('#motivo_rechazo_'+RECHAZADO_id).val() || '').trim();
+	var forzarAgregarMotivo = ($('#STATUS_RECHAZADO'+RECHAZADO_id).data('forzarAgregarMotivo') === 'si');
+	var mostrarVer = (statusActual === 'si' && motivo !== '');
+	var mostrarAgregar = (statusActual === 'si' && (motivo === '' || forzarAgregarMotivo));
+
+	if(forzarAgregarMotivo && statusActual === 'si'){
+		mostrarVer = false;
+	}
+
+	$('#agregar_rechazo_'+RECHAZADO_id).toggle(mostrarAgregar);
+	$('#ver_rechazo_'+RECHAZADO_id).toggle(mostrarVer);
+}
+
+function mostrarModalRechazoPago(){
+	if($('#modalRechazoPago').length === 0){
+		return;
+	}
+	if(typeof $('#modalRechazoPago').modal === 'function'){
+		$('#modalRechazoPago').modal('show');
+	} else {
+		$('#modalRechazoPago').show();
+	}
+}
+
+function cerrarModalRechazoPago(){
+	if($('#modalRechazoPago').length === 0){
+		return;
+	}
+	if(typeof $('#modalRechazoPago').modal === 'function'){
+		$('#modalRechazoPago').modal('hide');
+	} else {
+		$('#modalRechazoPago').hide();
+	}
+}
+
+	function STATUS_VENTAS(VENTAS_id){
+	
+
+	var checkBox = document.getElementById("STATUS_VENTAS"+VENTAS_id);
+	var VENTAS_text = "";
+	if (checkBox.checked == true){
+	VENTAS_text = "si";
+	}else{
+	VENTAS_text = "no";
+	}
+	  $.ajax({
+		url:'comprobaciones/controladorPP.php',
+		method:'POST',
+		data:{VENTAS_id:VENTAS_id,VENTAS_text:VENTAS_text},
+		beforeSend:function(){
+		$('#pasarpagado2').html('cargando');
+	},
+	success:function(data){
+		var result = data.split('^');				
+		$('#pasarpagado2').html("Cargando...").fadeIn().delay(500).fadeOut();
+		load(1);
+if(result[1]=='si'){
+		$('#color_VENTAS'+VENTAS_id).css('background-color', '#ceffcc');
+		$('#STATUS_RECHAZADO'+VENTAS_id)
+			.prop('disabled', true)
+			.css('cursor', 'not-allowed')
+			.attr('title', 'No se puede rechazar: autorizado por ventas');
+		actualizarBotonesRechazo(VENTAS_id);
+		}
+		if(result[1]=='no'){
+		$('#color_VENTAS'+VENTAS_id).css('background-color', '#e9d8ee');
+		$('#STATUS_RECHAZADO'+VENTAS_id)
+			.prop('disabled', false)
+			.css('cursor', 'pointer')
+			.attr('title', '');
+		actualizarBotonesRechazo(VENTAS_id);
+		}		
+		
+	}
+	});
+}
 
         $(function() {
                 const triggerSearch = () => load(1);
 
-                $('#target300').on('keydown', 'thead input, thead select', function(event) {
+                $('#target3').on('keydown', 'thead input, thead select', function(event) {
                         if (event.key === 'Enter' || event.which === 13) {
                                 event.preventDefault();
                                 triggerSearch();
@@ -58,120 +619,172 @@
 
                 load(1);
         });
-		
-		
-		function load(page){
 
+	function load(page){
+			var getVal = id => {
+				const value = $("#" + id).val();
+				return typeof value === 'string' ? value.trim() : '';
+			};
+		var query = $("#NOMBRE_EVENTO").val();
+		var DEPARTAMENTO2 = getVal("DEPARTAMENTO2WE");
+		var NUMERO_CONSECUTIVO_PROVEE = getVal("NUMERO_CONSECUTIVO_PROVEE_1");
+		var RAZON_SOCIAL = getVal("RAZON_SOCIAL_1");
+		var RFC_PROVEEDOR = getVal("RFC_PROVEEDOR_1");
+		var NUMERO_EVENTO = getVal("NUMERO_EVENTO_1");
+		var EJECUTIVOTARJETA = getVal("EJECUTIVOTARJETA_1");
+		var NOMBRE_EVENTO = getVal("NOMBRE_EVENTO_1");
+		var FECHA_INICIO_EVENTO=$("#FECHA_INICIO_EVENTO").val();
+        var FECHA_FINAL_EVENTO=$("#FECHA_FINAL_EVENTO").val();
+		var MOTIVO_GASTO = getVal("MOTIVO_GASTO_1");
+		var CONCEPTO_PROVEE = getVal("CONCEPTO_PROVEE_1");
+		var MONTO_TOTAL_COTIZACION_ADEUDO = getVal("MONTO_TOTAL_COTIZACION_ADEUDO_1");
+		var MONTO_FACTURA = getVal("MONTO_FACTURA_1");
+		var MONTO_PROPINA = getVal("MONTO_PROPINA_1");
+		var MONTO_DEPOSITAR = getVal("MONTO_DEPOSITAR_1");
+		var TIPO_DE_MONEDA = getVal("TIPO_DE_MONEDA_1");
+		var PFORMADE_PAGO = getVal("PFORMADE_PAGO_1");
+		var FECHA_A_DEPOSITAR = getVal("FECHA_A_DEPOSITAR_1");
+		var STATUS_DE_PAGO = getVal("STATUS_DE_PAGO_1");
+		var BANCO_ORIGEN = getVal("BANCO_ORIGEN1AA");
+		var ACTIVO_FIJO = getVal("ACTIVO_FIJO_1");
+		var GASTO_FIJO = getVal("GASTO_FIJO_1");
+		var PAGAR_CADA = getVal("PAGAR_CADA_1");
+		var FECHA_PPAGO = getVal("FECHA_PPAGO_1");
+		var FECHA_TPROGRAPAGO = getVal("FECHA_TPROGRAPAGO_1");
+		var NUMERO_EVENTOFIJO = getVal("NUMERO_EVENTOFIJO_1");
+		var CLASI_GENERAL = getVal("CLASI_GENERAL_1");
+		var SUB_GENERAL = getVal("SUB_GENERAL_1");
+		var MONTO_DE_COMISION = getVal("MONTO_DE_COMISION_1");
+		var POLIZA_NUMERO = getVal("POLIZA_NUMERO_1");
+		var NOMBRE_DEL_EJECUTIVO = getVal("NOMBRE_DEL_EJECUTIVO_1");
+		var NOMBRE_DEL_AYUDO = getVal("NOMBRE_DEL_AYUDO_1");
+		var OBSERVACIONES_1 = getVal("OBSERVACIONES_1_1_1");
+		var FECHA_DE_LLENADO = getVal("FECHA_DE_LLENADO_1");
+		var ADJUNTAR_COTIZACION_1_1 = getVal("ADJUNTAR_COTIZACION_1_1");
+		var TIPO_CAMBIOP = getVal("TIPO_CAMBIOP_1");
+		var TOTAL_ENPESOS = getVal("TOTAL_ENPESOS");
+		var IMPUESTO_HOSPEDAJE = getVal("IMPUESTO_HOSPEDAJE");
+		var NOMBRE_COMERCIAL = getVal("NOMBRE_COMERCIAL_1");
+		var IVA = getVal("IVA_1");
+		var TImpuestosRetenidosIVA = getVal("TImpuestosRetenidosIVA_5");
+		var TImpuestosRetenidosISR = getVal("TImpuestosRetenidosISR_5");
+		var descuentos = getVal("descuentos_5");
+		var UUID = getVal("UUID");
+		var metodoDePago = getVal("metodoDePago");
+		var total = getVal("total");
+		var serie = getVal("serie");
+		var folio = getVal("folio");
+		var regimenE = getVal("regimenE");
+		var UsoCFDI = getVal("UsoCFDI");
+		var TImpuestosTrasladados = getVal("TImpuestosTrasladados");
+		var TImpuestosRetenidos = getVal("TImpuestosRetenidos");
+		var Version = getVal("Version");
+		var tipoDeComprobante = getVal("tipoDeComprobante");
+		var condicionesDePago = getVal("condicionesDePago");
+		var fechaTimbrado = getVal("fechaTimbrado");
+		var nombreR = getVal("nombreR");
+		var rfcR = getVal("rfcR");
+		var Moneda = getVal("Moneda");
+		var TipoCambio = getVal("TipoCambio");
+		var ValorUnitarioConcepto = getVal("ValorUnitarioConcepto");
+		var DescripcionConcepto = getVal("DescripcionConcepto");
+		var ClaveUnidad = getVal("ClaveUnidad");
+		var ClaveProdServ = getVal("ClaveProdServ");
+		var Cantidad = getVal("Cantidad");
+		var ImporteConcepto = getVal("ImporteConcepto");
+		var UnidadConcepto = getVal("UnidadConcepto");
+		var TUA = getVal("TUA");
+		var TuaTotalCargos = getVal("TuaTotalCargos");
+		var Descuento = getVal("Descuento");
+		var propina = getVal("propina");
+		var per_page = getVal("per_page");
+		var parametros = {
+			"action": "ajax",
+			"page": page,
+			'query': query,
+			'per_page': per_page,
 			
-var query=$("#NOMBRE_EVENTO").val();
-var NUMERO_EVENTO=$("#NUMERO_EVENTO_1").val();
-var NOMBRE_EVENTO=$("#NOMBRE_EVENTO_1").val();
-var NOMBRE_COMERCIAL_EVENTO=$("#NOMBRE_COMERCIAL_EVENTO_1").val();
-var NOMBRE_FISCAL_EVENTO=$("#NOMBRE_FISCAL_EVENTO_1").val();
-var PUESTO_PERSONAL2=$("#PUESTO_PERSONAL2_1").val();
-var EMAIL_PERSONAL2=$("#EMAIL_PERSONAL2_1").val();
-var WHAT_PERSONAL=$("#WHAT_PERSONAL_1").val();
-var FECHA_INICIO_EVENTO=$("#FECHA_INICIO_EVENTO_1").val();
-var PAIS_DEL_EVENTO=$("#PAIS_DEL_EVENTO_1").val();
-var CIUDAD_DEL_EVENTO=$("#CIUDAD_DEL_EVENTO_1").val();
-var DEPARTAMENTO2=$("#DEPARTAMENTO2WE").val();
-var NOMBRE_PERSONAL=$("#NOMBRE_PERSONAL_1").val();
-var TIPO_DE_MONEDA_1=$("#TIPO_DE_MONEDA_1_1").val();
-var INSTITUCION_FINANCIERA_1=$("#INSTITUCION_FINANCIERA_1_1").val();
-var NUMERO_DE_CUENTA_DB_1=$("#NUMERO_DE_CUENTA_DB_1_1").val();
-var NUMERO_CLABE_1=$("#NUMERO_CLABE_1_1").val();
-var FOTO_ESTADO_PROVEE=$("#FOTO_ESTADO_PROVEE_1").val();
-var FECHA_INICIO=$("#FECHA_INICIO_1").val();
-var FECHA_FINAL=$("#FECHA_FINAL_1").val();
-var NUMERO_DIAS=$("#NUMERO_DIAS_1").val();
-var MONTO_BONO=$("#MONTO_BONO_1").val();
-var FOTO_ESTADO_PROVEE=$("#FOTO_ESTADO_PROVEE_1").val();
-var FECHA_INICIO=$("#FECHA_INICIO_1").val();
-var FECHA_FINAL=$("#FECHA_FINAL_1").val();
-var NUMERO_DIAS=$("#NUMERO_DIAS_1").val();
-var MONTO_BONO=$("#MONTO_BONO_1").val();
-var MONTO_BONO_TOTAL=$("#MONTO_BONO_TOTAL_1").val();
-var VIATICOS_PERSONAL=$("#VIATICOS_PERSONAL_1").val();
-var TOTAL=$("#TOTAL_1").val();
-var ULTIMO_DIA=$("#ULTIMO_DIA_1").val();
-var OBSERVACIONES_PERSONAL=$("#OBSERVACIONES_PERSONAL_1").val();
-var FECHA_PPAGO=$("#FECHA_PPAGO_1").val();
-var FORMA_PAGO=$("#FORMA_PAGO_1").val();
-var FECHA_EFECTIVA=$("#FECHA_EFECTIVA_1").val();
-var ADJUNTO_COMPROBANTEP=$("#ADJUNTO_COMPROBANTEP_1").val();
-var NOMBRE_RECIBIO=$("#NOMBRE_RECIBIO_1").val();
-var hDatosPERSONAL=$("#hDatosPERSONAL_1").val();
-var PERSONAL_FECHA_ULTIMA_CARGA=$("#PERSONAL_FECHA_ULTIMA_CARGA_1").val();
-var VYO=$("#VYO_1").val();
-var DIRECCION=$("#DIRECCION_1").val();
-var admin=$("#admin_1").val();
-
-
-
-/*termina copiar y pegar*/
 			
-			var per_page=$("#per_page").val();
-			var parametros = {
-			"action":"ajax",
-			"page":page,
-			'query':query,
-			'per_page':per_page,
-
-/*inicia copiar y pegar*/
-'NUMERO_EVENTO':NUMERO_EVENTO,
-'NOMBRE_EVENTO':NOMBRE_EVENTO,
-'NOMBRE_COMERCIAL_EVENTO':NOMBRE_COMERCIAL_EVENTO,
-'NOMBRE_FISCAL_EVENTO':NOMBRE_FISCAL_EVENTO,
-'FECHA_INICIO_EVENTO':FECHA_INICIO_EVENTO,
-'PUESTO_PERSONAL2':PUESTO_PERSONAL2,
-'WHAT_PERSONAL':WHAT_PERSONAL,
-'EMAIL_PERSONAL2':EMAIL_PERSONAL2,
-'PAIS_DEL_EVENTO':PAIS_DEL_EVENTO,
-'CIUDAD_DEL_EVENTO':CIUDAD_DEL_EVENTO,
-'NOMBRE_PERSONAL':NOMBRE_PERSONAL,
-'TIPO_DE_MONEDA_1':TIPO_DE_MONEDA_1,
-'INSTITUCION_FINANCIERA_1':INSTITUCION_FINANCIERA_1,
-'NUMERO_DE_CUENTA_DB_1':NUMERO_DE_CUENTA_DB_1,
-'NUMERO_CLABE_1':NUMERO_CLABE_1,
-'FOTO_ESTADO_PROVEE':FOTO_ESTADO_PROVEE,
-'FECHA_INICIO':FECHA_INICIO,
-'FECHA_FINAL':FECHA_FINAL,
-'NUMERO_DIAS':NUMERO_DIAS,
-'MONTO_BONO':MONTO_BONO,
-
-'MONTO_BONO_TOTAL':MONTO_BONO_TOTAL,
-
-'VIATICOS_PERSONAL':VIATICOS_PERSONAL,
-
-'TOTAL':TOTAL,
-
-'ULTIMO_DIA':ULTIMO_DIA,
-
-'OBSERVACIONES_PERSONAL':OBSERVACIONES_PERSONAL,
-
-'PERSONAL_FECHA_ULTIMA_CARGA':PERSONAL_FECHA_ULTIMA_CARGA,
-
-'FECHA_PPAGO':FECHA_PPAGO,
-'FORMA_PAGO':FORMA_PAGO,
-'FECHA_EFECTIVA':FECHA_EFECTIVA,
-'ADJUNTO_COMPROBANTEP':ADJUNTO_COMPROBANTEP,
-'NOMBRE_RECIBIO':NOMBRE_RECIBIO,
-'VYO':VYO,
-'DIRECCION':DIRECCION,
-'admin':admin,
-
-'hDatosPERSONAL':hDatosPERSONAL,
-
-
-/*termina copiar y pegar*/
-
+			
+			'NUMERO_CONSECUTIVO_PROVEE': NUMERO_CONSECUTIVO_PROVEE,
+			'RAZON_SOCIAL': RAZON_SOCIAL,
+			'RFC_PROVEEDOR': RFC_PROVEEDOR,
+			'NUMERO_EVENTO': NUMERO_EVENTO,
+			'EJECUTIVOTARJETA': EJECUTIVOTARJETA,
+			'NOMBRE_EVENTO': NOMBRE_EVENTO,
+			'MOTIVO_GASTO': MOTIVO_GASTO,
+			'CONCEPTO_PROVEE': CONCEPTO_PROVEE,
+			'MONTO_TOTAL_COTIZACION_ADEUDO': MONTO_TOTAL_COTIZACION_ADEUDO,
+			'MONTO_FACTURA': MONTO_FACTURA,
+			'MONTO_PROPINA': MONTO_PROPINA,
+			'MONTO_DEPOSITAR': MONTO_DEPOSITAR,
+			'TIPO_DE_MONEDA': TIPO_DE_MONEDA,
+			'PFORMADE_PAGO': PFORMADE_PAGO,
+			'FECHA_A_DEPOSITAR': FECHA_A_DEPOSITAR,
+			'STATUS_DE_PAGO': STATUS_DE_PAGO,
+			'BANCO_ORIGEN': BANCO_ORIGEN,
+			'ACTIVO_FIJO': ACTIVO_FIJO,
+			'GASTO_FIJO': GASTO_FIJO,
+			'PAGAR_CADA': PAGAR_CADA,
+			'FECHA_PPAGO': FECHA_PPAGO,
+			'FECHA_TPROGRAPAGO': FECHA_TPROGRAPAGO,
+			'NUMERO_EVENTOFIJO': NUMERO_EVENTOFIJO,
+			'CLASI_GENERAL': CLASI_GENERAL,
+			'SUB_GENERAL': SUB_GENERAL,
+			'MONTO_DE_COMISION': MONTO_DE_COMISION,
+			'POLIZA_NUMERO': POLIZA_NUMERO,
+			'FECHA_FINAL_EVENTO':FECHA_FINAL_EVENTO,
+            'FECHA_INICIO_EVENTO':FECHA_INICIO_EVENTO,
+			'NOMBRE_DEL_EJECUTIVO': NOMBRE_DEL_EJECUTIVO,
+			'NOMBRE_DEL_AYUDO': NOMBRE_DEL_AYUDO,
+			'OBSERVACIONES_1': OBSERVACIONES_1,
+			'FECHA_DE_LLENADO': FECHA_DE_LLENADO,
+			'ADJUNTAR_COTIZACION_1_1': ADJUNTAR_COTIZACION_1_1,
+			'TIPO_CAMBIOP': TIPO_CAMBIOP,
+			'IVA': IVA,
+			'TOTAL_ENPESOS': TOTAL_ENPESOS,
+			'IMPUESTO_HOSPEDAJE': IMPUESTO_HOSPEDAJE,
+			'TImpuestosRetenidosIVA_5': TImpuestosRetenidosIVA,
+			'TImpuestosRetenidosISR_5': TImpuestosRetenidosISR,
+			'descuentos_5': descuentos,
+			'NOMBRE_COMERCIAL': NOMBRE_COMERCIAL,
+			'UUID': UUID,
+			'metodoDePago': metodoDePago,
+			'total': total,
+			'serie': serie,
+			'folio': folio,
+			'regimenE': regimenE,
+			'UsoCFDI': UsoCFDI,
+			'TImpuestosTrasladados': TImpuestosTrasladados,
+			'TImpuestosRetenidos': TImpuestosRetenidos,
+			'Version': Version,
+			'tipoDeComprobante': tipoDeComprobante,
+			'condicionesDePago': condicionesDePago,
+			'fechaTimbrado': fechaTimbrado,
+			'nombreR': nombreR,
+			'rfcR': rfcR,
+			'Moneda': Moneda,
+			'TipoCambio': TipoCambio,
+			'ValorUnitarioConcepto': ValorUnitarioConcepto,
+			'DescripcionConcepto': DescripcionConcepto,
+			'ClaveUnidad': ClaveUnidad,
+			'ClaveProdServ': ClaveProdServ,
+			'Cantidad': Cantidad,
+			'ImporteConcepto': ImporteConcepto,
+			'UnidadConcepto': UnidadConcepto,
+			'TUA': TUA,
+			'TuaTotalCargos': TuaTotalCargos,
+			'Descuento': Descuento,
+			'propina': propina,
+			
+			
 			'DEPARTAMENTO2':DEPARTAMENTO2
 			};
 			$("#loader").fadeIn('slow');
-					$.ajax({
-				url:'BONOS/clasesPERSONAL/controlador_filtro.php',
-				type: 'POST',				
-				data: parametros,
+    $.ajax({
+        url: 'comprobaciones/clases/controlador_filtro.php', 
+        type: 'POST',
+        data: parametros,
 beforeSend: function(objeto){
   $("#loader").html(
     '<div class="msg-actualizando">' +
@@ -186,218 +799,31 @@ beforeSend: function(objeto){
     });
   }, 1000);
 },
-	success:function(data){
-					$(".datos_ajax").html(data).fadeIn('slow');
-					restoreRowSelections();
-					syncAutorizacionCells();
-					$("#loader").html("");
-				}
-			})
-	}
-	/* terminaB1*/		
 
-	function restoreRowSelections(){
-		$(".datos_ajax input.checkbox[data-id]").each(function(){
-			var id = $(this).data("id");
-			var fila = this.closest("tr");
-			if (localStorage.getItem("checkbox_" + id) === "checked") {
-				this.checked = true;
-				if (fila) {
-					fila.style.filter = "brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)";
-				}
-			} else {
-				this.checked = false;
-				if (fila) {
-					fila.style.filter = "none";
-				}
-			}
+        success: function (data) {
+            $(".datos_ajax").html(data).fadeIn('slow');
+			$('.checkbox').each(function() {
+    const id = $(this).data('id');
+    if (localStorage.getItem('checkbox_' + id) === 'checked') {
+        this.checked = true;
+        this.closest('tr').style.filter = 'brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)';
+    }
 });
-	}
+          
 
-	function updateAutorizacionCell(checkBox){
-		if (!checkBox) {
-			return;
-		}
-		var cell = checkBox.closest("td");
-		if (cell) {
-			cell.classList.toggle("autorizacion-checked", checkBox.checked);
-		}
-	}
-
-	function syncAutorizacionCells(){
-		document.querySelectorAll(".autorizacion-cell input[type='checkbox']").forEach(function(checkBox){
-			updateAutorizacionCell(checkBox);
-		});
-	}
-
-	function mostrarActualizado(mensaje){
-		var texto = mensaje || 'ACTUALIZADO';
-		$("#loader").html(
-			'<div class="msg-actualizando">' +
-			  '<span class="loader"></span> ' + texto +
-			'</div>'
-		).fadeIn();
-
-		setTimeout(function(){
-			$("#loader").fadeOut("slow", function(){
-				$(this).html("");
-			});
-		}, 1200);
-	}
-
-function pasara1_personalVYO_filtro(pasara1_personalVYO_id){
-		var checkBox = document.getElementById("VYO"+pasara1_personalVYO_id);
-		var pasapersonalVYO_text = (checkBox && checkBox.checked) ? "si" : "no";
-		updateAutorizacionCell(checkBox);
-		$.ajax({
-			url:'BONOS/controladorAE.php',
-			method:'POST',
-			data:{pasara1_personalVYO_id:pasara1_personalVYO_id,pasapersonalVYO_text:pasapersonalVYO_text},
-			success:function(){
-				mostrarActualizado('✅ ACTUALIZADO');
-			}
-		});
-	}
-
-function pasara1_personalDIRECCION_filtro(pasara1_personalDIRECCION_id){
-		var checkBox = document.getElementById("DIRECCION"+pasara1_personalDIRECCION_id);
-		var pasapersonalDIRECCION_text = (checkBox && checkBox.checked) ? "si" : "no";
-		updateAutorizacionCell(checkBox);
-		$.ajax({
-			url:'BONOS/controladorAE.php',
-			method:'POST',
-			data:{pasara1_personalDIRECCION_id:pasara1_personalDIRECCION_id,pasapersonalDIRECCION_text:pasapersonalDIRECCION_text},
-			success:function(){
-				mostrarActualizado('✅ ACTUALIZADO');
-			}
-		});
-	}
-
-function pasara1_personalADMIN_filtro(pasara1_personalADMIN_id){
-		var checkBox = document.getElementById("admin"+pasara1_personalADMIN_id);
-		var pasapersonalADMIN_text = (checkBox && checkBox.checked) ? "si" : "no";
-		updateAutorizacionCell(checkBox);
-		$.ajax({
-			url:'BONOS/controladorAE.php',
-			method:'POST',
-			data:{pasara1_personalADMIN_id:pasara1_personalADMIN_id,pasapersonalADMIN_text:pasapersonalADMIN_text},
-			success:function(){
-				mostrarActualizado('✅ ACTUALIZADO');
-			}
-		});
-	}
-
-
-
-function STATUS_RECHAZOBONO_filtro(STATUS_RECHAZOBONO_id){
-	var checkBox = document.getElementById("STATUS_RECHAZOBONO"+STATUS_RECHAZOBONO_id);
-	if(!checkBox){ return; }
-	var STATUS_RECHAZOBONO_text = checkBox.checked ? "si" : "no";
-	$.ajax({
-		url:'BONOS/clasesPERSONAL/controlador_filtro.php',
-		method:'POST',
-		data:{STATUS_RECHAZOBONO_id:STATUS_RECHAZOBONO_id,STATUS_RECHAZOBONO_text:STATUS_RECHAZOBONO_text},
-		success:function(){
-			actualizarBotonesRechazoPersonal(STATUS_RECHAZOBONO_id, 'personal', STATUS_RECHAZOBONO_text);
-			mostrarActualizado('✅ ACTUALIZADO');
-		}
-	});
+            // Scroll al checkbox editado
+if (lastCheckboxID !== null) {
+    setTimeout(function () {
+        let el = document.getElementById("STATUS_CHECKBOX" + lastCheckboxID);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+            lastCheckboxID = null;
+        }
+    }, 500);
 }
-
-function asegurarModalRechazoPersonal(){
-	if($('#modalRechazoPersonal').length){ return; }
-	$('body').append('<div id="modalRechazoPersonal" class="modal" tabindex="-1" role="dialog" style="display:none;background:rgba(0,0,0,0.45);"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="modalRechazoPersonalLabel">Motivo del rechazo</h5><button type="button" class="close" onclick="cerrarModalRechazoPersonal()" style="border:none;background:transparent;font-size:25px;line-height:1;">&times;</button></div><div class="modal-body"><input type="hidden" id="modal_rechazo_personal_id" /><input type="hidden" id="modal_rechazo_personal_tipo" /><textarea id="modal_rechazo_personal_texto" class="form-control" rows="4"></textarea><div id="modal_rechazo_personal_mensaje" style="margin-top:8px;color:#666;"></div></div><div class="modal-footer"><button type="button" id="btn_guardar_rechazo_personal_modal" class="btn btn-primary">Guardar</button><button type="button" class="btn btn-secondary" onclick="cerrarModalRechazoPersonal()">Cerrar</button></div></div></div></div>');
+        }
+    });
 }
-
-function abrirFormularioRechazoPersonal(idPersonal, tipoPersonal){
-	asegurarModalRechazoPersonal();
-	var motivoActual = $('#motivo_rechazo_'+tipoPersonal+'_'+idPersonal).val() || '';
-	$('#modal_rechazo_personal_id').val(idPersonal);
-	$('#modal_rechazo_personal_tipo').val(tipoPersonal);
-	configurarModalRechazoPersonal('editar', motivoActual, 'Captura el motivo y presiona Guardar.');
-	$('#btn_guardar_rechazo_personal_modal').off('click').on('click', function(){
-		guardarMotivoRechazoPersonalModal();
-	});
-}
-
-function guardarMotivoRechazoPersonalModal(){
-	var idPersonal = $('#modal_rechazo_personal_id').val();
-	var tipoPersonal = $('#modal_rechazo_personal_tipo').val();
-	var motivo = ($('#modal_rechazo_personal_texto').val() || '').trim();
-	if(motivo === ''){
-		$('#modal_rechazo_personal_mensaje').text('Debes capturar un motivo de rechazo.').css('color', '#b22222');
-		return;
-	}
-	$.ajax({
-		url:'BONOS/clasesPERSONAL/controlador_filtro.php',
-		method:'POST',
-		data:{RECHAZO_MOTIVO_PERSONAL_id:idPersonal,RECHAZO_MOTIVO_PERSONAL_tipo:tipoPersonal,RECHAZO_MOTIVO_PERSONAL_text:motivo},
-		success:function(resp){
-			if((resp || '').indexOf('ok') !== -1){
-				$('#motivo_rechazo_'+tipoPersonal+'_'+idPersonal).val(motivo);
-				actualizarBotonesRechazoPersonal(idPersonal, tipoPersonal);
-				$('#modal_rechazo_personal_mensaje').text('Motivo guardado correctamente.').css('color', '#228b22');
-				setTimeout(function(){ cerrarModalRechazoPersonal(); }, 400);
-			}else{
-				$('#modal_rechazo_personal_mensaje').text('No fue posible guardar el motivo.').css('color', '#b22222');
-			}
-		}
-	});
-}
-
-function verMotivoRechazoPersonal(idPersonal, tipoPersonal){
-	asegurarModalRechazoPersonal();
-	var motivoLocal = $('#motivo_rechazo_'+tipoPersonal+'_'+idPersonal).val() || '';
-	$('#modal_rechazo_personal_id').val(idPersonal);
-	$('#modal_rechazo_personal_tipo').val(tipoPersonal);
-	if(motivoLocal !== ''){
-		configurarModalRechazoPersonal('ver', motivoLocal, 'Consulta del motivo registrado.');
-		return;
-	}
-	$.ajax({
-		url:'BONOS/clasesPERSONAL/controlador_filtro.php',
-		method:'POST',
-		data:{RECHAZO_MOTIVO_PERSONAL_VER_id:idPersonal,RECHAZO_MOTIVO_PERSONAL_VER_tipo:tipoPersonal},
-		success:function(resp){
-			var motivo = (resp || '').trim();
-			if(motivo !== ''){
-				$('#motivo_rechazo_'+tipoPersonal+'_'+idPersonal).val(motivo);
-				configurarModalRechazoPersonal('ver', motivo, 'Consulta del motivo registrado.');
-			}else{
-				configurarModalRechazoPersonal('ver', 'No hay motivo de rechazo registrado.', 'Consulta del motivo registrado.');
-			}
-		}
-	});
-}
-
-function configurarModalRechazoPersonal(modo, texto, mensaje){
-	var esVer = (modo === 'ver');
-	$('#modalRechazoPersonalLabel').text(esVer ? 'Ver motivo del rechazo' : 'Agregar motivo del rechazo');
-	$('#modal_rechazo_personal_texto').val(texto || '').prop('readonly', esVer);
-	$('#modal_rechazo_personal_mensaje').text(mensaje || '').css('color', '#666');
-	$('#btn_guardar_rechazo_personal_modal').toggle(!esVer);
-	mostrarModalRechazoPersonal();
-}
-
-function actualizarBotonesRechazoPersonal(idPersonal, tipoPersonal, statusRechazo){
-	var statusActual = typeof statusRechazo === 'undefined'
-		? ($('#STATUS_RECHAZOBONO'+idPersonal).is(':checked') ? 'si' : 'no')
-		: statusRechazo;
-	var motivo = ($('#motivo_rechazo_'+tipoPersonal+'_'+idPersonal).val() || '').trim();
-	$('#agregar_rechazo_'+tipoPersonal+'_'+idPersonal).toggle(statusActual === 'si' && motivo === '');
-	$('#ver_rechazo_'+tipoPersonal+'_'+idPersonal).toggle(statusActual === 'si' && motivo !== '');
-}
-
-function mostrarModalRechazoPersonal(){
-	if(typeof $('#modalRechazoPersonal').modal === 'function'){
-		$('#modalRechazoPersonal').modal('show');
-	}else{ $('#modalRechazoPersonal').show(); }
-}
-
-function cerrarModalRechazoPersonal(){
-	if(typeof $('#modalRechazoPersonal').modal === 'function'){
-		$('#modalRechazoPersonal').modal('hide');
-	}else{ $('#modalRechazoPersonal').hide(); }
-}
-
+/* terminaB1*/		
+		
 	</script>
