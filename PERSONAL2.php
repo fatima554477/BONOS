@@ -144,7 +144,7 @@ $puedeModificarRechazoBono2 = ($conexion->variablespermisos('', 'rechazobono2', 
 <td style="background:#eff9eb">
   <div class="input-group">
     <input type="text" class="form-control" id="NUMERO_DIAS1"
-           required value="<?php echo $NUMERO_DIAS1; ?>" name="NUMERO_DIAS1">␊
+           required value="<?php echo $NUMERO_DIAS1; ?>" name="NUMERO_DIAS1">
 
   </div>
 
@@ -306,6 +306,8 @@ $urlADJUNTO_COMPROBANTE ='';
 while($row = mysqli_fetch_array($querycontras))
 {	
 $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'));
+$montoBonoTotalAjustado2 = $filaRechazoBono2 ? 0 : (float)$row["MONTO_BONO_TOTAL1"];
+
 	$motivoRechazoPersonal2 = $altaeventos->obtener_motivo_rechazo_personal($row["id"], 'personal2');
 	$mostrarAgregarRechazoPersonal2 = ($filaRechazoBono2 && $motivoRechazoPersonal2 == '');
 	$mostrarVerRechazoPersonal2 = ($filaRechazoBono2 && $motivoRechazoPersonal2 != '');
@@ -365,7 +367,9 @@ $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECH
 		   <button type="button" title="Agregar motivo" id="agregar_rechazo_personal2_<?php echo $row['id']; ?>" style="border:none;background:transparent;cursor:pointer;color:#007bff;font-size:13px;<?php echo $mostrarAgregarRechazoPersonal2 ? '' : 'display:none;'; ?>" onclick="abrirFormularioRechazoPersonal(<?php echo $row['id']; ?>, 'personal2')">agregar<br>motivo</button>
 		   <button type="button" title="Ver motivo" id="ver_rechazo_personal2_<?php echo $row['id']; ?>" style="border:none;background:transparent;cursor:pointer;color:#28a745;font-size:13px;<?php echo $mostrarVerRechazoPersonal2 ? '' : 'display:none;'; ?>" onclick="verMotivoRechazoPersonal(<?php echo $row['id']; ?>, 'personal2')">ver</button>
            </td>
-		  
+		    
+
+		  <?php } ?>
           <td style="text-align:center" >
           <input type="checkbox" style="width:40PX;" class="form-check-input" name="personal2[]" id="personal2" value="<?php echo $row["id"]; ?>"/> </td> 
 		  
@@ -391,7 +395,8 @@ $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECH
 		   	<?php if($conexion->variablespermisos('','PERSOVERBONO','ver')=='si' ){ ?>
           <td ><?php echo $row["NUMERO_DIAS1"]; ?></td>
           <td ><?php echo $row["MONTO_BONO1"]; ?></td>
-          <td ><?php echo $row["MONTO_BONO_TOTAL1"]; ?></td>
+           <td ><?php echo number_format($montoBonoTotalAjustado2,2,'.',','); ?></td>
+
   
           <td ><?php echo $row["OBSERVACIONES_PERSONAL2"]; ?></td>
 		       <td ><?php echo $row["FECHA_PPAGO1"]; ?></td>
@@ -408,12 +413,12 @@ $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECH
 </td>  <?php } ?>
           </tr>
           <?php
-		   
-          $NUMERO_DIAS12 += $row["NUMERO_DIAS1"];
-          $MONTO_BONO12 += $row["MONTO_BONO1"];
-          $PER2SUNTOTAL += $row["MONTO_BONO_TOTAL1"];
-          $PER2VIAT += $row["VIATICOS_PERSONAL2"];
-          $PER2TOTAL += $row["TOTAL1"];
+		   $MONTO_BONO12  += $filaRechazoBono2 ? 0 : (float)$row["MONTO_BONO1"];
+$NUMERO_DIAS12 += $filaRechazoBono2 ? 0 : (int)$row["NUMERO_DIAS1"];
+
+                 $PER2SUNTOTAL += $montoBonoTotalAjustado2;
+
+
           
           }
           ?>
@@ -431,8 +436,7 @@ $filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECH
           <td style="text-align:center;">$ <?php echo number_format($MONTO_BONO12,2,'.',','); ?></td>
 		  
           <td style="text-align:center;">$ <?php echo number_format($PER2SUNTOTAL,2,'.',','); ?></td>
-          <td style="text-align:center;">$ <?php echo number_format($PER2VIAT,2,'.',','); ?></td>
-          <td style="text-align:center;">$ <?php echo number_format($PER2TOTAL,2,'.',','); ?></td>
+
 		  <td colspan='<?php echo $columnasRestantesTotalesPersonal2; ?>'></td></tr><?php } ?>
            </form> 
           </table>  

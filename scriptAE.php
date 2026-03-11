@@ -416,7 +416,9 @@ function pasara1_personal(pasara1_personal_id){
 	success:function(data){
 		actualizarBotonesRechazoPersonal(STATUS_RECHAZOBONO_id, 'personal', STATUS_RECHAZOBONO_text);
 			
-	$("#reset_personal").load(location.href + " #reset_personal");			
+	$("#reset_personal").load(location.href + " #reset_personal");	
+	$("#reset_totales").load(location.href + " #reset_totales");	
+	
 			
 		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
 	}
@@ -445,7 +447,8 @@ function pasara1_personalAUT(pasara1_personalAUT_id){
 	success:function(data){
 		actualizarBotonesRechazoPersonal(STATUS_RECHAZOBONO_id, 'personal', STATUS_RECHAZOBONO_text);
 			
-	$("#reset_personal").load(location.href + " #reset_personal");				
+	$("#reset_personal").load(location.href + " #reset_personal");	
+$("#reset_totales").load(location.href + " #reset_totales");	
 			
 		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
 	}
@@ -553,7 +556,8 @@ function STATUS_RECHAZOBONO(STATUS_RECHAZOBONO_id){
 	},
 		success:function(data){
 			
-	$("#reset_personal").load(location.href + " #reset_personal");			
+	$("#reset_personal").load(location.href + " #reset_personal");	
+$("#reset_totales").load(location.href + " #reset_totales");		
 			
 		$('#mensajePERSONAL').html("<span id='ACTUALIZADO' >"+data+"</span>").fadeIn().delay(2000).fadeOut();
 	}
@@ -577,6 +581,7 @@ function STATUS_BONORECHAZO(STATUS_BONORECHAZO_id){
 	}
 	var esPersonal2 = document.getElementById("reset_personal2") !== null;
 	var targetTabla = esPersonal2 ? "#reset_personal2" : "#reset_personal";
+	$("#reset_totales").load(location.href + " #reset_totales");	
 	var targetMensaje = esPersonal2 ? "#mensajePERSONAL2" : "#mensajePERSONAL";
 	var dataPost = esPersonal2
 		? {STATUS_BONORECHAZO_id:STATUS_BONORECHAZO_id,STATUS_BONORECHAZO_text:STATUS_BONORECHAZO_text}
