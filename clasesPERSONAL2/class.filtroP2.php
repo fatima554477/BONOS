@@ -21,6 +21,25 @@ define("__ROOT1__", dirname(dirname(__FILE__)));
 		$this->mysqli = $this->db();
     }
 	
+		public function actualizaSTATUS_BONORECHAZO($STATUS_BONORECHAZO_id, $STATUS_BONORECHAZO_text){
+		$conn = $this->db();
+		$idPersonal = (int)$STATUS_BONORECHAZO_id;
+		$valor = ($STATUS_BONORECHAZO_text === 'si') ? 'si' : 'no';
+
+		if($idPersonal <= 0){
+			return "Datos_invalidos";
+		}
+
+		$var1 = "
+			UPDATE 04personal2
+			SET STATUS_BONORECHAZO = '".$conn->real_escape_string($valor)."'
+			WHERE id = ".$idPersonal."
+			LIMIT 1
+		";
+		mysqli_query($conn, $var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado";
+	}
+	
 	public function countAll($sql){
 		$query=$this->mysqli->query($sql);
 		$count=$query->num_rows;
