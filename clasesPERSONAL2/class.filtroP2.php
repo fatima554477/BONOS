@@ -68,8 +68,12 @@ $sWhere2="";$sWhere3="";
 			$autorizacionWhere .= " and $tables.DIRECCION = '".$search['DIRECCION']."'";
 		}
 
-		if(isset($search['admin']) && $search['admin'] !== ""){
+if(isset($search['admin']) && $search['admin'] !== ""){
 			$autorizacionWhere .= " and $tables.admin = '".$search['admin']."'";
+		}
+
+		if(isset($search['STATUS_BONORECHAZO']) && $search['STATUS_BONORECHAZO'] !== ""){
+			$autorizacionWhere .= " and $tables.STATUS_BONORECHAZO = '".$search['STATUS_BONORECHAZO']."'";
 		}
 
 		

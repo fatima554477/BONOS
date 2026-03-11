@@ -99,6 +99,7 @@ var hDatosPERSONAL2=$("#hDatosPERSONAL2_2").val();
 var VYO=$("#VYO_2").val();
 var DIRECCION=$("#DIRECCION_2").val();
 var admin=$("#admin_2").val();
+var STATUS_BONORECHAZO=$("#STATUS_BONORECHAZO_2").val();
 
 /*termina copiar y pegar*/
 			
@@ -142,6 +143,7 @@ var admin=$("#admin_2").val();
 'VYO':VYO,
 'DIRECCION':DIRECCION,
 'admin':admin,
+'STATUS_BONORECHAZO':STATUS_BONORECHAZO,
 'hDatosPERSONAL2':hDatosPERSONAL2,
 /*termina copiar y pegar*/
 /*termina copiar y pegar*/
@@ -191,7 +193,7 @@ function restoreRowSelections2(){
     });
     $("[id^='STATUS_BONORECHAZO']").each(function(){
         var id = this.id.replace('STATUS_BONORECHAZO','');
-        actualizarBotonesRechazoPersonal2(id, 'personal');
+        actualizarBotonesRechazoPersonal2(id, 'personal2');
     });
 } 
 
@@ -275,7 +277,7 @@ function pasara1_personal2ADMIN_filtro(pasara1_personal2ADMIN_id){
 	if(!checkBox){ return; }
 	var STATUS_BONORECHAZO_text = checkBox.checked ? "si" : "no";
 	$.ajax({
-		url:'BONOS/clasesPERSONAL/controlador_filtro.php', 
+		url:'BONOS/clasesPERSONAL2/controlador_filtro.php', 
 		method:'POST',
 		data:{STATUS_BONORECHAZO_id:STATUS_BONORECHAZO_id,STATUS_BONORECHAZO_text:STATUS_BONORECHAZO_text},
 		success:function(){
@@ -310,9 +312,9 @@ function guardarMotivoRechazoPersonal2Modal(){
 		return;
 	}
 	$.ajax({
-		url:'BONOS/clasesPERSONAL/controlador_filtro.php', 
+		url:'BONOS/clasesPERSONAL2/controlador_filtro.php', 
 		method:'POST',
-		data:{RECHAZO_MOTIVO_PERSONAL_id:idPersonal,RECHAZO_MOTIVO_PERSONAL_tipo:tipoPersonal2,RECHAZO_MOTIVO_PERSONAL_text:motivo},
+		data:{RECHAZO_MOTIVO_PERSONAL2_id:idPersonal,RECHAZO_MOTIVO_PERSONAL2_tipo:tipoPersonal2,RECHAZO_MOTIVO_PERSONAL2_text:motivo},
 		success:function(resp){
 			if((resp || '').indexOf('ok') !== -1){
 				$('#motivo_rechazo_'+tipoPersonal2+'_'+idPersonal).val(motivo);
@@ -336,9 +338,9 @@ function verMotivoRechazoPersonal2(idPersonal, tipoPersonal2){
 		return;
 	}
 	$.ajax({
-		url:'BONOS/clasesPERSONAL/controlador_filtro.php', 
+		url:'BONOS/clasesPERSONAL2/controlador_filtro.php', 
 		method:'POST',
-		data:{RECHAZO_MOTIVO_PERSONAL_VER_id:idPersonal,RECHAZO_MOTIVO_PERSONAL_VER_tipo:tipoPersonal2},
+		data:{RECHAZO_MOTIVO_PERSONAL2_VER_id:idPersonal,RECHAZO_MOTIVO_PERSONAL2_VER_tipo:tipoPersonal2},
 		success:function(resp){
 			var motivo = (resp || '').trim();
 			if(motivo !== ''){
