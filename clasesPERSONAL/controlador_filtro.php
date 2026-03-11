@@ -15,10 +15,30 @@
         session_start(); 
     }
 	define("__ROOT6__", dirname(__FILE__));
+
+require(__ROOT6__."/class.filtro.php");
+
+if(isset($_POST["STATUS_RECHAZOBONO_id"]) && isset($_POST["STATUS_RECHAZOBONO_text"])) {
+	$database = new orders();
+	echo $database->actualizaSTATUS_RECHAZOBONO($_POST["STATUS_RECHAZOBONO_id"], $_POST["STATUS_RECHAZOBONO_text"]);
+	exit;
+}
+
+if(isset($_POST["RECHAZO_MOTIVO_PERSONAL_id"]) && isset($_POST["RECHAZO_MOTIVO_PERSONAL_tipo"]) && isset($_POST["RECHAZO_MOTIVO_PERSONAL_text"])) {
+	$database = new orders();
+	echo $database->guardar_motivo_rechazo_personal($_POST["RECHAZO_MOTIVO_PERSONAL_id"], $_POST["RECHAZO_MOTIVO_PERSONAL_tipo"], $_POST["RECHAZO_MOTIVO_PERSONAL_text"]);
+	exit;
+}
+
+if(isset($_POST["RECHAZO_MOTIVO_PERSONAL_VER_id"]) && isset($_POST["RECHAZO_MOTIVO_PERSONAL_VER_tipo"])) {
+	$database = new orders();
+	echo $database->obtener_motivo_rechazo_personal($_POST["RECHAZO_MOTIVO_PERSONAL_VER_id"], $_POST["RECHAZO_MOTIVO_PERSONAL_VER_tipo"]);
+	exit;
+}
+
 $action = (isset($_POST["action"])&& $_POST["action"] !=NULL)?$_POST["action"]:"";
 if($action == "ajax"){
 
-require(__ROOT6__."/class.filtro.php");
 	$database=new orders();	
 	$puedeVerAdmin = ($database->variablespermisos('', 'PERSOBONO', 'ver') === 'si');
 	$puedeGuardarAdmin = ($database->variablespermisos('', 'PERSOBONO', 'guardar') === 'si');
@@ -29,6 +49,9 @@ require(__ROOT6__."/class.filtro.php");
 	$puedeVerDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'ver') === 'si');
 	$puedeGuardarDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'guardar') === 'si');
 	$puedeModificarDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'modificar') === 'si');
+	$puedeVerRechazoAdmin = ($database->variablespermisos('', 'rechazoadmin', 'ver') === 'si');
+	$puedeGuardarRechazoAdmin = ($database->variablespermisos('', 'rechazoadmin', 'guardar') === 'si');
+	$puedeModificarRechazoAdmin = ($database->variablespermisos('', 'rechazoadmin', 'modificar') === 'si');
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
 
@@ -244,7 +267,8 @@ if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DE
 <?php } ?>
 <?php if($puedeVerAdmin){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR AUDITORÍA</th>
 <?php } ?>
-
+<?php if($puedeVerRechazoAdmin){ ?><th style="background:#c9e8e8;text-align:center">RECHAZAR<br>PAGO BONO</th>
+<?php } ?>
 
 <?php
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE DEL PERSONAL</th>
@@ -402,7 +426,7 @@ echo $CIUDAD_DEL_EVENTO; ?>"></td>
     </select>
 </td>
 <?php } ?>
-
+<?php if($puedeVerRechazoAdmin){ ?><td style="background:#c9e8e8"></td><?php } ?>
 
 <?php  
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="NOMBRE_PERSONAL_1" value="<?php 
@@ -587,6 +611,9 @@ $colspanFields = array(
 	if ($puedeVerAdmin) {
 		$colspan++;
 	}
+	if ($puedeVerRechazoAdmin) {
+		$colspan++;
+	}
 
 	foreach ($datos as $key=>$row){?>
 		 <tr style="background:#FFFFFF;">
@@ -663,7 +690,30 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 <td class="autorizacion-cell<?php echo (isset($row["admin"]) && $row["admin"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalADMIN_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td>  
 <?php } ?>
-
+<?php if($puedeVerRechazoAdmin){ ?>
+<?php $filaRechazoBono = (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si');
+$motivoRechazoPersonal = $database->obtener_motivo_rechazo_personal($personalId, 'personal');
+$mostrarAgregarRechazoPersonal = ($filaRechazoBono && $motivoRechazoPersonal == '');
+$mostrarVerRechazoPersonal = ($filaRechazoBono && $motivoRechazoPersonal != '');
+?>
+<td style="text-align:center">
+    <input type="checkbox" style="width:40PX;" class="form-check-input"
+        id="STATUS_RECHAZOBONO<?php echo $personalId; ?>"
+        name="STATUS_RECHAZOBONO<?php echo $personalId; ?>"
+        value="<?php echo $personalId; ?>"
+        onclick="STATUS_RECHAZOBONO_filtro(<?php echo $personalId; ?>)"
+        <?php if($filaRechazoBono){ echo "checked"; } ?>
+        <?php if(!$puedeGuardarRechazoAdmin || ($filaRechazoBono && !$puedeModificarRechazoAdmin)) { echo "disabled"; } ?>
+    />
+    <input type="hidden" id="motivo_rechazo_personal_<?php echo $personalId; ?>" value="<?php echo htmlspecialchars($motivoRechazoPersonal, ENT_QUOTES, 'UTF-8'); ?>"/>
+    <button type="button" title="Agregar motivo" id="agregar_rechazo_personal_<?php echo $personalId; ?>"
+        style="border:none;background:transparent;cursor:pointer;color:#007bff;font-size:13px;<?php echo $mostrarAgregarRechazoPersonal ? '' : 'display:none;'; ?>"
+        onclick="abrirFormularioRechazoPersonal(<?php echo $personalId; ?>, 'personal')">agregar<br>motivo</button>
+    <button type="button" title="Ver motivo" id="ver_rechazo_personal_<?php echo $personalId; ?>"
+        style="border:none;background:transparent;cursor:pointer;color:#28a745;font-size:13px;<?php echo $mostrarVerRechazoPersonal ? '' : 'display:none;'; ?>"
+        onclick="verMotivoRechazoPersonal(<?php echo $personalId; ?>, 'personal')">ver</button>
+</td>
+<?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL"],'01informacionpersonal','NOMBRE_1'); ?></td>
 <?php } ?>
