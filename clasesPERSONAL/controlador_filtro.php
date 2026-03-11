@@ -86,6 +86,19 @@ $admin = isset($_POST["admin"])?trim($_POST["admin"]):"";
 
 $per_page=intval($_POST["per_page"]);
 
+$formasPago = array(
+"03" => "TRANSFERENCIA ELECTRONICA",
+"04" => "TARJETA DE CRÉDITO",
+"28" => "TARJETA DE DÉBITO",
+"01" => "EFECTIVO",
+"02" => "CHEQUE NOMINATIVO",
+"05" => "MONEDERO ELECTRÓNICO",
+"06" => "DINERO ELECTRÓNICO",
+"08" => "VALES DE DESPENSA",
+"29" => "TARJETA DE SERVICIO",
+"99" => "OTROS"
+);
+
 
 $campos="04personal.*, 01informacionpersonal.*, 01DATOSBANCARIOS.*, 04altaeventos.*";
 	$page = (isset($_POST["page"]) && !empty($_POST["page"]))?$_POST["page"]:1;
@@ -739,7 +752,7 @@ $TOTAL12 += floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL']));
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['FORMA_PAGO'];?></td>
+<?php  if($database->plantilla_filtro($nombreTabla,"FORMA_PAGO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo isset($formasPago[$row['FORMA_PAGO']]) ? $formasPago[$row['FORMA_PAGO']] : $row['FORMA_PAGO'];?></td>
 <?php } ?>
 
 <?php  
