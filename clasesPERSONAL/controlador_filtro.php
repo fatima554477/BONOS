@@ -106,6 +106,7 @@ $NOMBRE_RECIBIO = isset($_POST["NOMBRE_RECIBIO"])?trim($_POST["NOMBRE_RECIBIO"])
 $VYO = isset($_POST["VYO"])?trim($_POST["VYO"]):"";
 $DIRECCION = isset($_POST["DIRECCION"])?trim($_POST["DIRECCION"]):"";
 $admin = isset($_POST["admin"])?trim($_POST["admin"]):""; 
+$STATUS_RECHAZOBONO = isset($_POST["STATUS_RECHAZOBONO"])?trim($_POST["STATUS_RECHAZOBONO"]):""; 
 
 $per_page=intval($_POST["per_page"]);
 
@@ -170,6 +171,7 @@ $campos="04personal.*, 01informacionpersonal.*, 01DATOSBANCARIOS.*, 04altaevento
 "VYO"=>$VYO,
 "DIRECCION"=>$DIRECCION,
 "admin"=>$admin,
+"STATUS_RECHAZOBONO"=>$STATUS_RECHAZOBONO,
 
  "per_page"=>$per_page,
 	"query"=>$query,
@@ -426,7 +428,13 @@ echo $CIUDAD_DEL_EVENTO; ?>"></td>
     </select>
 </td>
 <?php } ?>
-<?php if($puedeVerRechazoAdmin){ ?><td style="background:#c9e8e8"></td><?php } ?>
+<?php if($puedeVerRechazoAdmin){ ?><td style="background:#c9e8e8">
+    <select class="form-select" id="STATUS_RECHAZOBONO_1" onchange="load(1)">
+        <option value="" <?php if($STATUS_RECHAZOBONO==""){ echo "selected"; } ?>>Todos</option>
+        <option value="si" <?php if($STATUS_RECHAZOBONO=="si"){ echo "selected"; } ?>>Si</option>
+        <option value="no" <?php if($STATUS_RECHAZOBONO=="no"){ echo "selected"; } ?>>No</option>
+    </select>
+</td><?php } ?>
 
 <?php  
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="NOMBRE_PERSONAL_1" value="<?php 

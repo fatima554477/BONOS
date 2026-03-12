@@ -106,6 +106,8 @@ var VYO=$("#VYO_1").val();
 var DIRECCION=$("#DIRECCION_1").val();
 var admin=$("#admin_1").val();
 
+var STATUS_RECHAZOBONO=$("#STATUS_RECHAZOBONO_1").val();
+
 
 
 /*termina copiar y pegar*/
@@ -159,7 +161,7 @@ var admin=$("#admin_1").val();
 'VYO':VYO,
 'DIRECCION':DIRECCION,
 'admin':admin,
-
+'STATUS_RECHAZOBONO':STATUS_RECHAZOBONO,
 'hDatosPERSONAL':hDatosPERSONAL,
 
 

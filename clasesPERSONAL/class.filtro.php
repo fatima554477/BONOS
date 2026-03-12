@@ -137,6 +137,10 @@ function __construct(){
 			$autorizacionWhere .= " and $tables.admin = '".$search['admin']."'";
 		}
 
+		if(isset($search['STATUS_RECHAZOBONO']) && $search['STATUS_RECHAZOBONO'] !== ""){
+			$autorizacionWhere .= " and $tables.STATUS_RECHAZOBONO = '".$search['STATUS_RECHAZOBONO']."'";
+		}
+
 		
 if($search['NUMERO_EVENTO']!=""){
 $sWhere2.="  $tables1.NUMERO_EVENTO LIKE   '%".$search['NUMERO_EVENTO']."%' OR ";}
