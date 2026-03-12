@@ -615,8 +615,13 @@ $colspanFields = array(
 		$colspan++;
 	}
 
-	foreach ($datos as $key=>$row){?>
-		 <tr style="background:#FFFFFF;">
+	foreach ($datos as $key=>$row){
+		$filaRechazoBono = (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si');
+		$estiloFila = $filaRechazoBono ? 'background:red;' : 'background:#FFFFFF;';
+		$montoBonoTotalOriginal = floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL']));
+		$montoBonoTotalAjustado = $filaRechazoBono ? 0 : floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL']));
+	?>
+		 <tr style="<?php echo $estiloFila; ?>">
 		 						<td>
     <input type="checkbox" 
            class="checkbox"
@@ -691,8 +696,7 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personalId; ?>" value="<?php echo $personalId; ?>" onclick="pasara1_personalADMIN_filtro(<?php echo $personalId; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin)) { echo "disabled"; } ?>/> </td>  
 <?php } ?>
 <?php if($puedeVerRechazoAdmin){ ?>
-<?php $filaRechazoBono = (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si');
-$motivoRechazoPersonal = $database->obtener_motivo_rechazo_personal($personalId, 'personal');
+<?php $motivoRechazoPersonal = $database->obtener_motivo_rechazo_personal($personalId, 'personal');
 $mostrarAgregarRechazoPersonal = ($filaRechazoBono && $motivoRechazoPersonal == '');
 $mostrarVerRechazoPersonal = ($filaRechazoBono && $motivoRechazoPersonal != '');
 ?>
@@ -769,10 +773,12 @@ $MONTO_BONO12 += floatval(str_replace(',', '', $row['MONTO_BONO']));
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:right; padding-right:10px;"><?php echo $row['MONTO_BONO_TOTAL'];
-$TOTAL12 += floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL']));
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td class="monto-bono-total-cell" data-original="<?php echo $montoBonoTotalOriginal; ?>" style="text-align:right; padding-right:10px;"><?php echo number_format($montoBonoTotalAjustado, 2, '.', ',');
+$TOTAL12 += $montoBonoTotalAjustado;
 ?></td>
 <?php } ?>
+
+
 
 
 
@@ -875,16 +881,16 @@ if (!empty($adjuntosComprobante)) {
 	<tr style="border-top:4px solid #c9c9c9;">
 		<td style="text-align:right; padding-right:45px;" colspan="<?php echo $colspan; ?>"><strong style="font-size:16px">TOTALES</strong></td>
 			<?php if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
-			<td style="text-align:center;"><strong style="font-size:16px"><?php echo number_format($NUMERO_DIAS12); ?></strong></td>
+			<td id="total_bonos_filtro_personal" style="text-align:center;"><strong style="font-size:16px"><?php echo number_format($NUMERO_DIAS12); ?></strong></td>
 		<?php } ?>
 		
 		<?php if($database->plantilla_filtro($nombreTabla,"MONTO_BONO",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
-			<td style="text-align:right; padding-right:10px;"><strong style="font-size:16px">$<?php echo number_format($MONTO_BONO12,2,'.',','); ?></strong></td>
+			<td id="total_bonos_filtro_personal" style="text-align:right; padding-right:10px;"><strong style="font-size:16px">$<?php echo number_format($MONTO_BONO12,2,'.',','); ?></strong></td>
 		<?php } ?>
 	
 	
 	<?php if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
-			<td style="text-align:right; padding-right:10px;"><strong style="font-size:16px">$<?php echo number_format($TOTAL12,2,'.',','); ?></strong></td>
+			<td id="total_bonos_filtro_personal" style="text-align:right; padding-right:10px;"><strong style="font-size:16px">$<?php echo number_format($TOTAL12,2,'.',','); ?></strong></td>
 		<?php } ?>
 
 	</tr>
