@@ -588,11 +588,14 @@ $colspanFields = array(
 
 			foreach ($datos as $key=>$row){
 			$filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'));
+			$estiloFila2 = $filaRechazoBono2 ? 'red' : '#FFFFFF';
+			$montoBonoTotalOriginal2 = floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL1']));
+			$montoBonoTotalAjustado2 = $filaRechazoBono2 ? 0 : $montoBonoTotalOriginal2;
 			$motivoRechazoPersonal2 = $database->obtener_motivo_rechazo_personal(!empty($row["PERSONAL2_ID"]) ? $row["PERSONAL2_ID"] : $row["id"], 'personal2');
 			$mostrarAgregarRechazoPersonal2 = ($filaRechazoBono2 && $motivoRechazoPersonal2 == '');
 			$mostrarVerRechazoPersonal2 = ($filaRechazoBono2 && $motivoRechazoPersonal2 != '');
 			?>
-		 <tr style="background:<?php echo $filaRechazoBono2 ? '#ff3c22' : '#FFFFFF'; ?>;">
+		 <tr style="background:<?php echo $estiloFila2; ?>;">
 		 						<td>
     <input type="checkbox" 
            class="checkbox"
@@ -720,8 +723,8 @@ $MONTO_BONO12 += $filaRechazoBono2 ? 0 : floatval(str_replace(',', '', $row['MON
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $filaRechazoBono2 ? '0.00' : $row['MONTO_BONO_TOTAL1'];
-$TOTAL12 += $filaRechazoBono2 ? 0 : floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL1']));
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td class="monto-bono-total1-cell" data-original="<?php echo $montoBonoTotalOriginal2; ?>" style="text-align:center"><?php echo number_format($montoBonoTotalAjustado2, 2, '.', ',');
+$TOTAL12 += $montoBonoTotalAjustado2;
 ?></td>
 <?php } ?>
 
@@ -837,7 +840,7 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_EFECTIVA1",$altaeventos,$DEP
 
 	
 		<?php if($database->plantilla_filtro($nombreTabla,"TOTAL",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
-			<td style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($TOTAL12,2,'.',','); ?></strong></td>
+			<td id="total_bonos_filtro_personal2" style="text-align:center"><strong style="font-size:16px">$<?php echo number_format($TOTAL12,2,'.',','); ?></strong></td>
 		<?php } ?>
 	
 	</tr>

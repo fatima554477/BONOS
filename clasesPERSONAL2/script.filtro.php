@@ -318,16 +318,47 @@ function STATUS_BONORECHAZO_filtro(STATUS_BONORECHAZO_id){
 	var checkBox = document.getElementById("STATUS_BONORECHAZO"+STATUS_BONORECHAZO_id);
 	if(!checkBox){ return; }
 	var STATUS_BONORECHAZO_text = checkBox.checked ? "si" : "no";
+	actualizarVistaRechazoBonoFiltro2(STATUS_BONORECHAZO_id, checkBox.checked);
 	$.ajax({
 		url:'BONOS/clasesPERSONAL2/controlador_filtro.php',
 		method:'POST',
 		data:{STATUS_BONORECHAZO_id:STATUS_BONORECHAZO_id,STATUS_BONORECHAZO_text:STATUS_BONORECHAZO_text},
 		success:function(){
 			actualizarBotonesRechazoPersonal(STATUS_BONORECHAZO_id, 'personal2', STATUS_BONORECHAZO_text);
-			load2(1);
 			mostrarActualizado2('✅ ACTUALIZADO');
 		}
 	});
+}
+
+function actualizarVistaRechazoBonoFiltro2(idPersonal2, rechazado){
+	var checkBox = document.getElementById("STATUS_BONORECHAZO"+idPersonal2);
+	if(!checkBox){ return; }
+	var fila = checkBox.closest('tr');
+	if(!fila){ return; }
+
+	fila.style.background = rechazado ? 'red' : '#FFFFFF';
+
+	var celdaMonto = fila.querySelector('.monto-bono-total1-cell');
+	if(celdaMonto){
+		var montoOriginal = parseFloat(celdaMonto.getAttribute('data-original') || '0');
+		if(isNaN(montoOriginal)){ montoOriginal = 0; }
+		var montoVisible = rechazado ? 0 : montoOriginal;
+		celdaMonto.textContent = montoVisible.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+	}
+
+	recalcularTotalBonoFiltro2();
+}
+
+function recalcularTotalBonoFiltro2(){
+	var total = 0;
+	$('.monto-bono-total1-cell').each(function(){
+		var valor = parseFloat(($(this).text() || '0').replace(/,/g, ''));
+		if(!isNaN(valor)){
+			total += valor;
+		}
+	});
+
+	$('#total_bonos_filtro_personal2 strong').text('$'+total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 }
 
 function asegurarModalRechazoPersonal(){
