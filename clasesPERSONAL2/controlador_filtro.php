@@ -15,10 +15,30 @@
         session_start(); 
     }
 	define("__ROOT6__", dirname(__FILE__));
+
+require(__ROOT6__."/class.filtroP2.php");
+
+if(isset($_POST["STATUS_BONORECHAZO_id"]) && isset($_POST["STATUS_BONORECHAZO_text"])) {
+	$database = new orders();
+	echo $database->actualizaSTATUS_BONORECHAZO($_POST["STATUS_BONORECHAZO_id"], $_POST["STATUS_BONORECHAZO_text"]);
+	exit;
+}
+
+if(isset($_POST["RECHAZO_MOTIVO_PERSONAL_id"]) && isset($_POST["RECHAZO_MOTIVO_PERSONAL_tipo"]) && isset($_POST["RECHAZO_MOTIVO_PERSONAL_text"])) {
+	$database = new orders();
+	echo $database->guardar_motivo_rechazo_personal($_POST["RECHAZO_MOTIVO_PERSONAL_id"], $_POST["RECHAZO_MOTIVO_PERSONAL_tipo"], $_POST["RECHAZO_MOTIVO_PERSONAL_text"]);
+	exit;
+}
+
+if(isset($_POST["RECHAZO_MOTIVO_PERSONAL_VER_id"]) && isset($_POST["RECHAZO_MOTIVO_PERSONAL_VER_tipo"])) {
+	$database = new orders();
+	echo $database->obtener_motivo_rechazo_personal($_POST["RECHAZO_MOTIVO_PERSONAL_VER_id"], $_POST["RECHAZO_MOTIVO_PERSONAL_VER_tipo"]);
+	exit;
+}
+
 $action = (isset($_POST["action2"])&& $_POST["action2"] !=NULL)?$_POST["action2"]:"";
 if($action == "ajax2"){
 
-	require(__ROOT6__."/class.filtroP2.php");
 	$database=new orders();	
 	$puedeVerAdmin2 = ($database->variablespermisos('', 'PERSO2BONO', 'ver') === 'si');
 	$puedeGuardarAdmin2 = ($database->variablespermisos('', 'PERSO2BONO', 'guardar') === 'si');
@@ -29,6 +49,9 @@ if($action == "ajax2"){
 	$puedeVerDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2BONO', 'ver') === 'si');
 	$puedeGuardarDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2BONO', 'guardar') === 'si');
 	$puedeModificarDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2BONO', 'modificar') === 'si');
+	$puedeVerRechazoBono2 = ($database->variablespermisos('', 'rechazobono2', 'ver') === 'si');
+	$puedeGuardarRechazoBono2 = ($database->variablespermisos('', 'rechazobono2', 'guardar') === 'si');
+	$puedeModificarRechazoBono2 = ($database->variablespermisos('', 'rechazobono2', 'modificar') === 'si');
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
 
@@ -242,6 +265,8 @@ if($database->plantilla_filtro($nombreTabla,"CIUDAD_DEL_EVENTO",$altaeventos,$DE
 <?php } ?>
 <?php if($puedeVerAdmin2){ ?><th style="background:#c9e8e8;text-align:center">AUTORIZACIÓN <br>POR AUDITORÍA</th>
 <?php } ?>
+<?php if($puedeVerRechazoBono2){ ?><th style="background:#c9e8e8;text-align:center">RECHAZAR<br>PAGO BONO</th>
+<?php } ?>
 
 
 <?php 
@@ -375,6 +400,7 @@ echo $CIUDAD_DEL_EVENTO; ?>"></td>
     </select>
 </td>
 <?php } ?>
+<?php if($puedeVerRechazoBono2){ ?><td style="background:#c9e8e8"></td><?php } ?>
 
 <?php  
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="NOMBRE_PERSONAL2_2" value="<?php 
@@ -556,9 +582,17 @@ $colspanFields = array(
 	if ($puedeVerAdmin2) {
 		$colspan++;
 	}
+	if ($puedeVerRechazoBono2) {
+		$colspan++;
+	}
 
-			foreach ($datos as $key=>$row){?>
-		 <tr style="background:#FFFFFF;">
+			foreach ($datos as $key=>$row){
+			$filaRechazoBono2 = ((isset($row["STATUS_BONORECHAZO"]) && $row["STATUS_BONORECHAZO"]=='si') || (isset($row["STATUS_RECHAZOBONO"]) && $row["STATUS_RECHAZOBONO"]=='si'));
+			$motivoRechazoPersonal2 = $database->obtener_motivo_rechazo_personal(!empty($row["PERSONAL2_ID"]) ? $row["PERSONAL2_ID"] : $row["id"], 'personal2');
+			$mostrarAgregarRechazoPersonal2 = ($filaRechazoBono2 && $motivoRechazoPersonal2 == '');
+			$mostrarVerRechazoPersonal2 = ($filaRechazoBono2 && $motivoRechazoPersonal2 != '');
+			?>
+		 <tr style="background:<?php echo $filaRechazoBono2 ? '#ff3c22' : '#FFFFFF'; ?>;">
 		 						<td>
     <input type="checkbox" 
            class="checkbox"
@@ -622,6 +656,14 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_INICIO_EVENTO",$altaeventos,
 <td class="autorizacion-cell2<?php echo (isset($row["admin"]) && $row["admin"]=='si') ? ' autorizacion-checked' : ''; ?>" style="text-align:center">
     <input type="checkbox" style="width:40PX;" class="form-check-input" name="admin[]" id="admin<?php echo $personal2Id; ?>" value="<?php echo $personal2Id; ?>" onclick="pasara1_personal2ADMIN_filtro(<?php echo $personal2Id; ?>)" <?php if(isset($row["admin"]) && $row["admin"]=='si'){ echo "checked"; } ?> <?php if(!$puedeGuardarAdmin2 || ((isset($row["admin"]) && $row["admin"]=='si') && !$puedeModificarAdmin2)) { echo "disabled"; } ?>/> </td>
 <?php } ?>
+<?php if($puedeVerRechazoBono2){ ?>
+<td style="text-align:center">
+    <input type="checkbox" style="width:40PX;" class="form-check-input" id="STATUS_BONORECHAZO<?php echo $personal2Id; ?>" name="STATUS_BONORECHAZO<?php echo $personal2Id; ?>" value="<?php echo $personal2Id; ?>" onclick="STATUS_BONORECHAZO_filtro(<?php echo $personal2Id; ?>)" <?php if($filaRechazoBono2){ echo "checked"; } ?> <?php if(!$puedeGuardarRechazoBono2 || ($filaRechazoBono2 && !$puedeModificarRechazoBono2)) { echo "disabled"; } ?>/>
+    <input type="hidden" id="motivo_rechazo_personal2_<?php echo $personal2Id; ?>" value="<?php echo htmlspecialchars($motivoRechazoPersonal2, ENT_QUOTES, 'UTF-8'); ?>" />
+    <button type="button" title="Agregar motivo" id="agregar_rechazo_personal2_<?php echo $personal2Id; ?>" style="border:none;background:transparent;cursor:pointer;color:#007bff;font-size:13px;<?php echo $mostrarAgregarRechazoPersonal2 ? '' : 'display:none;'; ?>" onclick="abrirFormularioRechazoPersonal(<?php echo $personal2Id; ?>, 'personal2')">agregar<br>motivo</button>
+    <button type="button" title="Ver motivo" id="ver_rechazo_personal2_<?php echo $personal2Id; ?>" style="border:none;background:transparent;cursor:pointer;color:#28a745;font-size:13px;<?php echo $mostrarVerRechazoPersonal2 ? '' : 'display:none;'; ?>" onclick="verMotivoRechazoPersonal(<?php echo $personal2Id; ?>, 'personal2')">ver</button>
+</td>
+<?php } ?>
 
 <?php  if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $database->un_solo_colaborador_nombre($row["NOMBRE_PERSONAL2"],'01informacionpersonal','NOMBRE_1'); ?></td>
 <?php } ?>
@@ -663,23 +705,23 @@ if ($database->plantilla_filtro($nombreTabla,"FECHA_FINAL1",$altaeventos,$DEPART
 </td>
 <?php } ?>
 
-<?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['NUMERO_DIAS1'];
-$NUMERO_DIAS112 += floatval($row['NUMERO_DIAS1']);
+<?php  if($database->plantilla_filtro($nombreTabla,"NUMERO_DIAS1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $filaRechazoBono2 ? 0 : $row['NUMERO_DIAS1'];
+$NUMERO_DIAS112 += $filaRechazoBono2 ? 0 : floatval($row['NUMERO_DIAS1']);
 
 ?></td>
 <?php } ?>
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['MONTO_BONO1'];
-$MONTO_BONO12 += floatval(str_replace(',', '', $row['MONTO_BONO1']));
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $filaRechazoBono2 ? '0.00' : $row['MONTO_BONO1'];
+$MONTO_BONO12 += $filaRechazoBono2 ? 0 : floatval(str_replace(',', '', $row['MONTO_BONO1']));
 ?></td>
 <?php } ?>
 
 
 
 
-<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['MONTO_BONO_TOTAL1'];
-$TOTAL12 += floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL1']));
+<?php  if($database->plantilla_filtro($nombreTabla,"MONTO_BONO_TOTAL1",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $filaRechazoBono2 ? '0.00' : $row['MONTO_BONO_TOTAL1'];
+$TOTAL12 += $filaRechazoBono2 ? 0 : floatval(str_replace(',', '', $row['MONTO_BONO_TOTAL1']));
 ?></td>
 <?php } ?>
 
