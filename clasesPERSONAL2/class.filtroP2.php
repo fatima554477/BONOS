@@ -77,6 +77,10 @@ $sWhere2="";$sWhere3="";
 			$autorizacionWhere .= " and $tables.admin = '".$search['admin']."'";
 		}
 
+		if(isset($search['STATUS_BONORECHAZO']) && $search['STATUS_BONORECHAZO'] !== ""){
+			$autorizacionWhere .= " and $tables.STATUS_BONORECHAZO = '".$search['STATUS_BONORECHAZO']."'";
+		}
+
 		
 if($search['NUMERO_EVENTO']!=""){
 $sWhere2.="  $tables1.NUMERO_EVENTO LIKE   '%".$search['NUMERO_EVENTO']."%' OR ";}
@@ -178,7 +182,8 @@ IF($sWhere2!=""){
 		
 
 		
-		$sWhere3.="  order by $tables.id asc ";
+		$sWhere3.="  order by $tables.PERSONAL2_FECHA_ULTIMA_CARGA desc, $tables.id desc ";
+
 		$sql="SELECT $campos, 04personal2.id as PERSONAL2_ID, 04altaeventos.id as EVENTO_ID, IDPERSONAL as id FROM $sWhere $sWhere3 LIMIT $offset,$per_page";
 		
 		$query=$this->mysqli->query($sql);

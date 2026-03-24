@@ -1,3 +1,4 @@
+
 <style>
 /* Loader2 con animación */
 .loader2 {
@@ -95,6 +96,7 @@ function load2(page){
     var VYO=$("#VYO_2").val();
     var DIRECCION=$("#DIRECCION_2").val();
     var admin=$("#admin_2").val();
+    var STATUS_BONORECHAZO=$("#STATUS_BONORECHAZO_2").val();
 
     var per_page=$("#per_page2").val();
     var parametros = {
@@ -134,6 +136,7 @@ function load2(page){
         'VYO':VYO,
         'DIRECCION':DIRECCION,
         'admin':admin,
+        'STATUS_BONORECHAZO':STATUS_BONORECHAZO,
         'hDatosPERSONAL2':hDatosPERSONAL2,
         'DEPARTAMENTO2':DEPARTAMENTO2
     };

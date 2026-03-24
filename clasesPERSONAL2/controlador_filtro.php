@@ -49,9 +49,9 @@ if($action == "ajax2"){
 	$puedeVerDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2BONO', 'ver') === 'si');
 	$puedeGuardarDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2BONO', 'guardar') === 'si');
 	$puedeModificarDIRECCION2 = ($database->variablespermisos('', 'PERSOdire2BONO', 'modificar') === 'si');
-	$puedeVerRechazoBono2 = ($database->variablespermisos('', 'rechazobono2', 'ver') === 'si');
-	$puedeGuardarRechazoBono2 = ($database->variablespermisos('', 'rechazobono2', 'guardar') === 'si');
-	$puedeModificarRechazoBono2 = ($database->variablespermisos('', 'rechazobono2', 'modificar') === 'si');
+	$puedeVerRechazoBono2 = ($database->variablespermisos('', 'rechazo2', 'ver') === 'si');
+	$puedeGuardarRechazoBono2 = ($database->variablespermisos('', 'rechazo2', 'guardar') === 'si');
+	$puedeModificarRechazoBono2 = ($database->variablespermisos('', 'rechazo2', 'modificar') === 'si');
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
 
@@ -99,6 +99,7 @@ $ULTIMA_CARGA_DATOBANCA = isset($_POST["ULTIMA_CARGA_DATOBANCA"])?trim($_POST["U
 $VYO = isset($_POST["VYO"])?trim($_POST["VYO"]):"";
 $DIRECCION = isset($_POST["DIRECCION"])?trim($_POST["DIRECCION"]):"";
 $admin = isset($_POST["admin"])?trim($_POST["admin"]):"";
+$STATUS_BONORECHAZO = isset($_POST["STATUS_BONORECHAZO"])?trim($_POST["STATUS_BONORECHAZO"]):"";
 $per_page=intval($_POST["per_page"]);
 $formasPago = array(
 
@@ -176,6 +177,7 @@ $formasPago = array(
 "VYO"=>$VYO,
 "DIRECCION"=>$DIRECCION,
 "admin"=>$admin,
+"STATUS_BONORECHAZO"=>$STATUS_BONORECHAZO,
 "hDatosPERSONAL2"=>$hDatosPERSONAL2,
 
  "per_page"=>$per_page,
@@ -400,7 +402,13 @@ echo $CIUDAD_DEL_EVENTO; ?>"></td>
     </select>
 </td>
 <?php } ?>
-<?php if($puedeVerRechazoBono2){ ?><td style="background:#c9e8e8"></td><?php } ?>
+<?php if($puedeVerRechazoBono2){ ?><td style="background:#c9e8e8">
+    <select class="form-select" id="STATUS_BONORECHAZO_2" onchange="load2(1)">
+        <option value="" <?php if($STATUS_BONORECHAZO==""){ echo "selected"; } ?>>Todos</option>
+        <option value="si" <?php if($STATUS_BONORECHAZO=="si"){ echo "selected"; } ?>>Si</option>
+        <option value="no" <?php if($STATUS_BONORECHAZO=="no"){ echo "selected"; } ?>>No</option>
+    </select>
+</td><?php } ?>
 
 <?php  
 if($database->plantilla_filtro($nombreTabla,"NOMBRE_PERSONAL2",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="NOMBRE_PERSONAL2_2" value="<?php 
