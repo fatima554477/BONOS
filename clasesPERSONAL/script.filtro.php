@@ -1,5 +1,4 @@
 
-
 <style>
 /* Loader con animación */
 .loader {
@@ -49,7 +48,7 @@
         $(function() {
                 const triggerSearch = () => load(1);
 
-                $('#target300').on('keydown', 'thead input, thead select', function(event) {
+                $('#target3').on('keydown', 'thead input, thead select', function(event) {
                         if (event.key === 'Enter' || event.which === 13) {
                                 event.preventDefault();
                                 triggerSearch();
