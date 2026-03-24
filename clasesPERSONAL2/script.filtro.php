@@ -1,4 +1,3 @@
-
 <style>
 /* Loader2 con animación */
 .loader2 {
@@ -46,7 +45,7 @@
 $(function() {
     const triggerSearch = () => load2(1);
 
-    $('#target3').on('keydown', 'thead input, thead select', function(event) {
+    $('#target4').on('keydown', 'thead input, thead select', function(event) {
         if (event.key === 'Enter' || event.which === 13) {
             event.preventDefault();
             triggerSearch();
@@ -65,9 +64,9 @@ function load2(page){
     var CIUDAD_DEL_EVENTO=$("#CIUDAD_DEL_EVENTO_2").val();
     var DEPARTAMENTO2=$("#DEPARTAMENTO2WE").val();
     var NOMBRE_PERSONAL2=$("#NOMBRE_PERSONAL2_2").val();
-    var PUESTO_PERSONAL2=$("#PUESTO_PERSONAL2_1").val();
-    var EMAIL_PERSONAL2=$("#EMAIL_PERSONAL2_1").val();
-    var WHAT_PERSONAL2=$("#WHAT_PERSONAL2_1").val();
+    var PUESTO_PERSONAL2=$("#PUESTO_PERSONAL2_2").val();
+    var EMAIL_PERSONAL2=$("#EMAIL_PERSONAL2_2").val();
+    var WHAT_PERSONAL2=$("#WHAT_PERSONAL2_2").val();
     var FECHA_INICIO1=$("#FECHA_INICIO1_2").val();
     var FECHA_FINAL1=$("#FECHA_FINAL1_2").val();
     var NUMERO_DIAS1=$("#NUMERO_DIAS1_2").val();
@@ -78,11 +77,11 @@ function load2(page){
     var ULTIMO_DIA1=$("#ULTIMO_DIA1_2").val();
     var OBSERVACIONES_PERSONAL2=$("#OBSERVACIONES_PERSONAL2_2").val();
     var PERSONAL2_FECHA_ULTIMA_CARGA=$("#PERSONAL2_FECHA_ULTIMA_CARGA_2").val();
-    var TIPO_DE_MONEDA_1=$("#TIPO_DE_MONEDA_1_1").val();
-    var INSTITUCION_FINANCIERA_1=$("#INSTITUCION_FINANCIERA_1_1").val();
-    var NUMERO_DE_CUENTA_DB_1=$("#NUMERO_DE_CUENTA_DB_1_1").val();
-    var NUMERO_CLABE_1=$("#NUMERO_CLABE_1_1").val();
-    var FOTO_ESTADO_PROVEE=$("#FOTO_ESTADO_PROVEE_1").val();
+    var TIPO_DE_MONEDA_1=$("#TIPO_DE_MONEDA_1_2").val();
+    var INSTITUCION_FINANCIERA_1=$("#INSTITUCION_FINANCIERA_1_2").val();
+    var NUMERO_DE_CUENTA_DB_1=$("#NUMERO_DE_CUENTA_DB_1_2").val();
+    var NUMERO_CLABE_1=$("#NUMERO_CLABE_1_2").val();
+    var FOTO_ESTADO_PROVEE=$("#FOTO_ESTADO_PROVEE_2").val();
     var FECHA_PPAGO1=$("#FECHA_PPAGO1_2").val();
     var FORMA_PAGO1=$("#FORMA_PAGO1_2").val();
     var FECHA_EFECTIVA1=$("#FECHA_EFECTIVA1_2").val();
