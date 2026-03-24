@@ -49,9 +49,9 @@ if($action == "ajax"){
 	$puedeVerDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'ver') === 'si');
 	$puedeGuardarDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'guardar') === 'si');
 	$puedeModificarDIRECCION = ($database->variablespermisos('', 'PERSOdireBONO', 'modificar') === 'si');
-	$puedeVerRechazoAdmin = ($database->variablespermisos('', 'rechazoadmin', 'ver') === 'si');
-	$puedeGuardarRechazoAdmin = ($database->variablespermisos('', 'rechazoadmin', 'guardar') === 'si');
-	$puedeModificarRechazoAdmin = ($database->variablespermisos('', 'rechazoadmin', 'modificar') === 'si');
+	$puedeVerRechazoAdmin = ($database->variablespermisos('', 'rechazoR', 'ver') === 'si');
+	$puedeGuardarRechazoAdmin = ($database->variablespermisos('', 'rechazoR', 'guardar') === 'si');
+	$puedeModificarRechazoAdmin = ($database->variablespermisos('', 'rechazoR', 'modificar') === 'si');
 
 	$query=isset($_POST["query"])?$_POST["query"]:"";
 

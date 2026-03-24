@@ -137,9 +137,13 @@ function __construct(){
 			$autorizacionWhere .= " and $tables.admin = '".$search['admin']."'";
 		}
 
-		if(isset($search['STATUS_RECHAZOBONO']) && $search['STATUS_RECHAZOBONO'] !== ""){
-			$autorizacionWhere .= " and $tables.STATUS_RECHAZOBONO = '".$search['STATUS_RECHAZOBONO']."'";
+if(isset($search['STATUS_RECHAZOBONO']) && $search['STATUS_RECHAZOBONO'] !== ""){
+			$statusRechazo = strtolower(trim($search['STATUS_RECHAZOBONO']));
+			if($statusRechazo === 'si' || $statusRechazo === 'no'){
+				$autorizacionWhere .= " and lower(trim(ifnull($tables.STATUS_RECHAZOBONO, ''))) = '".$statusRechazo."'";
+			}
 		}
+
 
 		
 if($search['NUMERO_EVENTO']!=""){
@@ -250,7 +254,8 @@ IF($sWhere2!=""){
 		
 
 		
-		$sWhere3.="  order by $tables.id asc ";
+		$sWhere3.="  order by $tables.PERSONAL_FECHA_ULTIMA_CARGA desc, $tables.id desc ";
+
 		$sql="SELECT $campos, 04personal.id as PERSONAL_ID, 04altaeventos.id as EVENTO_ID, IDPERSONAL as id FROM $sWhere $sWhere3 LIMIT $offset,$per_page";
 		
 		$query=$this->mysqli->query($sql);
